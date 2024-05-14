@@ -1,4 +1,4 @@
-using Blater.Client.Components;
+using Blater.Portal.Client.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Blater.Client._Imports).Assembly);
+    .AddAdditionalAssemblies(typeof(Blater.Portal.Client._Imports).Assembly);
 
 app.Run();

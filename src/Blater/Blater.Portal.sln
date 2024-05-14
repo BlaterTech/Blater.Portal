@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater", "Blater\Blater.csproj", "{AC6307B6-E09A-4AE0-98CB-254A5C4D2FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Portal", "Blater.Portal\Blater.Portal.csproj", "{AC6307B6-E09A-4AE0-98CB-254A5C4D2FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Client", "Blater.Client\Blater.Client.csproj", "{56FAD0FF-2F2E-4CE8-A403-42427C9EC837}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Portal.Client", "Blater.Portal.Client\Blater.Portal.Client.csproj", "{56FAD0FF-2F2E-4CE8-A403-42427C9EC837}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
