@@ -19,15 +19,7 @@
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="Layout\MainLayout.razor" />
-      <AdditionalFiles Include="Layout\NavMenu.razor" />
-      <AdditionalFiles Include="Pages\Counter.razor" />
-      <AdditionalFiles Include="Pages\Home.razor" />
-      <AdditionalFiles Include="Pages\Weather.razor" />
-    </ItemGroup>
-
+    
     <ItemGroup>
       <Folder Include="Components\" />
     </ItemGroup>

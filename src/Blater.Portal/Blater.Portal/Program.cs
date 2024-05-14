@@ -34,4 +34,4 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Blater.Portal.Client._Imports).Assembly);
 
-app.Run();
+await app.RunAsync();

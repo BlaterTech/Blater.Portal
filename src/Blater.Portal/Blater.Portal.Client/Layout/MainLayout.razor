@@ -1,15 +1,69 @@
 ﻿@inherits LayoutComponentBase
 
-
-<MudThemeProvider />
+<MudThemeProvider IsDarkMode="true" Theme="@_theme"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+
+    <MudAppBar Elevation="1" Dense="true">
+        <NavMenu/>
     </MudAppBar>
+
     <MudMainContent>
-        @Body
+        <div class="pa-6">
+            @Body
+        </div>
     </MudMainContent>
+
 </MudLayout>
+
+@code
+{
+    private readonly MudTheme _theme = new()
+    {
+        PaletteDark =
+        {
+            // Dark theme
+            Primary = "#0B9DD0",
+            PrimaryLighten = "#4FBEE4",
+            PrimaryDarken = "#0C7FA7",
+            Secondary = "rgba(11, 157, 208, 0.16)",
+            SecondaryLighten = "#5BAEE3",
+            SecondaryDarken = "#004A7A",
+            Tertiary = "#004A7A",
+            TertiaryLighten = "#003152",
+            TertiaryDarken = "#BDF8F3",
+            DrawerBackground = "#003152",
+            DrawerText = "#FFFFFF",
+            DrawerIcon = "#0B9DD0",
+            AppbarBackground = "#004A7A",
+            AppbarText = "#FFFFFF",
+            Background = "#32333D",
+            BackgroundGrey = "#27272F",
+            Surface = "#373740",
+        },
+        Palette =
+        {
+            // Light theme
+            Primary = "#0B9DD0",
+            PrimaryLighten = "#4FBEE4",
+            PrimaryDarken = "#0C7FA7",
+            Secondary = "rgba(11, 157, 208, 0.16)",
+            SecondaryLighten = "#5BAEE3",
+            SecondaryDarken = "#004A7A",
+            Tertiary = "#004A7A",
+            TertiaryLighten = "#003152",
+            TertiaryDarken = "#BDF8F3",
+            DrawerBackground = "#003152",
+            DrawerText = "#FFFFFF",
+            DrawerIcon = "#0B9DD0",
+            AppbarBackground = "#004A7A",
+            AppbarText = "#FFFFFF",
+            Background = "#F5F5F5",
+            BackgroundGrey = "#b8b4b4", // Custom Grey
+            Surface = "#FFFFFF",
+            SecondaryContrastText = "#0B9DD0",
+        }
+    };
+}
