@@ -1,12 +1,45 @@
 ﻿@inherits LayoutComponentBase
 
-<MudRTLProvider>
-    <MudThemeProvider IsDarkMode="true" Theme="@_theme"/>
-    <MudPopoverProvider />
-    <MudSnackbarProvider/>
-    <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall"/>
-    @Body
-</MudRTLProvider>
+<MudThemeProvider IsDarkMode="true" Theme="@_theme"/>
+<MudPopoverProvider />
+<MudSnackbarProvider/>
+<MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall"/>
+
+<MudLayout Class="mudblazor-landingpage">
+    <MudAppBar Fixed="true" Class="landing-appbar" Elevation="0" ToolBarClass="">
+        <Appbar DrawerToggleCallback="ToggleDrawer" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen" Elevation="25" Variant="@DrawerVariant.Temporary" aria-label="Navigation Drawer">
+        <MudToolBar Dense="true" Gutters="false" Class="px-1 docs-gray-bg">
+            <MudIconButton Icon="@Icons.Material.Rounded.Close" Color="Color.Inherit" OnClick="@ToggleDrawer" />
+            <MudSpacer/>
+        </MudToolBar>
+        <MudNavMenu Color="Color.Primary" Margin="Margin.Dense" Rounded="true" Class="pa-2">
+            <MudNavLink Href="/getting-started/installation">Get Started</MudNavLink>
+            <MudNavLink Href="/docs/overview">Docs</MudNavLink>
+            <MudNavLink Href="/mud/introduction" Match="NavLinkMatch.All">Learn More</MudNavLink>
+            <MudNavGroup Title="Products" ExpandIcon="@Icons.Material.Filled.ExpandMore">
+                <MudNavLink Href="https://mudblazor.com/">MudBlazor</MudNavLink>
+                <MudNavLink Href="https://try.mudblazor.com/">TryMudBlazor</MudNavLink>
+                <MudNavLink Href="https://github.com/MudBlazor/ThemeManager">ThemeManager</MudNavLink>
+                <MudNavLink Href="https://github.com/MudBlazor/Templates">Templates</MudNavLink>
+                <MudListSubheader Class="mt-4 pl-8 pb-2"><b>Coming soon</b></MudListSubheader>
+                <MudNavLink Disabled="true">MudExtensions</MudNavLink>
+            </MudNavGroup>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large">
+            <div class="my-10">
+                @Body
+            </div>
+            <LandingSection SectionClass="lp-footer" BackgroundClass="sweet" Class="mud-text-secondary pb-8">
+                <Footer></Footer>
+            </LandingSection>
+        </MudContainer>
+    </MudMainContent>
+    
+</MudLayout>
 
 @code
 {
@@ -44,4 +77,10 @@
             SecondaryContrastText = "#0B9DD0",
         }
     };
+    
+    private bool _drawerOpen;
+    private void ToggleDrawer()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
 }
