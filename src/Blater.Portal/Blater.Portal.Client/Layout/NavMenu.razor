@@ -1,18 +1,47 @@
-﻿<div class="d-none d-md-flex align-center flex-grow-1">
-    <MudLink Href="#" Class="d-flex align-center" Color="Color.Dark" Underline="Underline.None">
-        <MudImage
-            Class="pa-1"
-            Src="https://media.discordapp.net/attachments/1169247099943137311/1240009497800605797/image.png?ex=66450056&is=6643aed6&hm=39568f3482cfbbe501a1298132c0f40aac8c3f5687bd3b6f6a9b836e313de22e&=&format=webp&quality=lossless&width=623&height=148"
-            Width="150"
-            Height="50">
-        </MudImage>
-    </MudLink>
-    <MudLink Href="#" Color="Color.Dark" Class="mx-2" Underline="Underline.None">Getting Started</MudLink>
-    <MudLink Href="#" Color="Color.Dark" Class="mx-2" Underline="Underline.None">Getting Started</MudLink>
-    <MudLink Href="#" Color="Color.Dark" Class="mx-2" Underline="Underline.None">Getting Started</MudLink>
-    <MudMenu Color="Color.Dark" Variant="Variant.Filled" Label="Teste" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" Class="pa-1">
-        <MudMenuItem>Teste 1</MudMenuItem>
-        <MudMenuItem>Teste 2</MudMenuItem>
-        <MudMenuItem>Teste 3</MudMenuItem>
-    </MudMenu>
+﻿<div class="d-flex gap-2 mx-1 px-3">
+    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="#">Test 1</MudButton>
+    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="#">Test 2</MudButton>
+    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="#">Test 3</MudButton>
+
+    <MudMenu
+        Color="Color.Inherit"
+        Variant="Variant.Text"
+        PopoverClass="docs-layout-menu-shadow"
+        ListClass="d-flex px-4 pb-2 docs-appbar-special-menu"
+        LockScroll="true"
+        Label="Products"
+        EndIcon="@Icons.Material.Filled.KeyboardArrowDown"
+        AnchorOrigin="Origin.BottomCenter"
+        TransformOrigin="Origin.TopCenter">
+        <MudList T="string">
+            <MudListSubheader>
+                Products
+            </MudListSubheader>
+            <MudListItem Href="https://mudblazor.com/">
+                <div class="d-flex">
+                    <MudText Color="Color.Primary">MudBlazor</MudText>
+                </div>
+                <MudText Typo="Typo.body2">Blazor component library</MudText>
+            </MudListItem>
+            <MudListItem Href="https://try.mudblazor.com/">
+                <div class="d-flex">
+                    <MudText Color="Color.Primary">Try</MudText><MudText>MudBlazor</MudText>
+                </div>
+                <MudText Typo="Typo.body2">Online code editor with Blazor</MudText>
+            </MudListItem>
+            <MudListItem Href="https://github.com/MudBlazor/ThemeManager">
+                <div class="d-flex">
+                    <MudText>Theme</MudText><MudText Color="Color.Secondary">Manager</MudText>
+                </div>
+                <MudText Typo="Typo.body2">Manage your theme live in your app</MudText>
+            </MudListItem>
+            <MudListItem Href="https://github.com/MudBlazor/Templates">
+                <div class="d-flex">
+                    <MudText>Templates</MudText>
+                </div>
+                <MudText Typo="Typo.body2">Blazor templates loaded with MudBlazor</MudText>
+            </MudListItem>
+        </MudList>
+    </MudMenu>    
 </div>
+

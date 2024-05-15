@@ -1,22 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider IsDarkMode="true" Theme="@_theme"/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
-
-<MudLayout>
-
-    <MudAppBar Elevation="1" Dense="true">
-        <NavMenu/>
-    </MudAppBar>
-
-    <MudMainContent>
-        <div class="pa-6">
-            @Body
-        </div>
-    </MudMainContent>
-
-</MudLayout>
+<MudRTLProvider>
+    <MudThemeProvider IsDarkMode="true" Theme="@_theme"/>
+    <MudPopoverProvider />
+    <MudSnackbarProvider/>
+    <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall"/>
+    @Body
+</MudRTLProvider>
 
 @code
 {
@@ -25,44 +15,32 @@
         PaletteDark =
         {
             // Dark theme
-            Primary = "#0B9DD0",
-            PrimaryLighten = "#4FBEE4",
-            PrimaryDarken = "#0C7FA7",
-            Secondary = "rgba(11, 157, 208, 0.16)",
-            SecondaryLighten = "#5BAEE3",
-            SecondaryDarken = "#004A7A",
-            Tertiary = "#004A7A",
-            TertiaryLighten = "#003152",
-            TertiaryDarken = "#BDF8F3",
-            DrawerBackground = "#003152",
+            Primary = "#ffd380",
+            PrimaryDarken = "#ffa600",
+            Secondary = "#ff8531",
+            SecondaryDarken = "#ff6361",
+            Tertiary = "#bc5090",
+            TertiaryDarken = "#8a508f",
             DrawerText = "#FFFFFF",
             DrawerIcon = "#0B9DD0",
-            AppbarBackground = "#004A7A",
+            AppbarBackground = "#0f0f0f",
             AppbarText = "#FFFFFF",
-            Background = "#32333D",
-            BackgroundGrey = "#27272F",
-            Surface = "#373740",
+            Background = "#0f0f0f",
         },
         Palette =
         {
             // Light theme
-            Primary = "#0B9DD0",
-            PrimaryLighten = "#4FBEE4",
-            PrimaryDarken = "#0C7FA7",
-            Secondary = "rgba(11, 157, 208, 0.16)",
-            SecondaryLighten = "#5BAEE3",
-            SecondaryDarken = "#004A7A",
-            Tertiary = "#004A7A",
-            TertiaryLighten = "#003152",
-            TertiaryDarken = "#BDF8F3",
-            DrawerBackground = "#003152",
+            Primary = "#ffd380",
+            PrimaryDarken = "#ffa600",
+            Secondary = "#ff8531",
+            SecondaryDarken = "#ff6361",
+            Tertiary = "#bc5090",
+            TertiaryDarken = "#8a508f",
             DrawerText = "#FFFFFF",
             DrawerIcon = "#0B9DD0",
-            AppbarBackground = "#004A7A",
+            AppbarBackground = "#0f0f0f",
             AppbarText = "#FFFFFF",
-            Background = "#F5F5F5",
-            BackgroundGrey = "#b8b4b4", // Custom Grey
-            Surface = "#FFFFFF",
+            Background = "#0f0f0f",
             SecondaryContrastText = "#0B9DD0",
         }
     };
