@@ -32,4 +32,12 @@ app.MapRazorComponents<App>()
    .AddInteractiveWebAssemblyRenderMode()
    .AddAdditionalAssemblies(typeof(Blater.Portal.Client._Imports).Assembly);
 
-await app.RunAsync();
+try
+{
+    await app.RunAsync();
+    await app.StopAsync();
+}
+finally
+{
+    await app.DisposeAsync();
+}
