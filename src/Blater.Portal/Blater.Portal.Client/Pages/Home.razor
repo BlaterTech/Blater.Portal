@@ -2,37 +2,120 @@
 
 @layout LandingLayout
 
-<MudCard Elevation="0" Style="background: transparent; height: 42rem" Class="d-flex align-center flex-column justify-center">
-    <div class="d-flex flex-column align-center gap-6">
-        <div class="d-flex flex-column align-center">
-            <MudText Typo="Typo.h1" Style="line-height: 1">Mussum Ipsum</MudText>
-            <MudText Typo="Typo.h2" Style="line-height: 1; color: var(--mud-palette-secondary-darken)">Nulla id gravida magna</MudText>
-        </div>
-        <p style="text-align: center; font-size: 1.25rem; line-height: 1.75rem;">
-            Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
-            <br/>
-            Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.
-            <br/>
-            Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
-        </p>
-    </div>
-    <div class="d-flex align-center gap-2 justify-center mt-6">
-        <MudButton Variant="Variant.Filled" Style="background: var(--mud-palette-secondary-darken)">Sign In</MudButton>
-        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Api">Documentation</MudButton>
-    </div>
-    <div class="d-flex flex-column align-center gap-2 justify-center mt-6">
-        <MudText Typo="Typo.caption">Praesent vel viverra nisi.</MudText>
-        <div class="d-flex gap-2">
-            <MudIcon Icon="@Icons.Material.Filled.Favorite" Title="Favorite" />
-            <MudIcon Icon="@Icons.Material.Filled.Api" Title="API" />
-            <MudIcon Icon="@Icons.Material.Filled.AddCircle" Title="Add" />
-            <MudIcon Icon="@Icons.Custom.Brands.GitHub" Title="GitHub" />
-            <MudIcon Icon="@Icons.Custom.Brands.Google" Title="Google" />
-            <MudIcon Icon="@Icons.Custom.Brands.Reddit" Title="Reddit" />
-        </div>
-    </div>
-</MudCard>
-
-<MudCard Elevation="0" Style="background: transparent; height: 42rem" Class="d-flex align-center flex-column justify-center">
-    
-</MudCard>
+<MudGrid Spacing="2">
+    <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@_firstGridStyle">
+        <MudBreakpointProvider OnBreakpointChanged="@OnBreakpointCallback">
+            <MudText Typo="@_title" Style="line-height: 1">Mussum Ipsum</MudText>
+            <MudText Typo="@_subTitle" Style="line-height: 1;color: var(--mud-palette-secondary-darken)">Nulla id gravida magna</MudText>
+            <div class="d-flex align-center justify-center mt-6">
+                <p style="text-align: center; font-size: 1.25rem; line-height: 1.75rem;">
+                    Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
+                    <br/>
+                    Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.
+                    <br/>
+                    Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.
+                </p>
+            </div>
+            <div class="d-flex align-center gap-2 justify-center mt-6">
+                <MudButton Variant="Variant.Filled" Style="background: var(--mud-palette-secondary-darken)">Sign In</MudButton>
+                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Api">Documentation</MudButton>
+            </div>
+            <div class="d-flex flex-column align-center gap-2 justify-center my-6">
+                <MudText Typo="Typo.caption">Praesent vel viverra nisi.</MudText>
+                <div class="d-flex align-center gap-2 justify-center">
+                    <MudIcon Icon="@Icons.Material.Filled.Favorite" Title="Favorite"/>
+                    <MudIcon Icon="@Icons.Material.Filled.Api" Title="API"/>
+                    <MudIcon Icon="@Icons.Material.Filled.AddCircle" Title="Add"/>
+                    <MudIcon Icon="@Icons.Custom.Brands.GitHub" Title="GitHub"/>
+                    <MudIcon Icon="@Icons.Custom.Brands.Google" Title="Google"/>
+                    <MudIcon Icon="@Icons.Custom.Brands.Reddit" Title="Reddit"/>
+                </div>
+            </div>
+        </MudBreakpointProvider>
+    </MudItem>
+    <MudItem xs="12">
+        <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2">
+            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Funcionalidade 1
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Funcionalidade 2
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Funcionalidade 3
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Funcionalidade 4
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Funcionalidade 5
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Funcionalidade 6
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="12">
+        <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2">
+            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Textinho bacana
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Exemplos de chamadas em linguagens
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="12">
+        <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2">
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Explicações básicas da funcionalidade X
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Explicações básicas da funcionalidade X
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Explicações básicas da funcionalidade X
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                    Explicações básicas da funcionalidade X
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="12">
+        <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2">
+            <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 1</MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 2</MudPaper>
+            </MudItem>
+            <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 3</MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>
