@@ -6,7 +6,7 @@
     <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@(_dictGridStyle.GetValueOrDefault(1))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(1, i))">
             <MudText Typo="@_title" Style="line-height: 1">Mussum Ipsum</MudText>
-            <MudText Typo="@_subTitle" Style="line-height: 1;color: var(--mud-palette-secondary-darken)">Nulla id gravida magna</MudText>
+            <MudText Typo="@_subTitle" Style="line-height: 1;" Color="Color.Primary">Nulla id gravida magna</MudText>
             <div class="d-flex align-center justify-center mt-6">
                 <p style="text-align: center; font-size: 1.25rem; line-height: 1.75rem;">
                     Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
@@ -17,10 +17,10 @@
                 </p>
             </div>
             <div class="d-flex align-center gap-2 justify-center mt-6">
-                <MudButton Variant="Variant.Filled" Style="background: var(--mud-palette-secondary-darken)">Sign In</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">Sign In</MudButton>
                 <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Api">Documentation</MudButton>
             </div>
-            <div class="d-flex flex-column align-center gap-2 justify-center my-6">
+            @*<div class="d-flex flex-column align-center gap-2 justify-center my-6">
                 <MudText Typo="Typo.caption">Praesent vel viverra nisi.</MudText>
                 <div class="d-flex align-center gap-2 justify-center">
                     <MudIcon Icon="@Icons.Material.Filled.Favorite" Title="Favorite"/>
@@ -30,7 +30,7 @@
                     <MudIcon Icon="@Icons.Custom.Brands.Google" Title="Google"/>
                     <MudIcon Icon="@Icons.Custom.Brands.Reddit" Title="Reddit"/>
                 </div>
-            </div>
+            </div>*@
         </MudBreakpointProvider>
     </MudItem>
     <MudItem xs="12" Style="@(_dictGridStyle.GetValueOrDefault(2))">

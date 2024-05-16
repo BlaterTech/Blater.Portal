@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <MudRTLProvider>
-    <MudThemeProvider IsDarkMode="true" Theme="@_theme"/>
+    <MudThemeProvider IsDarkMode="true" Theme="@Theme"/>
     <MudSnackbarProvider/>
     <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall"/>
     @Body
@@ -9,38 +9,34 @@
 
 @code
 {
-    private readonly MudTheme _theme = new()
+    private static MudTheme Theme => new()
     {
         PaletteDark =
         {
-            // Dark theme
-            Primary = "#ffd380",
+            Primary = "#ff7414",
             PrimaryDarken = "#ffa600",
-            Secondary = "#ff8531",
-            SecondaryDarken = "#ff6361",
-            Tertiary = "#bc5090",
-            TertiaryDarken = "#8a508f",
+            PrimaryLighten = "#ffd380 ",
+            Secondary = "#bc5090",
+            SecondaryDarken = "#8a508f",
+            SecondaryLighten = "#ff6361",
+            Tertiary = "#003f5c",
+            TertiaryDarken = "#00202e",
+            TertiaryLighten = "#2c4875",
             DrawerText = "#FFFFFF",
             DrawerIcon = "#0B9DD0",
             AppbarBackground = "#0f0f0f",
             AppbarText = "#FFFFFF",
             Background = "#0f0f0f",
+            Surface = "#1c1c1c",
+            PrimaryContrastText = "#1c1c1c"
         },
-        Palette =
+        Typography = new Typography
         {
-            // Light theme
-            Primary = "#ffd380",
-            PrimaryDarken = "#ffa600",
-            Secondary = "#ff8531",
-            SecondaryDarken = "#ff6361",
-            Tertiary = "#bc5090",
-            TertiaryDarken = "#8a508f",
-            DrawerText = "#FFFFFF",
-            DrawerIcon = "#0B9DD0",
-            AppbarBackground = "#0f0f0f",
-            AppbarText = "#FFFFFF",
-            Background = "#0f0f0f",
-            SecondaryContrastText = "#0B9DD0",
+            Button = new Button
+            {
+                FontWeight = 700,
+                FontSize = "0.85rem"
+            }
         }
     };
 }
