@@ -4,10 +4,12 @@
 
 <MudLayout Class="mudblazor-landingpage">
     <MudAppBar Fixed="true" Class="landing-appbar" Elevation="0" ToolBarClass="">
-        <Appbar DrawerToggleCallback="ToggleDrawer" />
+        <MudContainer MaxWidth="MaxWidth.Large">
+            <LandingAppbar DrawerToggleCallback="ToggleDrawer"/>
+        </MudContainer>
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="25" Variant="@DrawerVariant.Temporary" aria-label="Navigation Drawer">
-        <MudToolBar Dense="true" Gutters="false" Class="px-1 docs-gray-bg">
+        <MudToolBar Dense="true" DisableGutters="false" Class="px-1 docs-gray-bg">
             <MudIconButton Icon="@Icons.Material.Rounded.Close" Color="Color.Inherit" OnClick="@ToggleDrawer" />
             <MudSpacer/>
         </MudToolBar>
@@ -27,11 +29,9 @@
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large">
-            <div class="my-10">
-                @Body
-            </div>
+            @Body
             <LandingSection SectionClass="lp-footer" BackgroundClass="sweet" Class="mud-text-secondary pb-8">
-                <Footer></Footer>
+                <LandingFooter></LandingFooter>
             </LandingSection>
         </MudContainer>
     </MudMainContent>
