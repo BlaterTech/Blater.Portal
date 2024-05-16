@@ -3,8 +3,8 @@
 @layout LandingLayout
 
 <MudGrid Spacing="2">
-    <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@_firstGridStyle">
-        <MudBreakpointProvider OnBreakpointChanged="@OnBreakpointCallback">
+    <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@(_dictGridStyle.GetValueOrDefault(1))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(1, i))">
             <MudText Typo="@_title" Style="line-height: 1">Mussum Ipsum</MudText>
             <MudText Typo="@_subTitle" Style="line-height: 1;color: var(--mud-palette-secondary-darken)">Nulla id gravida magna</MudText>
             <div class="d-flex align-center justify-center mt-6">
@@ -33,89 +33,97 @@
             </div>
         </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12">
-        <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2">
-            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Funcionalidade 1
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Funcionalidade 2
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Funcionalidade 3
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Funcionalidade 4
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Funcionalidade 5
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Funcionalidade 6
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
+    <MudItem xs="12" Style="@(_dictGridStyle.GetValueOrDefault(2))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(2, i))">
+            <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
+                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Funcionalidade 1
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Funcionalidade 2
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Funcionalidade 3
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Funcionalidade 4
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Funcionalidade 5
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Funcionalidade 6
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12">
-        <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2">
-            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Textinho bacana
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Exemplos de chamadas em linguagens
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
+    <MudItem xs="12" Style="@(_dictGridStyle.GetValueOrDefault(3))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(3, i))">
+            <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
+                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Textinho bacana
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Exemplos de chamadas em linguagens
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12">
-        <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2">
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Explicações básicas da funcionalidade X
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Explicações básicas da funcionalidade X
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Explicações básicas da funcionalidade X
-                </MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                    Explicações básicas da funcionalidade X
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
+    <MudItem xs="12" Style="@(_dictGridStyle.GetValueOrDefault(4))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(4, i))">
+            <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Explicações básicas da funcionalidade X
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Explicações básicas da funcionalidade X
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Explicações básicas da funcionalidade X
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
+                        Explicações básicas da funcionalidade X
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12">
-        <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2">
-            <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 1</MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 2</MudPaper>
-            </MudItem>
-            <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
-                <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 3</MudPaper>
-            </MudItem>
-        </MudGrid>
+    <MudItem xs="12" Class="mb-6" Style="@(_dictGridStyle.GetValueOrDefault(5))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(5, i))">
+            <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2 mud-height-full">
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 1</MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 2</MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 3</MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudBreakpointProvider>
     </MudItem>
 </MudGrid>
