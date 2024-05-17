@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.4"/>
     </ItemGroup>
 
@@ -16,6 +15,10 @@
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj" />
     </ItemGroup>
 
 </Project>
