@@ -1,7 +1,5 @@
 ﻿@page "/"
 
-@layout LandingLayout
-
 <MudGrid Spacing="2">
     <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@(_dictGridStyle.GetValueOrDefault(1))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => OnBreakpointCallback(1, i))">

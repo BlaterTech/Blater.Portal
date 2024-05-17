@@ -1,4 +1,4 @@
-﻿namespace Blater.Portal;
+﻿namespace Blater.Portal.Client;
 
 public class BlaterIcons
 {

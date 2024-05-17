@@ -1,0 +1,36 @@
+﻿@page "/sign-up"
+
+@layout LoginLayout
+
+<BlaterLogin Title="Create your account" Height="790px">
+    <MudItem xs="6">
+        <MudTextField Variant="Variant.Filled" T="string" Label="First name"/>
+    </MudItem>
+    <MudItem xs="6">
+        <MudTextField Variant="Variant.Filled" T="string" Label="Last name"/>
+    </MudItem>
+    <MudItem xs="12">
+        <MudTextField Variant="Variant.Filled" T="string" Label="Username"/>
+    </MudItem>
+    <MudItem xs="12">
+        <MudTextField Variant="Variant.Filled" T="string" Label="Email address"/>
+    </MudItem>
+    <MudItem xs="12">
+        <BlaterPasswordInput/>
+    </MudItem>
+    <MudItem xs="12">
+        <MudButton Class="mud-width-full" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
+            Continue
+        </MudButton>
+    </MudItem>
+    <MudItem xs="12" Class="d-flex align-center">
+        <MudText Typo="@Typo.subtitle1">
+            Have an account? <MudLink Href="/login">Sign in</MudLink>
+        </MudText>
+    </MudItem>
+</BlaterLogin>
+
+@code {
+
+    
+}
