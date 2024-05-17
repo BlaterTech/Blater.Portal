@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blater.Portal.Client.Services;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace Blater.Portal.Client.Pages;
@@ -6,16 +7,11 @@ namespace Blater.Portal.Client.Pages;
 public partial class Home
 {
     [Inject]
-    protected IBrowserViewportService BrowserViewportService { get; set; } = null!;
-    
-    private Typo _title = Typo.h1;
-    private Typo _subTitle = Typo.h2;
-    private Dictionary<int, Dictionary<Breakpoint, string>> _dictGridBreakpoint = new();
-    private readonly Dictionary<int, string> _dictGridStyle = new();
-    
+    protected BrowserViewportObserverService BrowserViewportObserverService { get; set; } = null!;
+
     private void InitializedDictGridBreakpoint()
     {
-        _dictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
+        BrowserViewportObserverService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
         {
             {
                 1, new Dictionary<Breakpoint, string>
@@ -75,67 +71,17 @@ public partial class Home
         };
     }
     
-    private void UpdateGrid(int key, Breakpoint obj)
-    {
-        if (!_dictGridBreakpoint.TryGetValue(key, out var value))
-        {
-            return;
-        }
-        
-        if (!value.TryGetValue(obj, out var gridStyleValue))
-        {
-            return;
-        }
-        
-        if (!_dictGridStyle.TryAdd(key, gridStyleValue))
-        {
-            _dictGridStyle[key] = gridStyleValue;
-        }
-    }
-    
     protected override async Task OnInitializedAsync()
     {
         InitializedDictGridBreakpoint();
         
-        var currentBreakpoint = await BrowserViewportService.GetCurrentBreakpointAsync().ConfigureAwait(false);
+        var currentBreakpoint = await BrowserViewportObserverService.GetCurrentBreakpoint().ConfigureAwait(false);
         for (var i = 0; i <= 5; i++)
         {
-            UpdateGrid(i, currentBreakpoint);
+            BrowserViewportObserverService.UpdateGrid(i, currentBreakpoint);
         }
         
         await InvokeAsync(StateHasChanged);
-    }
-    
-    private void UpdateFonts(Typo title, Typo subTitle)
-    {
-        _title = title;
-        _subTitle = subTitle;
-    }
-    
-    private void OnBreakpointCallback(int value, Breakpoint obj)
-    {
-        switch (obj)
-        {
-            case Breakpoint.Xs:
-                UpdateFonts(Typo.h4, Typo.h5);
-                UpdateGrid(value, obj);
-                break;
-            case Breakpoint.Sm:
-            case Breakpoint.Md:
-                UpdateFonts(Typo.h3, Typo.h4);
-                UpdateGrid(value, obj);
-                break;
-            case Breakpoint.Lg:
-            case Breakpoint.Xl:
-            case Breakpoint.Xxl:
-                UpdateFonts(Typo.h2, Typo.h3);
-                UpdateGrid(value, obj);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(obj), obj, null);
-        }
-        
-        StateHasChanged();
     }
     
 }

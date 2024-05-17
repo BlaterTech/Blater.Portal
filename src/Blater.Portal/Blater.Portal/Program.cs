@@ -1,19 +1,17 @@
 using Blater.Portal.Apps;
-using Blater.Portal.Services;
+using Blater.Portal.Client.Services;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddMudServices();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
        .AddInteractiveServerComponents()
        .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddMudServices();
 
 builder.Services.AddScoped<BrowserViewportObserverService>();
-
 
 var app = builder.Build();
 

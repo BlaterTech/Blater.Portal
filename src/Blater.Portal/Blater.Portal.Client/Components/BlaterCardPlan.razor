@@ -1,0 +1,87 @@
+﻿<MudPaper Class="pa-8 mud-width-full mud-height-full">
+    <MudGrid Spacing="2">
+        <MudItem xs="12">
+            <MudText Class="mb-4" Typo="Typo.h5">@PlanTitle</MudText>
+        </MudItem>
+        <MudItem xs="12" Class="d-flex flex-column gap-2">
+            <div class="d-flex justify-start align-center">
+                <MudText Typo="Typo.h4">From</MudText>
+            </div>
+            <div class="d-flex align-end gap-2">
+                @if (CustomPlan)
+                {
+                    <MudText Typo="Typo.h3">Custom</MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h3">$@PlanValue</MudText>
+                    <MudText Typo="Typo.h4">/month</MudText>
+                }
+            </div>
+        </MudItem>
+        <MudItem xs="12">
+            <MudButton
+                Size="Size.Large"
+                Class="mud-width-full rounded-xl pa-3 my-2"
+                Variant="Variant.Filled">
+                @PlanButtonTitle
+            </MudButton>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText
+                Typo="Typo.subtitle1"
+                Class="mb-2">
+                @PlanDescription
+            </MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <MudDivider/>
+        </MudItem>
+        <MudItem xs="12" Class="d-flex flex-column gap-3">
+            @foreach (var (contains, description) in PlanInfo)
+            {
+                <div class="d-flex align-center gap-2">
+                    <MudIcon Icon="@GetIcon(contains)" Style="@GetColor(contains)"/>
+                    <MudText Style="@GetColor(contains)">@description</MudText>
+                </div>
+            }
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+@code {
+    
+    [Parameter]
+    [EditorRequired]
+    public string PlanTitle { get; set; } = null!;
+    
+    [Parameter]
+    [EditorRequired]
+    public decimal PlanValue { get; set; }
+    
+    [Parameter]
+    public bool CustomPlan { get; set; } = false;
+    
+    [Parameter]
+    [EditorRequired]
+    public string PlanButtonTitle { get; set; } = null!;
+    
+    [Parameter]
+    [EditorRequired]
+    public string PlanDescription { get; set; } = null!;
+    
+    [Parameter]
+    [EditorRequired]
+    public List<(bool contains, string description)> PlanInfo { get; set; } = null!;
+    
+    private static string GetIcon(bool value)
+    {
+        return value ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel;
+    }
+    
+    private static string GetColor(bool value)
+    {
+        return value ? "color: var(--mud-palette-white)" : "color: var(--mud-palette-dark-lighten)";
+    }
+    
+}

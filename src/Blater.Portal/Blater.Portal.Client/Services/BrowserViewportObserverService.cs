@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace Blater.Portal.Services;
+namespace Blater.Portal.Client.Services;
 
 public class BrowserViewportObserverService(
     IBrowserViewportService browserViewportService)
@@ -16,7 +16,7 @@ public class BrowserViewportObserverService(
         return await browserViewportService.GetCurrentBreakpointAsync().ConfigureAwait(false);
     }
     
-    private void UpdateGrid(int key, Breakpoint obj)
+    public void UpdateGrid(int key, Breakpoint obj)
     {
         if (!DictGridBreakpoint.TryGetValue(key, out var value))
         {
@@ -40,7 +40,7 @@ public class BrowserViewportObserverService(
         SubTitle = subTitle;
     }
     
-    private void OnBreakpointCallback(int value, Breakpoint obj)
+    public void OnBreakpointCallback(int value, Breakpoint obj)
     {
         switch (obj)
         {
