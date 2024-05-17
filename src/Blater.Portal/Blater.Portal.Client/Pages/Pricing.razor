@@ -1,6 +1,6 @@
 ﻿@page "/pricing"
 
-@*<style>
+<style>
     .mud-table-cell-custom-group {
         font-weight: 500;
     }
@@ -10,38 +10,6 @@
         text-align: right;
     }
 </style>
-
-<MudTable Hover="true" Breakpoint="Breakpoint.Sm" Height="500px" FixedHeader="true"
-          GroupHeaderStyle="background-color:var(--mud-palette-background-grey)"
-          Items="@_elements"
-          GroupBy="@_groupDefinition"
-          GroupFooterClass="mb-4"
-          Dense="true"
-          @ref="_tableRef">
-    <ColGroup>
-        <col style="width: 60px;"/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-        <col/>
-    </ColGroup>
-    <HeaderContent>
-        <MudTh>Free Tier</MudTh>
-        <MudTh>Launch</MudTh>
-        <MudTh>Scale</MudTh>
-        <MudTh>Enterprise</MudTh>
-    </HeaderContent>
-    <GroupHeaderTemplate>
-        <MudTh Class="mud-table-cell-custom-group" colspan="5">@($"{context.GroupName}: {context.Key}") </MudTh>
-    </GroupHeaderTemplate>
-    <RowTemplate>
-        <MudTd DataLabel="Free Tier">@context.A</MudTd>
-        <MudTd DataLabel="Launch">@context.B</MudTd>
-        <MudTd DataLabel="Scale">@context.C</MudTd>
-        <MudTd DataLabel="Enterprise">@context.D</MudTd>
-    </RowTemplate>
-</MudTable>*@
 
 <MudGrid Spacing="1" Class="mt-6">
     <MudItem xs="12" Style="height: 25vh">
@@ -59,12 +27,15 @@
                 PlanTitle="@item.PlanTitle"/>
         </MudItem>
     }
-    <MudItem xs="12" Class="mb-6" Style="height: 25vh">
-        <MudPaper Class="pa-16 mud-width-full mud-height-full">Go to plan table details</MudPaper>
+    <MudItem xs="12" Class="mb-6" Style="height: 85vh">
+        <MudPaper Class="pa-16 mud-width-full mud-height-full">
+        </MudPaper>
     </MudItem>
 </MudGrid>
 
 @code {
+    
+    #region Card
     
     private class Plan
     {
@@ -134,7 +105,9 @@
         });
     }
     
-    /*private class Test
+    #endregion
+    
+    private class Test
     {
         public int A { get; set; }
         public int B { get; set; }
@@ -151,7 +124,8 @@
     {
         GroupName = "INCLUDED",
         Indentation = false,
-        Expandable = false,
+        Expandable = true,
+        IsInitiallyExpanded = false,
         Selector = (e) => e.GroupName,
         InnerGroup = new TableGroupDefinition<Test>
         {
@@ -179,6 +153,6 @@
         }
     
         _elements = asd;
-    }*/
+    }
     
 }
