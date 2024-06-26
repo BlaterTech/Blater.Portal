@@ -107,52 +107,6 @@
     
     #endregion
     
-    private class Test
-    {
-        public int A { get; set; }
-        public int B { get; set; }
-        public int C { get; set; }
-        public int D { get; set; }
-        public string GroupName { get; set; } = null!;
-    }
     
-    private IEnumerable<Test> _elements = new List<Test>();
-    
-    private MudTable<Test> _tableRef;
-    
-    private TableGroupDefinition<Test> _groupDefinition = new()
-    {
-        GroupName = "INCLUDED",
-        Indentation = false,
-        Expandable = true,
-        IsInitiallyExpanded = false,
-        Selector = (e) => e.GroupName,
-        InnerGroup = new TableGroupDefinition<Test>
-        {
-            GroupName = "ASDASDASDAS",
-            Selector = x => $"ASDASDASDAS_{x.GroupName}",
-            Expandable = true,
-            Indentation = true,
-            IsInitiallyExpanded = false
-        }
-    };
-    
-    protected override void OnInitialized()
-    {
-        var asd = new List<Test>();
-        for (var i = 0; i < 101; i++)
-        {
-            asd.Add(new Test
-            {
-                A = i,
-                B = i,
-                C = i,
-                D = i,
-                GroupName = $"GroupName_{i}"
-            });
-        }
-    
-        _elements = asd;
-    }
     
 }
