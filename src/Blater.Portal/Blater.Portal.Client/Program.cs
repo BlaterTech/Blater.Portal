@@ -27,4 +27,11 @@ builder.Services.AddBlaterServices();
 
 var app = builder.Build();
 
-await app.RunAsync();
+try
+{
+    await app.RunAsync();
+}
+finally
+{
+    await app.DisposeAsync();
+}

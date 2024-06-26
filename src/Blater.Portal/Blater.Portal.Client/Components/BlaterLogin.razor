@@ -47,6 +47,14 @@
             <MudItem xs="12">
                 <BlaterPasswordInput ValueChanged="@(s => Password = s)"/>
             </MudItem>
+            @if (!string.IsNullOrWhiteSpace(Message))
+            {
+                <MudItem xs="12" Class="d-flex align-center">
+                    <MudText Typo="@Typo.subtitle1" Class="mt-6">
+                        @Message
+                    </MudText>
+                </MudItem>
+            }
             <MudItem xs="12">
                 <MudButton Class="mt-4 mud-width-full" OnClick="@Submit" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
                     Continue
@@ -72,13 +80,12 @@
 
 @code {
     #pragma warning disable CA2252
+
     [Inject]
     protected BrowserViewportObserverService BrowserViewportObserverService { get; set; } = null!;
 
     [Inject]
     protected IBlaterAuthLoginStoreEndpoints LoginStore { get; set; } = null!;
-    
-    
 
     [Inject]
     protected AuthenticationService AuthenticationService { get; set; } = null!;
@@ -89,6 +96,7 @@
     private string Email { get; set; } = null!;
     private string Name { get; set; } = null!;
     private string Password { get; set; } = null!;
+    private string? Message { get; set; }
 
     private void InitializedDictGridBreakpoint()
     {
@@ -114,8 +122,6 @@
 
         var currentBreakpoint = await BrowserViewportObserverService.GetCurrentBreakpoint().ConfigureAwait(false);
         BrowserViewportObserverService.UpdateGrid(1, currentBreakpoint);
-
-        await InvokeAsync(StateHasChanged);
     }
 
     private async Task Submit()
@@ -140,7 +146,10 @@
         {
             jwt = await LoginLocal();
             await AuthenticationService.Login(jwt);
+            return;
         }
+
+        Message = "Error in Register";
     }
 
     private async Task<string> LoginLocal()
@@ -153,7 +162,11 @@
 
         var loginLocal = await LoginStore.LoginLocal(authRequest);
 
-        if (!loginLocal.Success) return string.Empty;
+        if (loginLocal.Failure)
+        {
+            Message = "Error in Login Local";
+            return string.Empty;
+        }
 
         Console.WriteLine(loginLocal.Value);
         return loginLocal.Value!;

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Blater.Portal.Client.Pages;
+namespace Blater.Portal.Client.Pages.LandingPage;
 
 public partial class Home
 {
