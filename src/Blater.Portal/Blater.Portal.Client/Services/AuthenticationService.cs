@@ -5,6 +5,7 @@ using Blater.Extensions;
 using Blater.Interfaces;
 using Blater.JsonUtilities;
 using Blater.Models.User;
+using Blazored.LocalStorage;
 using Microsoft.JSInterop;
 
 namespace Blater.Portal.Client.Services;
@@ -14,8 +15,7 @@ public class AuthenticationService(
     ILocalStorageService localStorageService,
     IBlaterDatabaseStoreT<BlaterUser> store,
     BlaterUserToken blaterUserToken,
-    NavigationService navigationService,
-    ILogger<AuthenticationService> logger)
+    NavigationService navigationService)
 {
     private const string LocalStorageValueKey = "Blater-UserToken";
     
@@ -31,14 +31,14 @@ public class AuthenticationService(
         var userTokenClaim = jwtTokenDecoded.Claims.FirstOrDefault(x => x.Type == "UserId");
         if (userTokenClaim == null)
         {
-            throw new Exception("Invalid jwt token, no UserToken claim found");
+            throw new Exception("Invalid jwt token, no UserId claim found");
         }
         
         var userToken = userTokenClaim.Value.FromJson<BlaterUserToken>();
         
         if (userToken == null)
         {
-            throw new Exception("Invalid jwt token, UserToken claim is not a valid UserToken");
+            throw new Exception("Invalid jwt token, BlaterUserToken claim is not a valid BlaterUserToken");
         }
 
         var findUser = await store.FindOne(x => x.Id == userToken.UserId);
@@ -56,7 +56,7 @@ public class AuthenticationService(
         
         if (saveStorage)
         {
-            await localStorageService.SetItemAsync(LocalStorageValueKey, jwtToken);
+            await localStorageService.SetItemAsStringAsync(LocalStorageValueKey, jwtToken);
         }
         
         navigationService.Navigate($"home");
@@ -64,7 +64,7 @@ public class AuthenticationService(
 
     public async Task Logout()
     {
-        var item= await localStorageService.GetItemAsync(LocalStorageValueKey);
+        var item= await localStorageService.GetItemAsStringAsync(LocalStorageValueKey);
         
         if (string.IsNullOrWhiteSpace(item))
         {
@@ -76,7 +76,7 @@ public class AuthenticationService(
     
     public async Task TryAutoLogin()
     {
-        var jwtToken = await localStorageService.GetItemAsync(LocalStorageValueKey);
+        var jwtToken = await localStorageService.GetItemAsStringAsync(LocalStorageValueKey);
         
         if (string.IsNullOrWhiteSpace(jwtToken))
         {
@@ -87,10 +87,8 @@ public class AuthenticationService(
         await Login(jwtToken);
     }
 
-    public async Task LoginBase64(string jwtTokenBase64, bool saveStorage = true)
+    public async Task LoginJwt(string jwtToken, bool saveStorage = true)
     {
-        var jwtToken = await jwtTokenBase64.FromBase64ToString();
-
         await Login(jwtToken, saveStorage);
         
         navigationService.Navigate("HomePage");

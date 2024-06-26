@@ -39,7 +39,7 @@
             {
                 <MudItem xs="12">
                     <MudTextField Variant="Variant.Filled" T="string" Required="true" RequiredError="Name is required" Label="Name" @bind-Value="@Name"/>
-                </MudItem> 
+                </MudItem>
             }
             <MudItem xs="12">
                 <MudTextField Variant="Variant.Filled" T="string" Required="true" RequiredError="Email is required" Label="Email" @bind-Value="@Email"/>
@@ -48,7 +48,7 @@
                 <BlaterPasswordInput ValueChanged="@(s => Password = s)"/>
             </MudItem>
             <MudItem xs="12">
-                <MudButton Class="mt-4 mud-width-full" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
+                <MudButton Class="mt-4 mud-width-full" OnClick="@Submit" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
                     Continue
                 </MudButton>
             </MudItem>
@@ -56,11 +56,13 @@
                 <MudText Typo="@Typo.subtitle1" Class="mt-6">
                     @if (IsLogin)
                     {
-                        @("No account?") <MudLink Href="/sign-up">Sign up</MudLink>
+                        @("No account?")
+                        <MudLink Href="/sign-up">Sign up</MudLink>
                     }
                     else
                     {
-                        @("Have an account?") <MudLink Href="/login">Sign in</MudLink> 
+                        @("Have an account?")
+                        <MudLink Href="/login">Sign in</MudLink>
                     }
                 </MudText>
             </MudItem>
@@ -69,12 +71,17 @@
 </MudCard>
 
 @code {
-    
+    #pragma warning disable CA2252
     [Inject]
     protected BrowserViewportObserverService BrowserViewportObserverService { get; set; } = null!;
-    
+
     [Inject]
     protected IBlaterAuthLoginStoreEndpoints LoginStore { get; set; } = null!;
+    
+    
+
+    [Inject]
+    protected AuthenticationService AuthenticationService { get; set; } = null!;
 
     [Parameter]
     public bool IsLogin { get; set; }
@@ -82,7 +89,7 @@
     private string Email { get; set; } = null!;
     private string Name { get; set; } = null!;
     private string Password { get; set; } = null!;
-    
+
     private void InitializedDictGridBreakpoint()
     {
         BrowserViewportObserverService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
@@ -100,14 +107,14 @@
             }
         };
     }
-    
+
     protected override async Task OnInitializedAsync()
     {
         InitializedDictGridBreakpoint();
-        
+
         var currentBreakpoint = await BrowserViewportObserverService.GetCurrentBreakpoint().ConfigureAwait(false);
         BrowserViewportObserverService.UpdateGrid(1, currentBreakpoint);
-        
+
         await InvokeAsync(StateHasChanged);
     }
 
@@ -117,6 +124,7 @@
         if (IsLogin)
         {
             jwt = await LoginLocal();
+            await AuthenticationService.Login(jwt);
             return;
         }
 
@@ -126,10 +134,12 @@
             Name = Name,
             Password = Password
         };
+
         var register = await LoginStore.Register(registerBlaterUserRequest);
         if (register.Success)
         {
             jwt = await LoginLocal();
+            await AuthenticationService.Login(jwt);
         }
     }
 
@@ -140,11 +150,13 @@
             Email = Email,
             Password = Password
         };
+
         var loginLocal = await LoginStore.LoginLocal(authRequest);
-        
+
         if (!loginLocal.Success) return string.Empty;
-        
+
         Console.WriteLine(loginLocal.Value);
         return loginLocal.Value!;
     }
+    #pragma warning restore CA2252
 }
