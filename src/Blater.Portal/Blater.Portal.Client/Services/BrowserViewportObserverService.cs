@@ -2,8 +2,7 @@
 
 namespace Blater.Portal.Client.Services;
 
-public class BrowserViewportObserverService(
-    IBrowserViewportService browserViewportService)
+public class BrowserViewportObserverService(IBrowserViewportService browserViewportService)
 {
     public Dictionary<int, Dictionary<Breakpoint, string>> DictGridBreakpoint { get; set; } = new();
     public Dictionary<int, string> DictGridStyle { get; set; } = new();
@@ -14,6 +13,11 @@ public class BrowserViewportObserverService(
     public async Task<Breakpoint> GetCurrentBreakpoint()
     {
         return await browserViewportService.GetCurrentBreakpointAsync().ConfigureAwait(false);
+    }
+    
+    public string? GetStyleValue(int key)
+    {
+        return DictGridStyle.GetValueOrDefault(key);
     }
     
     public void UpdateGrid(int key, Breakpoint obj)

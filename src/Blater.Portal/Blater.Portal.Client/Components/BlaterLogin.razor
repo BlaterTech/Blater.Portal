@@ -1,13 +1,18 @@
-﻿<MudCard Elevation="1" Class="d-flex align-center justify-center rounded-xl">
-    <MudBreakpointProvider OnBreakpointChanged="Callback">
+﻿@using Blater.SDK.Contracts.Authentication.Request
+@using Blater.SDK.Contracts.Common.Request
+@using Blater.SDK.Interfaces
+<MudCard Elevation="1" Class="d-flex align-center justify-center rounded-xl" Style="@(BrowserViewportObserverService.GetStyleValue(1))">
+    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(1, i))">
         <MudGrid Justify="Justify.Center" Spacing="0" Class="mud-width-full mud-height-full pa-4">
             <MudItem xs="12">
                 <BlaterLogo/>
             </MudItem>
             <MudItem xs="12" Class="d-flex flex-column gap-1">
-                <MudText Typo="@Typo.h4" Color="Color.Primary" Class="mb-6 mt-4">@Title</MudText>
+                <MudText Typo="@Typo.h4" Color="Color.Primary" Class="mb-6 mt-4">
+                    @(IsLogin ? "Login" : "Create your account")
+                </MudText>
             </MudItem>
-            <MudItem xs="12" Class="d-flex flex-column align-start gap-2">
+            <MudItem xs="12" Class="d-flex flex-row align-start gap-2">
                 <MudButton
                     StartIcon="@Icons.Custom.Brands.GitHub"
                     IconClass="px-2"
@@ -30,50 +35,116 @@
                 <MudText Typo="@Typo.subtitle1" Class="pa-4"> or </MudText>
                 <MudDivider Style="width: 30%"/>
             </MudItem>
+            @if (!IsLogin)
+            {
+                <MudItem xs="12">
+                    <MudTextField Variant="Variant.Filled" T="string" Required="true" RequiredError="Name is required" Label="Name" @bind-Value="@Name"/>
+                </MudItem> 
+            }
             <MudItem xs="12">
-                <MudTextField Variant="Variant.Filled" T="string" Label="Email address"/>
+                <MudTextField Variant="Variant.Filled" T="string" Required="true" RequiredError="Email is required" Label="Email" @bind-Value="@Email"/>
             </MudItem>
             <MudItem xs="12">
-                <BlaterPasswordInput/>
+                <BlaterPasswordInput ValueChanged="@(s => Password = s)"/>
             </MudItem>
             <MudItem xs="12">
                 <MudButton Class="mt-4 mud-width-full" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
                     Continue
                 </MudButton>
             </MudItem>
-            @if (IsLogin)
-            {
             <MudItem xs="12" Class="d-flex align-center">
                 <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                    No account? <MudLink Href="/sign-up">Sign up</MudLink>
+                    @if (IsLogin)
+                    {
+                        @("No account?") <MudLink Href="/sign-up">Sign up</MudLink>
+                    }
+                    else
+                    {
+                        @("Have an account?") <MudLink Href="/login">Sign in</MudLink> 
+                    }
                 </MudText>
             </MudItem>
-            }
-            else
-            {
-            <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                Have an account? <MudLink Href="/login">Sign in</MudLink>
-            </MudText>
-            }
         </MudGrid>
     </MudBreakpointProvider>
 </MudCard>
 
 @code {
     
+    [Inject]
+    protected BrowserViewportObserverService BrowserViewportObserverService { get; set; } = null!;
+    
+    [Inject]
+    protected IBlaterAuthLoginStoreEndpoints LoginStore { get; set; } = null!;
+
     [Parameter]
     public bool IsLogin { get; set; }
+
+    private string Email { get; set; } = null!;
+    private string Name { get; set; } = null!;
+    private string Password { get; set; } = null!;
     
-    [Parameter]
-    [EditorRequired]
-    public string Title { get; set; } = null!;
-    
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-    
-    private void Callback(Breakpoint obj)
+    private void InitializedDictGridBreakpoint()
     {
-        throw new NotImplementedException();
+        BrowserViewportObserverService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
+        {
+            {
+                1, new Dictionary<Breakpoint, string>
+                {
+                    { Breakpoint.Xs, "width: 80vw" },
+                    { Breakpoint.Sm, "width: 70vw" },
+                    { Breakpoint.Md, "width: 60vw" },
+                    { Breakpoint.Lg, "width: 50vw" },
+                    { Breakpoint.Xl, "width: 30vw" },
+                    { Breakpoint.Xxl, "width: 30vw" },
+                }
+            }
+        };
     }
     
+    protected override async Task OnInitializedAsync()
+    {
+        InitializedDictGridBreakpoint();
+        
+        var currentBreakpoint = await BrowserViewportObserverService.GetCurrentBreakpoint().ConfigureAwait(false);
+        BrowserViewportObserverService.UpdateGrid(1, currentBreakpoint);
+        
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task Submit()
+    {
+        var jwt = "";
+        if (IsLogin)
+        {
+            jwt = await LoginLocal();
+            return;
+        }
+
+        var registerBlaterUserRequest = new RegisterBlaterUserRequest
+        {
+            Email = Email,
+            Name = Name,
+            Password = Password
+        };
+        var register = await LoginStore.Register(registerBlaterUserRequest);
+        if (register.Success)
+        {
+            jwt = await LoginLocal();
+        }
+    }
+
+    private async Task<string> LoginLocal()
+    {
+        var authRequest = new AuthRequest
+        {
+            Email = Email,
+            Password = Password
+        };
+        var loginLocal = await LoginStore.LoginLocal(authRequest);
+        
+        if (!loginLocal.Success) return string.Empty;
+        
+        Console.WriteLine(loginLocal.Value);
+        return loginLocal.Value!;
+    }
 }
