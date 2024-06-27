@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater", "..\..\Blater\src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.SDK", "..\..\Blater.SDK\src\Blater.SDK\Blater.SDK.csproj", "{0733FF7F-C25C-467A-B01A-D2934A0FB6A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Frontend", "..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj", "{95BA0764-4BAC-451D-8DD4-D87E40EDD069}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,9 +34,14 @@ Global
 		{0733FF7F-C25C-467A-B01A-D2934A0FB6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0733FF7F-C25C-467A-B01A-D2934A0FB6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0733FF7F-C25C-467A-B01A-D2934A0FB6A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95BA0764-4BAC-451D-8DD4-D87E40EDD069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95BA0764-4BAC-451D-8DD4-D87E40EDD069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95BA0764-4BAC-451D-8DD4-D87E40EDD069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95BA0764-4BAC-451D-8DD4-D87E40EDD069}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4119BA3E-06CA-45F5-BA7A-4AA415E7DFA1} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
 		{0733FF7F-C25C-467A-B01A-D2934A0FB6A7} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
+		{95BA0764-4BAC-451D-8DD4-D87E40EDD069} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
 	EndGlobalSection
 EndGlobal
