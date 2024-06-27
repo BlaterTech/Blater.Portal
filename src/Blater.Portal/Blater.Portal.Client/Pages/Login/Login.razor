@@ -1,10 +1,62 @@
 ﻿@page "/login"
 
+@using Blater.Frontend.Services
+@using Blater.JsonUtilities
+@using Blater.SDK.Contracts.Authentication.Request
+@using Blater.SDK.Interfaces
+
 @layout LoginLayout
 
-<BlaterLogin IsLogin="true"/>
+<BlaterLogin 
+    IsLogin="true"
+    Callback="@(x => Submit(x.Email, x.Password))"
+    ErrorMessage="@ErrorMessage"/>
 
-
-@code {
+@code
+{
+    #pragma warning disable CA2252
+    [Inject]
+    protected AuthenticationService AuthenticationService { get; set; } = null!;
     
+    [Inject]
+    protected IBlaterAuthLoginStoreEndpoints LoginStore { get; set; } = null!;
+    
+    private string? ErrorMessage { get; set; }
+    
+    private async Task Submit(string email, string password)
+    {
+        var authRequest = new AuthRequest
+        {
+            Email = email,
+            Password = password
+        };
+ 
+        var loginLocal = await LoginStore.LoginLocal(authRequest);
+
+        if (loginLocal.Failure)
+        {
+            ErrorMessage = "Error in Login Local";
+            return;
+        }
+        
+        var jwt = loginLocal.Value;
+
+        if (string.IsNullOrWhiteSpace(jwt))
+        {
+            ErrorMessage = "Error jwt is nullable";
+            StateHasChanged();
+            return;
+        }
+        
+        var result = await AuthenticationService.LoginJwt(jwt);
+        if (!result.Success)
+        {
+            ErrorMessage = result.Message;
+            StateHasChanged();
+            return;
+        }
+        StateHasChanged();
+    }
+    
+    #pragma warning restore CA2252
 }

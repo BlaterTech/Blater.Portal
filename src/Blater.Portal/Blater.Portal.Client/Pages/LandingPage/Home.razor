@@ -1,10 +1,12 @@
 ﻿@page "/"
 
+@layout LandingLayout
+
 <MudGrid Spacing="2">
-    <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@(BrowserViewportObserverService.DictGridStyle.GetValueOrDefault(1))">
-        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(1, i))">
-            <MudText Typo="@BrowserViewportObserverService.Title" Style="line-height: 1">Mussum Ipsum</MudText>
-            <MudText Typo="@BrowserViewportObserverService.SubTitle" Style="line-height: 1;" Color="Color.Primary">Nulla id gravida magna</MudText>
+    <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(1))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(1, i))">
+            <MudText Typo="@BrowserViewportService.Title" Style="line-height: 1">Mussum Ipsum</MudText>
+            <MudText Typo="@BrowserViewportService.SubTitle" Style="line-height: 1;" Color="Color.Primary">Nulla id gravida magna</MudText>
             <div class="d-flex align-center justify-center mt-6">
                 <p style="text-align: center; font-size: 1.25rem; line-height: 1.75rem;">
                     Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
@@ -31,8 +33,8 @@
             </div>*@
         </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12" Style="@(BrowserViewportObserverService.DictGridStyle.GetValueOrDefault(2))">
-        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(2, i))">
+    <MudItem xs="12" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(2))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(2, i))">
             <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
                 <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
                     <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
@@ -67,8 +69,8 @@
             </MudGrid>
         </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12" Style="@(BrowserViewportObserverService.DictGridStyle.GetValueOrDefault(3))">
-        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(3, i))">
+    <MudItem xs="12" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(3))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(3, i))">
             <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
                 <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
                     <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
@@ -83,8 +85,8 @@
             </MudGrid>
         </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12" Style="@(BrowserViewportObserverService.DictGridStyle.GetValueOrDefault(4))">
-        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(4, i))">
+    <MudItem xs="12" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(4))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(4, i))">
             <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
                 <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
                     <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
@@ -109,8 +111,8 @@
             </MudGrid>
         </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12" Class="mb-6" Style="@(BrowserViewportObserverService.DictGridStyle.GetValueOrDefault(5))">
-        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(5, i))">
+    <MudItem xs="12" Class="mb-6" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(5))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(5, i))">
             <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2 mud-height-full">
                 <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
                     <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 1</MudPaper>

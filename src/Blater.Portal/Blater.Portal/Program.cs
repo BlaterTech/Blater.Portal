@@ -3,6 +3,7 @@ using Blater.Frontend.Logging;
 using Blater.Frontend.Services;
 using Blater.Models.User;
 using Blater.Portal.Apps;
+using Blater.Portal.Client.Services;
 using Blater.SDK.Extensions;
 using Blazored.LocalStorage;
 using Microsoft.IdentityModel.Logging;
@@ -40,11 +41,9 @@ builder.Services.AddBlazoredLocalStorage(config =>
 {
     config.JsonSerializerOptions.WriteIndented = true;
 });
-        
-//Scoped services (AKA per user)
 
-builder.Services.AddScoped<BlaterUserToken>();
-
+builder.Services.AddScoped<BlaterAuthState>();
+builder.Services.AddScoped<BrowserViewportObserverService>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
 

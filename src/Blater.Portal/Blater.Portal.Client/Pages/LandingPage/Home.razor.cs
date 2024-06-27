@@ -7,11 +7,11 @@ namespace Blater.Portal.Client.Pages.LandingPage;
 public partial class Home
 {
     [Inject]
-    protected BrowserViewportObserverService BrowserViewportObserverService { get; set; } = null!;
-
+    protected BrowserViewportObserverService BrowserViewportService { get; set; } = null!;
+    
     private void InitializedDictGridBreakpoint()
     {
-        BrowserViewportObserverService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
+        BrowserViewportService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
         {
             {
                 1, new Dictionary<Breakpoint, string>
@@ -75,13 +75,12 @@ public partial class Home
     {
         InitializedDictGridBreakpoint();
         
-        var currentBreakpoint = await BrowserViewportObserverService.GetCurrentBreakpoint().ConfigureAwait(false);
-        for (var i = 0; i <= 5; i++)
+        var currentBreakpoint = await BrowserViewportService.GetCurrentBreakpoint().ConfigureAwait(false);
+        for (var i = 0; i <= BrowserViewportService.DictGridBreakpoint.Count; i++)
         {
-            BrowserViewportObserverService.UpdateGrid(i, currentBreakpoint);
+            BrowserViewportService.UpdateGrid(i, currentBreakpoint);
         }
         
         await InvokeAsync(StateHasChanged);
     }
-    
 }

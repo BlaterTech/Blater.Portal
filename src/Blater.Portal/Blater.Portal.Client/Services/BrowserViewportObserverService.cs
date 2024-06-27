@@ -4,8 +4,8 @@ namespace Blater.Portal.Client.Services;
 
 public class BrowserViewportObserverService(IBrowserViewportService browserViewportService)
 {
-    public Dictionary<int, Dictionary<Breakpoint, string>> DictGridBreakpoint { get; set; } = new();
-    public Dictionary<int, string> DictGridStyle { get; set; } = new();
+    public Dictionary<int, Dictionary<Breakpoint, string>> DictGridBreakpoint { get; set; } = [];
+    public Dictionary<int, string> DictGridStyle { get; set; } = [];
     
     public Typo Title = Typo.h1;
     public Typo SubTitle = Typo.h2;

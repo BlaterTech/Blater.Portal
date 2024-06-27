@@ -2,8 +2,9 @@
 @using Blater.SDK.Contracts.Authentication.Request
 @using Blater.SDK.Contracts.Common.Request
 @using Blater.SDK.Interfaces
-<MudCard Elevation="1" Class="d-flex align-center justify-center rounded-xl" Style="@(BrowserViewportObserverService.GetStyleValue(1))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportObserverService.OnBreakpointCallback(1, i))">
+
+<MudCard Elevation="1" Class="d-flex align-center justify-center rounded-xl">
+    <MudBreakpointProvider>
         <MudGrid Justify="Justify.Center" Spacing="0" Class="mud-width-full mud-height-full pa-4">
             <MudItem xs="12">
                 <BlaterLogo/>
@@ -39,25 +40,32 @@
             @if (!IsLogin)
             {
                 <MudItem xs="12">
-                    <MudTextField Variant="Variant.Filled" T="string" Required="true" RequiredError="Name is required" Label="Name" @bind-Value="@Name"/>
+                    <MudTextField 
+                        Variant="Variant.Filled" 
+                        T="string" Required="true" RequiredError="Name is required" Label="Name" @bind-Value="@Name"/>
                 </MudItem>
             }
             <MudItem xs="12">
-                <MudTextField Variant="Variant.Filled" T="string" Required="true" RequiredError="Email is required" Label="Email" @bind-Value="@Email"/>
+                <MudTextField 
+                    Variant="Variant.Filled" 
+                    T="string" Required="true" RequiredError="Email is required" Label="Email" @bind-Value="@Email"/>
             </MudItem>
             <MudItem xs="12">
                 <BlaterPasswordInput ValueChanged="@(s => Password = s)"/>
             </MudItem>
-            @if (!string.IsNullOrWhiteSpace(Message))
+            @if (!string.IsNullOrWhiteSpace(ErrorMessage))
             {
                 <MudItem xs="12" Class="d-flex align-center">
                     <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                        @Message
+                        @ErrorMessage
                     </MudText>
                 </MudItem>
             }
             <MudItem xs="12">
-                <MudButton Class="mt-4 mud-width-full" OnClick="@Submit" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
+                <MudButton 
+                    Class="mt-4 mud-width-full" 
+                    OnClick="@(() => Callback.InvokeAsync((Email, Name, Password)!))" 
+                    ButtonType="ButtonType.Submit" Size="Size.Medium" Variant="Variant.Filled" Color="Color.Primary">
                     Continue
                 </MudButton>
             </MudItem>
@@ -80,97 +88,19 @@
 </MudCard>
 
 @code {
-    #pragma warning disable CA2252
-
     [Inject]
-    protected BrowserViewportObserverService BrowserViewportObserverService { get; set; } = null!;
-
-    [Inject]
-    protected IBlaterAuthLoginStoreEndpoints LoginStore { get; set; } = null!;
-
-    [Inject]
-    protected AuthenticationService AuthenticationService { get; set; } = null!;
+    protected IBrowserViewportService  BrowserViewportService { get; set; } = null!;
 
     [Parameter]
     public bool IsLogin { get; set; }
-
+    
+    [Parameter]
+    public EventCallback<(string Email, string Name, string Password)> Callback { get; set; }
+    
+    [Parameter]
+    public string? ErrorMessage { get; set; }
+    
     private string Email { get; set; } = null!;
-    private string Name { get; set; } = null!;
     private string Password { get; set; } = null!;
-    private string? Message { get; set; }
-
-    private void InitializedDictGridBreakpoint()
-    {
-        BrowserViewportObserverService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
-        {
-            {
-                1, new Dictionary<Breakpoint, string>
-                {
-                    { Breakpoint.Xs, "width: 80vw" },
-                    { Breakpoint.Sm, "width: 70vw" },
-                    { Breakpoint.Md, "width: 60vw" },
-                    { Breakpoint.Lg, "width: 50vw" },
-                    { Breakpoint.Xl, "width: 30vw" },
-                    { Breakpoint.Xxl, "width: 30vw" },
-                }
-            }
-        };
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        InitializedDictGridBreakpoint();
-
-        var currentBreakpoint = await BrowserViewportObserverService.GetCurrentBreakpoint().ConfigureAwait(false);
-        BrowserViewportObserverService.UpdateGrid(1, currentBreakpoint);
-    }
-
-    private async Task Submit()
-    {
-        var jwt = "";
-        if (IsLogin)
-        {
-            jwt = await LoginLocal();
-            await AuthenticationService.Login(jwt);
-            return;
-        }
-
-        var registerBlaterUserRequest = new RegisterBlaterUserRequest
-        {
-            Email = Email,
-            Name = Name,
-            Password = Password
-        };
-
-        var register = await LoginStore.Register(registerBlaterUserRequest);
-        if (register.Success)
-        {
-            jwt = await LoginLocal();
-            await AuthenticationService.Login(jwt);
-            return;
-        }
-
-        Message = "Error in Register";
-    }
-
-    private async Task<string> LoginLocal()
-    {
-        var authRequest = new AuthRequest
-        {
-            Email = Email,
-            Password = Password
-        };
-
-        var loginLocal = await LoginStore.LoginLocal(authRequest);
-
-        if (loginLocal.Failure)
-        {
-            Message = "Error in Login Local";
-            return string.Empty;
-        }
-
-        Console.WriteLine(loginLocal.Value);
-        return loginLocal.Value!;
-    }
-    #pragma warning restore CA2252
+    private string Name { get; set; } = null!;
 }

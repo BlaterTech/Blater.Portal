@@ -1,19 +1,22 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blater.Frontend.Services
+@using Blater.Models.User
+
+@inherits LayoutComponentBase
 
 @layout MainLayout
 
 <MudLayout>
     <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End"/>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
         <MudDrawerHeader>
             <MudText Typo="Typo.h5" Class="mt-1">Application</MudText>
         </MudDrawerHeader>
         <MudNavMenu Class="mud-width-full">
-            <MudDivider Class="my-2" />
+            <MudDivider Class="my-2"/>
             <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
             <MudNavGroup Title="Level 0" Icon="@Icons.Material.Filled.Settings" Expanded="true">
                 <MudNavGroup Title="Level 1" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="true">
@@ -26,19 +29,64 @@
             </MudNavGroup>
             <MudNavLink Href="/billing" Icon="@Icons.Material.Filled.Receipt">Billing</MudNavLink>
         </MudNavMenu>
+        <MudSpacer/>
+        <MudNavLink
+            Icon="@Icons.Material.Filled.ExitToApp"
+            Match="NavLinkMatch.Prefix"
+            IconColor="Color.Error"
+            OnClick="@(async e => await AuthenticationService.Logout())">
+            <MudText Color="Color.Error">
+                Sair
+            </MudText>
+        </MudNavLink>
     </MudDrawer>
     <MudMainContent>
-        <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+        <MudContainer Class="mt-8" MaxWidth="MaxWidth.ExtraExtraLarge">
             @Body
         </MudContainer>
     </MudMainContent>
 </MudLayout>
 
 @code {
+    #pragma warning disable CA2252
+    [Inject]
+    protected AuthenticationService AuthenticationService { get; set; } = null!;
+
+    [Inject]
+    protected BlaterAuthState BlaterAuthState { get; set; } = null!;
+
+    [Inject]
+    protected NavigationService NavigationService { get; set; } = null!;
+
     bool _drawerOpen = true;
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
+
+    protected override void OnInitialized()
+    {
+        if (!BlaterAuthState.LoggedIn)
+        {
+            NavigationService.NavigateTo("login");
+        }
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await AuthenticationService.TryAutoLogin();
+            
+            if (!BlaterAuthState.LoggedIn)
+            {
+                NavigationService.NavigateTo("login");
+            }
+        }
+    }
+
+    #pragma warning restore CA2252
 }
