@@ -1,5 +1,5 @@
-using Blater.Frontend.Logging;
-using Blater.Frontend.Services;
+using Blater.FrontEnd.Services;
+using Blater.Logging;
 using Blater.Models.User;
 using Blater.Portal.Client.Services;
 using Blater.SDK.Extensions;
