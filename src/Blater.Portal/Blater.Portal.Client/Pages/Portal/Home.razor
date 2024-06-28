@@ -1,6 +1,11 @@
 ﻿@page "/home"
 
+@using Blater.Attributes.Auto
+
 @layout PortalLayout
+
+@attribute [AutoNavMenu(2, BlaterIcons.BlaterIcon)]
+@attribute [AutoRequiredRoles("ProjectOwner")]
 
 <MudGrid>
     <MudItem xs="12" sm="6" md="4">
