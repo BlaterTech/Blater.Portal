@@ -1,3 +1,4 @@
+using Blater.Frontend.Logging;
 using Blater.Frontend.Services;
 using Blater.Models.User;
 using Blater.Portal.Client.Services;
@@ -9,7 +10,10 @@ using Microsoft.Extensions.Http;
 using MudBlazor.Services;
 
 #pragma warning disable CA2252
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+builder.SetupSerilog();
 
 builder.Services.AddMudServices();
 

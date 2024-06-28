@@ -2,6 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../../Blater" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../Blater.Frontend" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Blater.SDK" vcs="Git" />
   </component>

@@ -9,9 +9,12 @@ using Blazored.LocalStorage;
 using Microsoft.IdentityModel.Logging;
 using MudBlazor;
 using MudBlazor.Services;
+using Serilog;
 
 #pragma warning disable CA2252
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddSerilog();
 
 builder.Services.Configure<HostOptions>(hostOptions =>
 {
