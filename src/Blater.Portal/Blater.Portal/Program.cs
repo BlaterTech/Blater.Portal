@@ -1,5 +1,5 @@
-using Blater.FrontEnd.Auto;
-using Blater.FrontEnd.Services;
+using Blater.Frontend.Auto;
+using Blater.Frontend.Services;
 using Blater.Models.User;
 using Blater.Portal.Apps;
 using Blater.Portal.Client.Services;
