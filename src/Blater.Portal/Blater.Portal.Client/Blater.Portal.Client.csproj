@@ -29,6 +29,10 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
+    </ItemGroup>
     
     
 </Project>

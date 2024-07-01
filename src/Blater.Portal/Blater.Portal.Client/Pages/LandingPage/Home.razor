@@ -6,8 +6,8 @@
 <MudGrid Spacing="2">
     <MudItem xs="12" Class="d-flex flex-column align-center justify-center" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(1))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(1, i))">
-            <MudText Typo="@BrowserViewportService.Title" Style="line-height: 1">Mussum Ipsum</MudText>
-            <MudText Typo="@BrowserViewportService.SubTitle" Style="line-height: 1;" Color="Color.Primary">Nulla id gravida magna</MudText>
+            <MudText Typo="@BrowserViewportService.Title" Style="line-height: 1">Connecting Devs</MudText>
+            <MudText Typo="@BrowserViewportService.Title" Style="line-height: 1">with Employers</MudText>
             <div class="d-flex align-center justify-center mt-6">
                 <p style="text-align: center; font-size: 1.25rem; line-height: 1.75rem;">
                     Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.
@@ -18,74 +18,105 @@
                 </p>
             </div>
             <div class="d-flex align-center gap-2 justify-center mt-6">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary">Sign In</MudButton>
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Api">Documentation</MudButton>
+                <MudButton Variant="Variant.Outlined">Documentation</MudButton>
             </div>
-            @*<div class="d-flex flex-column align-center gap-2 justify-center my-6">
-                <MudText Typo="Typo.caption">Praesent vel viverra nisi.</MudText>
-                <div class="d-flex align-center gap-2 justify-center">
-                    <MudIcon Icon="@Icons.Material.Filled.Favorite" Title="Favorite"/>
-                    <MudIcon Icon="@Icons.Material.Filled.Api" Title="API"/>
-                    <MudIcon Icon="@Icons.Material.Filled.AddCircle" Title="Add"/>
-                    <MudIcon Icon="@Icons.Custom.Brands.GitHub" Title="GitHub"/>
-                    <MudIcon Icon="@Icons.Custom.Brands.Google" Title="Google"/>
-                    <MudIcon Icon="@Icons.Custom.Brands.Reddit" Title="Reddit"/>
-                </div>
-            </div>*@
         </MudBreakpointProvider>
     </MudItem>
-    <MudItem xs="12" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(2))">
+    
+    <MudItem xs="12" Style="@(BrowserViewportService.GetStyleValue(2))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(2, i))">
-            <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
+            <MudGrid Justify="Justify.SpaceBetween" Spacing="6" Style="height: 65%">
                 <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Funcionalidade 1
-                    </MudPaper>
+                    <div class="pa-8 card mud-height-full">
+                        <div class="d-flex justify-end mud-width-full">
+                            <MudImage Src="database.svg" Width="400"/>
+                        </div>
+                        <MudText Typo="Typo.h3" Color="Color.Secondary">Database</MudText>
+                        <MudText Typo="Typo.body2">Dive into the basics of astronomy. Learn about stars, planets,
+                            galaxies, and the tools astronomers use to explore the universe.</MudText>
+                    </div>
                 </MudItem>
-                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Funcionalidade 2
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Funcionalidade 3
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Funcionalidade 4
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Funcionalidade 5
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Funcionalidade 6
-                    </MudPaper>
+                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6" Class="d-flex justify-space-around" Style="height: 100%">
+                    <MudGrid Justify="Justify.SpaceBetween" Spacing="6">
+                        <MudItem xs="12">
+                            <div class="pa-8 card mud-height-full">
+                                <div class="d-flex justify-end mud-width-full">
+                                    <MudImage Src="database.svg" Width="100"/>
+                                </div>
+                                <MudText Typo="Typo.h3" Color="Color.Secondary">Database</MudText>
+                                <MudText Typo="Typo.body2">Dive into the basics of astronomy. Learn about stars, planets,
+                                    galaxies, and the tools astronomers use to explore the universe.</MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="12">
+                            <div class="pa-8 card mud-height-full">
+                                <div class="d-flex justify-end mud-width-full">
+                                    <MudImage Src="database.svg" Width="100"/>
+                                </div>
+                                <MudText Typo="Typo.h3" Color="Color.Secondary">Database</MudText>
+                                <MudText Typo="Typo.body2">Dive into the basics of astronomy. Learn about stars, planets,
+                                    galaxies, and the tools astronomers use to explore the universe.</MudText>
+                            </div>
+                        </MudItem>
+                    </MudGrid>
                 </MudItem>
             </MudGrid>
         </MudBreakpointProvider>
     </MudItem>
+    
     <MudItem xs="12" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(3))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(3, i))">
-            <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
-                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Textinho bacana
-                    </MudPaper>
+            <MudGrid Justify="Justify.SpaceBetween" Spacing="6" Style="height: 65%">
+                <MudItem xs="12" md="4" lg="4" xl="4" xxl="4" Class="d-flex align-center justify-center pa-8">
+                    <div class="d-flex flex-column gap-4">
+                        <MudText Typo="Typo.h3" Color="Color.Inherit">Numbers are telling our story</MudText>
+                        <MudText Typo="Typo.body2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</MudText>
+                    </div>
                 </MudItem>
-                <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Exemplos de chamadas em linguagens
-                    </MudPaper>
+                <MudItem xs="12" md="8" lg="8" xl="8" xxl="8" Class="d-flex justify-space-around" Style="height: 100%">
+                    <MudGrid Justify="Justify.SpaceBetween" Spacing="6">
+                        <MudItem xs="6">
+                            <div class="d-flex flex-column mud-height-full gap-2 pa-8">
+                                <div class="mud-width-full">
+                                    <MudImage Src="space-technology.svg" Width="60"/>
+                                </div>
+                                <MudText Typo="Typo.h5" Color="Color.Inherit" Style="font-weight: bold;">Latest Discoveries</MudText>
+                                <MudText Typo="Typo.body2">Stay up-to-date with the most recent breakthroughs and discoveries in the field of astrophysics.</MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <div class="d-flex flex-column mud-height-full gap-2 pa-8">
+                                <div class="mud-width-full">
+                                    <MudImage Src="space-technology.svg" Width="60"/>
+                                </div>
+                                <MudText Typo="Typo.h5" Color="Color.Inherit" Style="font-weight: bold;">Latest Discoveries</MudText>
+                                <MudText Typo="Typo.body2">Stay up-to-date with the most recent breakthroughs and discoveries in the field of astrophysics.</MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <div class="d-flex flex-column mud-height-full gap-2 pa-8">
+                                <div class="mud-width-full">
+                                    <MudImage Src="space-technology.svg" Width="60"/>
+                                </div>
+                                <MudText Typo="Typo.h5" Color="Color.Inherit" Style="font-weight: bold;">Latest Discoveries</MudText>
+                                <MudText Typo="Typo.body2">Stay up-to-date with the most recent breakthroughs and discoveries in the field of astrophysics.</MudText>
+                            </div>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <div class="d-flex flex-column mud-height-full gap-2 pa-8">
+                                <div class="mud-width-full">
+                                    <MudImage Src="space-technology.svg" Width="60"/>
+                                </div>
+                                <MudText Typo="Typo.h5" Color="Color.Inherit" Style="font-weight: bold;">Latest Discoveries</MudText>
+                                <MudText Typo="Typo.body2">Stay up-to-date with the most recent breakthroughs and discoveries in the field of astrophysics.</MudText>
+                            </div>
+                        </MudItem>
+                    </MudGrid>
                 </MudItem>
             </MudGrid>
         </MudBreakpointProvider>
     </MudItem>
+    
     <MudItem xs="12" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(4))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(4, i))">
             <MudGrid Justify="Justify.Center" Spacing="2" Class="mt-2 mud-height-full">
@@ -104,14 +135,10 @@
                         Explicações básicas da funcionalidade X
                     </MudPaper>
                 </MudItem>
-                <MudItem xs="12" md="6" lg="3" xl="3" xxl="3">
-                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">
-                        Explicações básicas da funcionalidade X
-                    </MudPaper>
-                </MudItem>
             </MudGrid>
         </MudBreakpointProvider>
     </MudItem>
+    
     <MudItem xs="12" Class="mb-6" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(5))">
         <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(5, i))">
             <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2 mud-height-full">
@@ -123,6 +150,32 @@
                 </MudItem>
                 <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
                     <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 3</MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudBreakpointProvider>
+    </MudItem>
+
+    <MudItem xs="12" Class="mb-6" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(5))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(6, i))">
+            <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2 mud-height-full">
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 1</MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 2</MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudBreakpointProvider>
+    </MudItem>
+
+    <MudItem xs="12" Class="mb-6" Style="@(BrowserViewportService.DictGridStyle.GetValueOrDefault(5))">
+        <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(7, i))">
+            <MudGrid Justify="Justify.Center" Spacing="2" Class="my-2 mud-height-full">
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 1</MudPaper>
+                </MudItem>
+                <MudItem xs="12" md="12" lg="4" xl="4" xxl="4">
+                    <MudPaper Class="pa-16 mud-width-full mud-height-full" Outlined="true">Infraestrutura 2</MudPaper>
                 </MudItem>
             </MudGrid>
         </MudBreakpointProvider>

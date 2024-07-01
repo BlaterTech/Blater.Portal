@@ -19,9 +19,9 @@ public partial class Home
                     { Breakpoint.Xs, "height: 70vh" },
                     { Breakpoint.Sm, "height: 60vh" },
                     { Breakpoint.Md, "height: 60vh" },
-                    { Breakpoint.Lg, "height: 95vh" },
-                    { Breakpoint.Xl, "height: 95vh" },
-                    { Breakpoint.Xxl, "height: 95vh" },
+                    { Breakpoint.Lg, "height: 100vh" },
+                    { Breakpoint.Xl, "height: 100vh" },
+                    { Breakpoint.Xxl, "height: 100vh" },
                 }
             },
             {
@@ -38,12 +38,12 @@ public partial class Home
             {
                 3, new Dictionary<Breakpoint, string>
                 {
-                    { Breakpoint.Xs, "height: 65vh" },
-                    { Breakpoint.Sm, "height: 65vh" },
-                    { Breakpoint.Md, "height: 65vh" },
-                    { Breakpoint.Lg, "height: 65vh" },
-                    { Breakpoint.Xl, "height: 65vh" },
-                    { Breakpoint.Xxl, "height: 65vh" },
+                    { Breakpoint.Xs, "height: 150vh" },
+                    { Breakpoint.Sm, "height: 150vh" },
+                    { Breakpoint.Md, "height: 110vh" },
+                    { Breakpoint.Lg, "height: 110vh" },
+                    { Breakpoint.Xl, "height: 110vh" },
+                    { Breakpoint.Xxl, "height: 110vh" },
                 }
             },
             {

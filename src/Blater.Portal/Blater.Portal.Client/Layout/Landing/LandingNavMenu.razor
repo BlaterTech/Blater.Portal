@@ -1,9 +1,6 @@
 ﻿@using Icons = MudBlazor.Icons
-<div class="d-flex gap-2 mx-1 px-3">
-    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="#">Test 1</MudButton>
-    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="#">Test 2</MudButton>
-    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/pricing">Pricing</MudButton>
 
+<div class="d-flex gap-2 mx-1 px-3">
     <MudMenu
         Color="Color.Inherit"
         Variant="Variant.Text"
@@ -18,31 +15,17 @@
             <MudListSubheader>
                 Products
             </MudListSubheader>
-            <MudListItem Href="https://mudblazor.com/">
+            <MudListItem Href="#">
                 <div class="d-flex">
-                    <MudText Color="Color.Primary">MudBlazor</MudText>
+                    <MudText Color="Color.Primary">Blater</MudText><MudText> Database</MudText>
                 </div>
-                <MudText Typo="Typo.body2">Blazor component library</MudText>
-            </MudListItem>
-            <MudListItem Href="https://try.mudblazor.com/">
-                <div class="d-flex">
-                    <MudText Color="Color.Primary">Try</MudText><MudText>MudBlazor</MudText>
-                </div>
-                <MudText Typo="Typo.body2">Online code editor with Blazor</MudText>
-            </MudListItem>
-            <MudListItem Href="https://github.com/MudBlazor/ThemeManager">
-                <div class="d-flex">
-                    <MudText>Theme</MudText><MudText Color="Color.Secondary">Manager</MudText>
-                </div>
-                <MudText Typo="Typo.body2">Manage your theme live in your app</MudText>
-            </MudListItem>
-            <MudListItem Href="https://github.com/MudBlazor/Templates">
-                <div class="d-flex">
-                    <MudText>Templates</MudText>
-                </div>
-                <MudText Typo="Typo.body2">Blazor templates loaded with MudBlazor</MudText>
+                <MudText Typo="Typo.body2">Base description from blater database</MudText>
             </MudListItem>
         </MudList>
-    </MudMenu>    
+    </MudMenu>
+    
+    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/pricing">Pricing</MudButton>
+    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/about">About</MudButton>
+    <MudButton Variant="Variant.Text" Color="Color.Inherit" Href="/faq">FAQ</MudButton>
 </div>
 
