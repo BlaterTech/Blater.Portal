@@ -3,16 +3,18 @@
 <div class="d-flex align-center justify-center" style="width: 100%">
     <MudGrid
         Justify="Justify.Center"
-        Spacing="2" Class="my-16 mud-width-full mud-height-full gradient-background-2 rounded" Style="height: 40vh;width: 100%">
-        <MudItem xs="6" Class="d-flex align-center justify-center">
+        Spacing="2" Class="my-16 mud-width-full mud-height-full gradient-background-2 rounded">
+        <MudItem xs="6" md="6" lg="6" xl="6" xxl="6" Class="d-flex flex-column align-start justify-center">
             <div class="d-flex flex-column gap-4 pa-6">
                 <MudText Typo="Typo.h4" Color="Color.Inherit">Join our community</MudText>
                 <MudText>of stargazers, explorers, and cosmic enthusiasts as we embark on a journey through the cosmos like never before.</MudText>
-                <MudButton Color="Color.Dark" Variant="Variant.Filled" Size="Size.Small" Style="width: 40%" Class="rounded-pill">Subscribe</MudButton>
+                <div class="d-flex align-start">
+                    <MudButton Color="Color.Dark" Variant="Variant.Filled" Size="Size.Small" Class="rounded-pill px-4 py-2">Subscribe</MudButton>
+                </div>
             </div>
         </MudItem>
-        <MudItem xs="6" Class="d-flex align-center justify-center">
-            <MudImage Src="notebook.svg" Width="240"/>
+        <MudItem xs="6" md="6" lg="6" xl="6" xxl="6" Class="d-flex align-center justify-center">
+            <MudImage Src="notebook.svg" Style="max-width: 240px" Class="mud-width-full mud-height-full pa-2"/>
         </MudItem>
     </MudGrid>
 </div>

@@ -50,6 +50,11 @@ h1:focus {
     border-color: #929292;
 }
 
+.content {
+    position: relative;
+    z-index: 1;
+}
+
 /* === GRADIENT ===*/
 .gradient-background-3 {
     background: linear-gradient(90deg, #270634, #C26EE2);
@@ -71,7 +76,6 @@ h1:focus {
     background: linear-gradient(45deg, #FF6361, #FFD380);
 }
 
-
 @property --rotate {
     syntax: "<angle>";
     initial-value: 132deg;
@@ -79,7 +83,6 @@ h1:focus {
 }
 
 .card {
-    background: #191c29;
     position: relative;
     border-radius: 6px;
     cursor: pointer;
