@@ -1,6 +1,4 @@
-﻿@using Icons = MudBlazor.Icons
-
-<div class="d-flex gap-2 mx-1 px-3">
+﻿<div class="d-flex gap-2 mx-1 px-3">
     <MudMenu
         Color="Color.Inherit"
         Variant="Variant.Text"
@@ -8,7 +6,7 @@
         ListClass="d-flex px-4 pb-2 docs-appbar-special-menu"
         LockScroll="true"
         Label="Products"
-        EndIcon="@Icons.Material.Filled.KeyboardArrowDown"
+        EndIcon="@Material.Filled.KeyboardArrowDown"
         AnchorOrigin="Origin.BottomCenter"
         TransformOrigin="Origin.TopCenter">
         <MudList T="string">
@@ -17,7 +15,7 @@
             </MudListSubheader>
             <MudListItem Href="/products/database">
                 <div class="d-flex">
-                    <MudText Color="Color.Primary">Blater</MudText><MudText> Database</MudText>
+                    <MudText Color="Color.Tertiary">@("Blater ")</MudText><MudText> Database</MudText>
                 </div>
                 <MudText Typo="Typo.body2">Base description from blater database</MudText>
             </MudListItem>
