@@ -11,11 +11,11 @@
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen" Elevation="25" Variant="@DrawerVariant.Temporary" aria-label="Navigation Drawer">
         <MudToolBar Dense="true" Gutters="false" Class="px-1 docs-gray-bg">
-            <MudIconButton Icon="@Icons.Material.Rounded.Close" Color="Color.Inherit" OnClick="@ToggleDrawer" />
+            <MudIconButton Icon="@Material.Rounded.Close" Color="Color.Inherit" OnClick="@ToggleDrawer" />
             <MudSpacer/>
         </MudToolBar>
         <MudNavMenu Color="Color.Primary" Margin="Margin.Dense" Rounded="true" Class="pa-2">
-            <MudNavGroup Title="Products" ExpandIcon="@Icons.Material.Filled.ExpandMore">
+            <MudNavGroup Title="Products" ExpandIcon="@Material.Filled.ExpandMore">
                 <MudNavLink Href="/products/database">Blater</MudNavLink>
             </MudNavGroup>
             <MudNavLink Href="/pricing">Princing</MudNavLink>
