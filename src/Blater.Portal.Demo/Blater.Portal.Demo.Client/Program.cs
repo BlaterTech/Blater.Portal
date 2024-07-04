@@ -1,3 +1,4 @@
+using Blater.Frontend.Interfaces;
 using Blater.Frontend.Services;
 using Blater.Logging;
 using Blater.Models.User;
@@ -28,6 +29,7 @@ builder.Services.AddBlaterServices();
 builder.Services.AddScoped<BlaterAuthState>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
+builder.Services.AddScoped<IBlaterLocalStorageService, BlaterLocalStorageService>();
 
 builder.Services.AddSingleton<LocalizationService>();
 

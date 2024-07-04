@@ -13,13 +13,22 @@
             Icon="@Material.Outlined.Notifications"
             Color="Color.Inherit"/>
 
-        <MudText Class="pr-2">
-            Olá, @(BlaterAuthState.Name)!
-        </MudText>
+        @if (_loading)
+        {
+            <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+        }
+        else
+        {
+            <MudText Class="pr-2">
+                Olá, @(BlaterAuthState.Name)!
+            </MudText>
 
-        <MudAvatar>
-            <MudImage Src="@BlaterAuthState.AvatarUrl"/>
-        </MudAvatar>
+            <MudAvatar>
+                <MudImage Src="@BlaterAuthState.AvatarUrl"/>
+            </MudAvatar>
+        }
+        
+        
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen"
                Elevation="2"

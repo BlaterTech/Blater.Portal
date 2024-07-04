@@ -12,16 +12,17 @@ public partial class PortalLayout
 {
     [Inject]
     protected AuthenticationService AuthenticationService { get; set; } = null!;
-
-    [Inject]
-    protected BlaterAuthState BlaterAuthState { get; set; } = null!;
+    
+    
 
     [Inject]
     protected NavigationService NavigationService { get; set; } = null!;
     
     protected IEnumerable<NavMenuRouteInfo> Routes { get; set; } = [];
+    protected BlaterAuthState BlaterAuthState { get; set; } = new();
 
     private bool _drawerOpen = true;
+    private bool _loading;
 
     private void DrawerToggle()
     {
@@ -33,15 +34,17 @@ public partial class PortalLayout
     {
         if (firstRender)
         {
-            await AuthenticationService.TryAutoLogin();
+            var authState = await AuthenticationService.TryAutoLogin();
+
+            if (authState != null)
+            {
+                BlaterAuthState = authState;
+            }
             
             Routes = NavigationService
                     .Routes
                     .Where(x => x.RoleNames.Any(role => BlaterAuthState.RoleNames.Contains(role)))
                     .Where(x => x.Permissions.Any(permission => BlaterAuthState.Permissions.Contains(permission)));
-
-            Console.WriteLine(BlaterAuthState.RoleNames.ToJson());
-            Console.WriteLine(BlaterAuthState.Permissions.ToJson());
             
             await InvokeAsync(StateHasChanged);
         }

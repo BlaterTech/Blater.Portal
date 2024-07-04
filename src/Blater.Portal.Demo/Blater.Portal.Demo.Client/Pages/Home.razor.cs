@@ -27,24 +27,24 @@ public partial class Home
     protected NavigationService NavigationService { get; set; } = null!;
     
     [Inject]
-    protected BlaterAuthState BlaterAuthState { get; set; } = null!;
+    protected AuthenticationService AuthenticationService { get; set; } = null!;
 
     private List<TestCrud> TestCruds { get; set; } = [];
-
-    protected override void OnParametersSet()
-    {
-        Console.WriteLine("BlaterAuthState OnParametersSet: " +BlaterAuthState.UserId);
-        Console.WriteLine("BlaterAuthState OnParametersSet: " +BlaterAuthState.ToJson());
-    }
+    private bool _loading = true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            Console.WriteLine("BlaterAuthState: "+BlaterAuthState.UserId);
-            Console.WriteLine("BlaterAuthState: "+BlaterAuthState.ToJson());
+            var blaterAuthState = await AuthenticationService.GetBlaterState();
+            Console.WriteLine("BlaterAuthState.UserId: "    +blaterAuthState?.UserId);
+            Console.WriteLine("BlaterAuthState.JwtToken: "  +blaterAuthState?.JwtToken);
+            Console.WriteLine("BlaterAuthState JsonValue: " +blaterAuthState.ToJson());
+        
             Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
             var query = predicate.ExpressionToBlaterQuery();
+
+            BlaterHttpClient.Token = blaterAuthState?.JwtToken;
 
             var results = await Store.FindMany(query);
             if (results.HandleErrors(out var errorsFind, out var response))
@@ -54,7 +54,7 @@ public partial class Home
                     Snackbar.Add(error.Message, Severity.Error);
                 }
             }
-
+            
             TestCruds = response.ToList();
 
             if (TestCruds.Count == 0)
@@ -82,65 +82,22 @@ public partial class Home
 
                 TestCruds.Add(value);
             }
+            
+            await InvokeAsync(StateHasChanged);
         
             await GetChangesQuery(query);
 
             TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
+            _loading = false;
+            Console.WriteLine("_loading: "+_loading);
             Console.WriteLine(TestCruds.ToJson());
+            await InvokeAsync(StateHasChanged);
         }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine("BlaterAuthState: "+BlaterAuthState.JwtToken);
-        Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
-        var query = predicate.ExpressionToBlaterQuery();
-
-        var results = await Store.FindMany(query);
-        if (results.HandleErrors(out var errorsFind, out var response))
-        {
-            foreach (var error in errorsFind)
-            {
-                Snackbar.Add(error.Message, Severity.Error);
-            }
-        }
-
-        TestCruds = response.ToList();
-
-        if (TestCruds.Count == 0)
-        {
-            var testCrud = new TestCrud
-            {
-                Enabled = true,
-                Name = "Test",
-                Quantity = 1,
-                CreatedAt = DateTimeOffset.UtcNow,
-                UpdatedAt = DateTimeOffset.UtcNow
-            };
-
-            var add = await Store.Insert(testCrud);
-
-            if (add.HandleErrors(out var errors, out var value))
-            {
-                foreach (var error in errors)
-                {
-                    Snackbar.Add(error.Message, Severity.Error);
-                }
-
-                return;
-            }
-
-            TestCruds.Add(value);
-        }
-        
-        await GetChangesQuery(query);
-
-        TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
-        Console.WriteLine(TestCruds.ToJson());
     }
 
     private async Task GetChangesQuery(BlaterQuery query)
     {
+        Console.WriteLine("Chegou aqui");
         var changes = Store.GetChangesQuery(query);
         await foreach (var change in changes)
         {
@@ -150,6 +107,8 @@ public partial class Home
                 {
                     Snackbar.Add(error.Message, Severity.Error);
                 }
+
+                await InvokeAsync(StateHasChanged);
                 continue;
             }
 
@@ -159,16 +118,19 @@ public partial class Home
             {
                 TestCruds.Add(value);
                 Snackbar.Add($"{value.Name} was added", Severity.Success);
+                await InvokeAsync(StateHasChanged);
                 continue;
             }
 
             if (TestCruds[index].Id.Partition.Equals(value.Id.Partition))
             {
+                await InvokeAsync(StateHasChanged);
                 continue;
             }
 
             TestCruds[index] = value;
             Snackbar.Add($"{value.Name} was updated", Severity.Success);
+            await InvokeAsync(StateHasChanged);
         }
     }
 
