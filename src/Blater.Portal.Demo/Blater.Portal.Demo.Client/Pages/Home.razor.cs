@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using Blater.Enumerations;
 using Blater.Frontend.Services;
-using Blater.Interfaces;
 using Blater.JsonUtilities;
-using Blater.Models.User;
+using Blater.Models;
 using Blater.Portal.Demo.Client.Models;
 using Blater.Query.Extensions;
 using Blater.Query.Models;
@@ -20,27 +18,19 @@ public partial class Home
 {
     [Inject]
     protected IBlaterDatabaseStoreTEndpoints<TestCrud> Store { get; set; } = null!;
-    
+
     [Inject]
     protected ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    protected NavigationService NavigationService { get; set; } = null!;
+
     private List<TestCrud> TestCruds { get; set; } = [];
-    private bool _isCellEditMode;
-    private bool _editTriggerRowClick;
-    private string Jwt = "";
 
     protected override async Task OnInitializedAsync()
     {
-        var query = new BlaterQuery
-        {
-            Sort = new List<IDictionary<string, OrderDirection>>
-            {
-                new Dictionary<string, OrderDirection>
-                {
-                    { "createdAt", OrderDirection.Descending }
-                }
-            }
-        };
+        Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
+        var query = predicate.ExpressionToBlaterQuery();
 
         var results = await Store.FindMany(query);
         if (results.HandleErrors(out var errorsFind, out var response))
@@ -50,8 +40,10 @@ public partial class Home
                 Snackbar.Add(error.Message, Severity.Error);
             }
         }
-        
-        TestCruds = response.ToList();
+
+        TestCruds = response
+                   .OrderByDescending(x => x.Id.GuidValue)
+                   .ToList();
 
         if (TestCruds.Count == 0)
         {
@@ -72,80 +64,73 @@ public partial class Home
                 {
                     Snackbar.Add(error.Message, Severity.Error);
                 }
+
                 return;
             }
-            
+
             TestCruds.Add(value);
-            await InvokeAsync(StateHasChanged);
         }
 
-        await foreach (var item in Items())
-        {
-            TestCruds = item;
-            await InvokeAsync(StateHasChanged);
-        }
+        await InvokeAsync(StateHasChanged);
+
+        await GetChangesQuery(query);
     }
 
-    private async IAsyncEnumerable<List<TestCrud>> Items([EnumeratorCancellation] CancellationToken cancellationToken = default)
+    private async Task GetChangesQuery(BlaterQuery query)
     {
-        var query = new BlaterQuery
-        {
-            Sort = new List<IDictionary<string, OrderDirection>>
-            {
-                new Dictionary<string, OrderDirection>
-                {
-                    { "createdAt", OrderDirection.Descending }
-                }
-            }
-        };
-        
         var changes = Store.GetChangesQuery(query);
-        await foreach (var change in changes.WithCancellation(cancellationToken))
+        await foreach (var change in changes)
         {
             if (change.HandleErrors(out var errors, out var value))
             {
                 foreach (var error in errors)
                 {
                     Snackbar.Add(error.Message, Severity.Error);
-                    Console.WriteLine(errors.ToJson());
                 }
+                continue;
             }
-            
+
             var index = TestCruds.FindIndex(p => p.Id == value.Id);
 
             if (index == -1)
             {
                 TestCruds.Add(value);
                 Snackbar.Add($"{value.Name} was added", Severity.Success);
-                yield return TestCruds;
+                await InvokeAsync(StateHasChanged);
+                continue;
             }
 
             if (TestCruds[index].Id.Partition.Equals(value.Id.Partition))
             {
-                yield return TestCruds;
+                continue;
             }
 
             TestCruds[index] = value;
             Snackbar.Add($"{value.Name} was updated", Severity.Success);
-            yield return TestCruds;
-        }  
-        
-    }
-    
-    
-    private List<string> _events = [];
-    void StartedEditingItem(TestCrud item)
-    {
-        _events.Insert(0, $"Event = StartedEditingItem, Data = {item.ToJson()}");
+            await InvokeAsync(StateHasChanged);
+        }
     }
 
-    void CanceledEditingItem(TestCrud item)
+    private async Task Delete(BlaterId id)
     {
-        _events.Insert(0, $"Event = CanceledEditingItem, Data = {item.ToJson()}");
-    }
+        var result = await Store.Delete(id);
+        if (result.HandleErrors(out var errors, out var value))
+        {
+            foreach (var error in errors)
+            {
+                Snackbar.Add(error.Message, Severity.Error);
+            }
 
-    void CommittedItemChanges(TestCrud item)
-    {
-        _events.Insert(0, $"Event = CommittedItemChanges, Data = {item.ToJson()}");
+            return;
+        }
+
+        var testCrud = TestCruds.FirstOrDefault(x => x.Id == id);
+        if (testCrud != null && value)
+        {
+            TestCruds.Remove(testCrud);
+        }
+
+        Snackbar.Add(value ? "Item removed" : "Item not removed", value ? Severity.Success : Severity.Warning);
+        await InvokeAsync(StateHasChanged);
     }
 }

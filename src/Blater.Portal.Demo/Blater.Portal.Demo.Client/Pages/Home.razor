@@ -2,29 +2,47 @@
 
 @using Blater.Portal.Demo.Client.Models
 
-<MudDataGrid
-    T="TestCrud" 
-    Items="@TestCruds"
-    EditMode="@(_isCellEditMode ? DataGridEditMode.Cell : DataGridEditMode.Form)"
-    StartedEditingItem="@StartedEditingItem" 
-    CanceledEditingItem="@CanceledEditingItem" 
-    CommittedItemChanges="@CommittedItemChanges"
-    Bordered="true" 
-    Dense="true" 
-    EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)">
-    <Columns>
-        <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" />
-        <PropertyColumn Property="x => x.CreatedAt" Title="Created" />
-        <PropertyColumn Property="x => x.UpdatedAt" Title="Updated" />
-        <PropertyColumn Property="x => x.Enabled" Title="Enabled"/>
-        <PropertyColumn Property="x => x.Deleted" Title="Deleted"/>
-        <PropertyColumn Property="x => x.Name" Title="Name" />
-        <PropertyColumn Property="x => x.Quantity" Title="Quantity" />
-        
-        <TemplateColumn Hidden="@(_isCellEditMode || _editTriggerRowClick)" CellClass="d-flex justify-end">
-            <CellTemplate>
-                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@context.Actions.StartEditingItemAsync" />
-            </CellTemplate>
-        </TemplateColumn>
-    </Columns>
-</MudDataGrid>
+<MudCard Elevation="0" Class="pa-4 mb-2">
+    <MudGrid Justify="Justify.SpaceBetween" Class="pa-2 align-center">
+        <MudText
+            Typo="Typo.h5"
+            Class="ml-2">
+            Products
+        </MudText>
+        <MudIconButton
+            Color="Color.Primary"
+            OnClick="@(() => NavigationService.Navigate("formTestCrud"))"
+            Variant="Variant.Filled"
+            Size="Size.Medium"
+            Icon="@Material.Filled.Add"
+            Class="mr-2">
+        </MudIconButton>
+    </MudGrid>
+</MudCard>
+
+<MudTable 
+    T="TestCrud"
+    Items="@TestCruds" 
+    Hover="true" 
+    Breakpoint="Breakpoint.Sm"
+    LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Name</MudTh>
+        <MudTh>Quantity</MudTh>
+        <MudTh>CreatedAt</MudTh>
+        <MudTh>UpdatedAt</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Quantity">@context.Quantity</MudTd>
+        <MudTd DataLabel="CreatedAt">@context.CreatedAt.UtcDateTime</MudTd>
+        <MudTd DataLabel="UpdatedAt">@context.UpdatedAt.UtcDateTime</MudTd>
+        <MudTd DataLabel="">
+            <div class="d-flex align-center justify-center gap-2">
+                <MudIconButton Icon="@Material.Outlined.Edit" OnClick="@(() => NavigationService.Navigate($"formTestCrud/{context.Id}"))"/>
+                <MudIconButton Icon="@Material.Outlined.Delete" OnClick="@(() => Delete(context.Id))"/>
+            </div>
+        </MudTd>
+    </RowTemplate>
+</MudTable>
