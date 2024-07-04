@@ -1,5 +1,11 @@
 ﻿@page "/home"
 
+@layout PortalLayout
+
+@attribute [AutoNavMenu(2, BlaterIcons.BlaterIcon)]
+@attribute [AutoRequiredRoles("ProjectOwner")]
+
+@using Blater.Attributes.Auto
 @using Blater.Portal.Demo.Client.Models
 
 <MudCard Elevation="0" Class="pa-4 mb-2">

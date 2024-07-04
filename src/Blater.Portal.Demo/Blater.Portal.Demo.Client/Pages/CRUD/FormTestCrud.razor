@@ -8,7 +8,7 @@
                 <MudTextField T="string" Label="Name" Required="true" @bind-Value="@TestCrud.Name" RequiredError="User name is required!"/>
                 <MudTextField T="int" Label="Quantity" Required="true" @bind-Value="@TestCrud.Quantity" RequiredError="User name is required!"/>
                 <div class="d-flex align-center justify-space-between">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto" OnClick="@Save">Save</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto mt-4" OnClick="@Save">Save</MudButton>
                 </div>
             </MudForm>
         </MudPaper>

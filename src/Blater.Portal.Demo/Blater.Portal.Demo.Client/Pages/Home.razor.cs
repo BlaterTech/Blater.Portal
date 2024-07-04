@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Blater.Frontend.Services;
 using Blater.JsonUtilities;
 using Blater.Models;
+using Blater.Models.User;
 using Blater.Portal.Demo.Client.Models;
 using Blater.Query.Extensions;
 using Blater.Query.Models;
@@ -24,11 +25,74 @@ public partial class Home
 
     [Inject]
     protected NavigationService NavigationService { get; set; } = null!;
+    
+    [Inject]
+    protected BlaterAuthState BlaterAuthState { get; set; } = null!;
 
     private List<TestCrud> TestCruds { get; set; } = [];
 
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("BlaterAuthState OnParametersSet: " +BlaterAuthState.UserId);
+        Console.WriteLine("BlaterAuthState OnParametersSet: " +BlaterAuthState.ToJson());
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Console.WriteLine("BlaterAuthState: "+BlaterAuthState.UserId);
+            Console.WriteLine("BlaterAuthState: "+BlaterAuthState.ToJson());
+            Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
+            var query = predicate.ExpressionToBlaterQuery();
+
+            var results = await Store.FindMany(query);
+            if (results.HandleErrors(out var errorsFind, out var response))
+            {
+                foreach (var error in errorsFind)
+                {
+                    Snackbar.Add(error.Message, Severity.Error);
+                }
+            }
+
+            TestCruds = response.ToList();
+
+            if (TestCruds.Count == 0)
+            {
+                var testCrud = new TestCrud
+                {
+                    Enabled = true,
+                    Name = "Test",
+                    Quantity = 1,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    UpdatedAt = DateTimeOffset.UtcNow
+                };
+
+                var add = await Store.Insert(testCrud);
+
+                if (add.HandleErrors(out var errors, out var value))
+                {
+                    foreach (var error in errors)
+                    {
+                        Snackbar.Add(error.Message, Severity.Error);
+                    }
+
+                    return;
+                }
+
+                TestCruds.Add(value);
+            }
+        
+            await GetChangesQuery(query);
+
+            TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
+            Console.WriteLine(TestCruds.ToJson());
+        }
+    }
+
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("BlaterAuthState: "+BlaterAuthState.JwtToken);
         Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
         var query = predicate.ExpressionToBlaterQuery();
 
@@ -41,9 +105,7 @@ public partial class Home
             }
         }
 
-        TestCruds = response
-                   .OrderByDescending(x => x.Id.GuidValue)
-                   .ToList();
+        TestCruds = response.ToList();
 
         if (TestCruds.Count == 0)
         {
@@ -70,10 +132,11 @@ public partial class Home
 
             TestCruds.Add(value);
         }
-
-        await InvokeAsync(StateHasChanged);
-
+        
         await GetChangesQuery(query);
+
+        TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
+        Console.WriteLine(TestCruds.ToJson());
     }
 
     private async Task GetChangesQuery(BlaterQuery query)
@@ -96,7 +159,6 @@ public partial class Home
             {
                 TestCruds.Add(value);
                 Snackbar.Add($"{value.Name} was added", Severity.Success);
-                await InvokeAsync(StateHasChanged);
                 continue;
             }
 
@@ -107,7 +169,6 @@ public partial class Home
 
             TestCruds[index] = value;
             Snackbar.Add($"{value.Name} was updated", Severity.Success);
-            await InvokeAsync(StateHasChanged);
         }
     }
 
@@ -131,6 +192,6 @@ public partial class Home
         }
 
         Snackbar.Add(value ? "Item removed" : "Item not removed", value ? Severity.Success : Severity.Warning);
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
     }
 }

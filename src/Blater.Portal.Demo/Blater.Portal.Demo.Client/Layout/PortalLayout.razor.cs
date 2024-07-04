@@ -40,7 +40,7 @@ public partial class PortalLayout
                     .Where(x => x.RoleNames.Any(role => BlaterAuthState.RoleNames.Contains(role)))
                     .Where(x => x.Permissions.Any(permission => BlaterAuthState.Permissions.Contains(permission)));
             
-            await InvokeAsync(StateHasChanged);
+            StateHasChanged();
         }
     }
 }
