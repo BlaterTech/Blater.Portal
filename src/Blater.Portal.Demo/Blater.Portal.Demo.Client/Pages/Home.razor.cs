@@ -28,6 +28,9 @@ public partial class Home
     
     [Inject]
     protected AuthenticationService AuthenticationService { get; set; } = null!;
+    
+    [Inject]
+    protected BlaterAuthState BlaterAuthState { get; set; } = null!;
 
     private List<TestCrud> TestCruds { get; set; } = [];
     private bool _loading = true;
@@ -36,15 +39,11 @@ public partial class Home
     {
         if (firstRender)
         {
-            var blaterAuthState = await AuthenticationService.GetBlaterState();
-            Console.WriteLine("BlaterAuthState.UserId: "    +blaterAuthState?.UserId);
-            Console.WriteLine("BlaterAuthState.JwtToken: "  +blaterAuthState?.JwtToken);
-            Console.WriteLine("BlaterAuthState JsonValue: " +blaterAuthState.ToJson());
-        
+            BlaterHttpClient.Token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjAyOTQwNjIsImlhdCI6MTcyMDIwNzY2MiwiVXNlcklkIjoiYmxhdGVyX21vZGVsc191c2VyX2JsYXRlcnVzZXI6MDhkYzljZjYtYzcyYS0xNjc5LTUwZjgtNzNjYjcwZGJhYTgyIiwiRW1haWwiOiJ0ZXN0ZSIsIkF2YXRhclVybCI6IiIsIkxvY2tvdXRFbmFibGVkIjoiZGlzYWJsZWQiLCJOYW1lIjoidGVzdGUiLCJwZXJtaXNzaW9ucyI6WyJQcm9qZWN0T3duZXI6RGVsZXRlIiwiUHJvamVjdE93bmVyOlVwZGF0ZSIsIlByb2plY3RPd25lcjpVcHNlcnQiLCJQcm9qZWN0T3duZXI6UmVhZCIsIlByb2plY3RPd25lcjpDcmVhdGUiLCJQcm9qZWN0T3duZXI6T3duZXIiXSwicm9sZSI6IlByb2plY3RPd25lciIsIm5iZiI6MTcyMDIwNzY2Mn0.4AYZYcV8A8GmPLmW-VoxQw2ntbASf8-H7nd82D-3fNE";
+            
             Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
             var query = predicate.ExpressionToBlaterQuery();
-
-            BlaterHttpClient.Token = blaterAuthState?.JwtToken;
+            query.Limit = 100;
 
             var results = await Store.FindMany(query);
             if (results.HandleErrors(out var errorsFind, out var response))
@@ -53,49 +52,25 @@ public partial class Home
                 {
                     Snackbar.Add(error.Message, Severity.Error);
                 }
+
+                _loading = false;
+                StateHasChanged();
+                return;
             }
             
-            TestCruds = response.ToList();
-
-            if (TestCruds.Count == 0)
-            {
-                var testCrud = new TestCrud
-                {
-                    Enabled = true,
-                    Name = "Test",
-                    Quantity = 1,
-                    CreatedAt = DateTimeOffset.UtcNow,
-                    UpdatedAt = DateTimeOffset.UtcNow
-                };
-
-                var add = await Store.Insert(testCrud);
-
-                if (add.HandleErrors(out var errors, out var value))
-                {
-                    foreach (var error in errors)
-                    {
-                        Snackbar.Add(error.Message, Severity.Error);
-                    }
-
-                    return;
-                }
-
-                TestCruds.Add(value);
-            }
+            TestCruds = response.OrderByDescending(x => x.Id.GuidValue).ToList();
             
-            await InvokeAsync(StateHasChanged);
+            //StateHasChanged();
         
-            await GetChangesQuery(query);
+            //await GetChangesQuery(query);
 
-            TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
+            //TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
             _loading = false;
-            Console.WriteLine("_loading: "+_loading);
-            Console.WriteLine(TestCruds.ToJson());
-            await InvokeAsync(StateHasChanged);
+            StateHasChanged();
         }
     }
 
-    private async Task GetChangesQuery(BlaterQuery query)
+    /*private async Task GetChangesQuery(BlaterQuery query)
     {
         Console.WriteLine("Chegou aqui");
         var changes = Store.GetChangesQuery(query);
@@ -108,7 +83,7 @@ public partial class Home
                     Snackbar.Add(error.Message, Severity.Error);
                 }
 
-                await InvokeAsync(StateHasChanged);
+                StateHasChanged();
                 continue;
             }
 
@@ -118,21 +93,21 @@ public partial class Home
             {
                 TestCruds.Add(value);
                 Snackbar.Add($"{value.Name} was added", Severity.Success);
-                await InvokeAsync(StateHasChanged);
+                StateHasChanged();
                 continue;
             }
 
             if (TestCruds[index].Id.Partition.Equals(value.Id.Partition))
             {
-                await InvokeAsync(StateHasChanged);
+                StateHasChanged();
                 continue;
             }
 
             TestCruds[index] = value;
             Snackbar.Add($"{value.Name} was updated", Severity.Success);
-            await InvokeAsync(StateHasChanged);
+            StateHasChanged();
         }
-    }
+    }*/
 
     private async Task Delete(BlaterId id)
     {

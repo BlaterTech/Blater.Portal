@@ -4,6 +4,7 @@ using Blater.Frontend.Services;
 using Blater.JsonUtilities;
 using Blater.Models.User;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 
 namespace Blater.Portal.Demo.Client.Layout;
 
@@ -12,16 +13,17 @@ public partial class PortalLayout
 {
     [Inject]
     protected AuthenticationService AuthenticationService { get; set; } = null!;
-    
 
     [Inject]
     protected NavigationService NavigationService { get; set; } = null!;
+    
+    [Inject]
+    protected BlaterAuthState BlaterAuthState { get; set; } = null!;
     
     protected IEnumerable<NavMenuRouteInfo> Routes { get; set; } = [];
 
     private bool _drawerOpen = true;
     private bool _loading = true;
-    protected BlaterAuthState BlaterAuthState { get; set; } = new();
 
     private void DrawerToggle()
     {
@@ -33,13 +35,8 @@ public partial class PortalLayout
     {
         if (firstRender)
         {
-            var authState = await AuthenticationService.TryAutoLogin();
-
-            if (authState != null)
-            {
-                BlaterAuthState = authState;
-            }
-            
+            await AuthenticationService.TryAutoLogin();
+        
             Routes = NavigationService
                     .Routes
                     .Where(x => x.RoleNames.Any(role => BlaterAuthState.RoleNames.Contains(role)))
