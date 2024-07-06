@@ -44,12 +44,18 @@ builder.Services.AddBlazoredLocalStorage(config =>
     config.JsonSerializerOptions.WriteIndented = true;
 });
 
+builder.Services.AddAuthentication().AddCookie();
+
+//builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddCascadingAuthenticationState();
+
 builder.Services.AddBlaterServices();
 
 builder.Services.AddScoped<BlaterAuthState>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
-builder.Services.AddScoped<IBlaterLocalStorageService, BlaterLocalStorageService>();
+builder.Services.AddScoped<IBlaterCookieService, BlaterCookieService>();
 
 builder.Services.AddSingleton<LocalizationService>();
 

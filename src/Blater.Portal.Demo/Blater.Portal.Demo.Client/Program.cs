@@ -24,12 +24,14 @@ builder.Services.AddBlazoredLocalStorage(config =>
 
 builder.Services.RemoveAll<IHttpMessageHandlerBuilderFilter>();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddBlaterServices();
 
 builder.Services.AddScoped<BlaterAuthState>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
-builder.Services.AddScoped<IBlaterLocalStorageService, BlaterLocalStorageService>();
+builder.Services.AddScoped<IBlaterCookieService, BlaterCookieService>();
 
 builder.Services.AddSingleton<LocalizationService>();
 
