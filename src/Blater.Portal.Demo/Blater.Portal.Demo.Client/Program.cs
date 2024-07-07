@@ -3,6 +3,7 @@ using Blater.Frontend.Services;
 using Blater.Logging;
 using Blater.Models.User;
 using Blater.SDK.Extensions;
+using Blater.SDK.Interfaces;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -28,7 +29,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddBlaterServices();
 
-builder.Services.AddScoped<BlaterAuthState>();
+//TODO builder.Services.AddScoped<BlaterAuthState>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
 builder.Services.AddScoped<IBlaterCookieService, BlaterCookieService>();
@@ -36,6 +37,10 @@ builder.Services.AddScoped<IBlaterCookieService, BlaterCookieService>();
 builder.Services.AddSingleton<LocalizationService>();
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+var blaterSdk = scope.ServiceProvider.GetRequiredService<IBlaterSDK>();
+await blaterSdk.Login("test", "test");
 
 try
 {

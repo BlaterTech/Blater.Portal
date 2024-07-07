@@ -8,7 +8,7 @@ using Blater.Models.Bases;
 
 namespace Blater.Portal.Client.Models;
 
-[SuppressMessage("Usage", "CA2252:Esta API requer a aceitação de recursos de visualização")]
+
 [AutoPage(false, true, true, true, BlaterProjects.Blater)]
 public class TestModel : BaseFrontendModel
 {

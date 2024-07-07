@@ -25,7 +25,7 @@ builder.Services.AddBlazoredLocalStorage(config =>
 builder.Services.RemoveAll<IHttpMessageHandlerBuilderFilter>();
 
 builder.Services.AddScoped<BrowserViewportObserverService>();
-builder.Services.AddScoped<BlaterAuthState>();
+//TODO builder.Services.AddScoped<BlaterAuthState>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
 

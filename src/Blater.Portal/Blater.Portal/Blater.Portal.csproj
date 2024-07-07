@@ -12,12 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj" />
     </ItemGroup>
 

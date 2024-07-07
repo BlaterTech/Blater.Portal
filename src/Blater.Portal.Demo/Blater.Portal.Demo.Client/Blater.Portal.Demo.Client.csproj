@@ -17,14 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Components\Inputs\BlaterPasswordInput.razor" />
-      <AdditionalFiles Include="Pages\Login\Login.razor" />
-      <AdditionalFiles Include="Pages\Login\SignUp.razor" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\CRUD\CreateTestCrud.razor" />
-      <_ContentIncludedByDefault Remove="Pages\CRUD\EditTestCrud.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Login\Login.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Login\SignUp.razor" />
     </ItemGroup>
 
 </Project>

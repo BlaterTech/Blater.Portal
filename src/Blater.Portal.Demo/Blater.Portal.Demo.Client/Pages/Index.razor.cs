@@ -1,25 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using Blater.Frontend.Services;
-using Blater.JsonUtilities;
+using Blater.Interfaces;
 using Blater.Models;
-using Blater.Models.User;
 using Blater.Portal.Demo.Client.Models;
 using Blater.Query.Extensions;
-using Blater.Query.Models;
-using Blater.SDK.Interfaces;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using MudBlazor;
 
 namespace Blater.Portal.Demo.Client.Pages;
 
-[SuppressMessage("Usage", "CA2252:Esta API requer a aceitação de recursos de visualização")]
-public partial class Home
+
+public partial class Index
 {
     [Inject]
-    protected IBlaterDatabaseStoreTEndpoints<TestCrud> Store { get; set; } = null!;
+    protected IBlaterDatabaseStoreT<TestCrud> Store { get; set; } = null!;
 
     [Inject]
     protected ISnackbar Snackbar { get; set; } = null!;
@@ -37,10 +32,6 @@ public partial class Home
     {
         if (firstRender)
         {
-            var jwtToken = await AuthenticationService.TryGetCookie();
-            Console.WriteLine("TryGetCookie: "+jwtToken);
-            BlaterHttpClient.Token = jwtToken;
-            
             Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
             var query = predicate.ExpressionToBlaterQuery();
             query.Limit = 100;

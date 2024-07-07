@@ -1,18 +1,41 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using System.Diagnostics.CodeAnalysis
+
+@using Microsoft.JSInterop
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
-@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components
 
 @using MudBlazor
+@using static MudBlazor.Icons
 
-@using Blater.Portal.Demo
-@using Blater.Portal.Demo.Apps
+
+@using Blater.Extensions
+@using Blater.Frontend.Services
+@using Blater.Interfaces
+@using Blater.Models
+@using Blater.Portal.Demo.Client.Models
+@using Blater.Attributes.Auto
+
+@using Blater.Frontend.Services
+@using Blater.SDK.Contracts.Authentication.Request
+@using Blater.SDK.Contracts.Common.Request
+@using Blater.SDK.Interfaces
+@using Blater.SDK.Interfaces.BlaterAuth
 
 @using Blater.Portal.Demo.Client
+
 @using Blater.Portal.Demo.Client.Pages
 @using Blater.Portal.Demo.Client.Layout
+
 @using Blater.Portal.Demo.Client.Components
+@using Blater.Portal.Demo.Client.Components.Inputs
+
+@using Blater.Frontend.Services
+@using Blater.SDK.Contracts.Authentication.Request
+@using Blater.SDK.Contracts.Common.Request
+@using Blater.SDK.Interfaces.BlaterAuth

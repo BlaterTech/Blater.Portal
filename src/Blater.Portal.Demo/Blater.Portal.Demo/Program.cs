@@ -4,6 +4,7 @@ using Blater.Frontend.Services;
 using Blater.Models.User;
 using Blater.Portal.Demo.Apps;
 using Blater.SDK.Extensions;
+using Blater.SDK.Interfaces;
 using Blazored.LocalStorage;
 using Microsoft.IdentityModel.Logging;
 using MudBlazor;
@@ -52,7 +53,7 @@ builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddBlaterServices();
 
-builder.Services.AddScoped<BlaterAuthState>();
+//TODO builder.Services.AddScoped<BlaterAuthState>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<NavigationService>();
 builder.Services.AddScoped<IBlaterCookieService, BlaterCookieService>();
@@ -65,6 +66,10 @@ builder.Services
        .AddInteractiveWebAssemblyComponents();
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+var blaterSdk = scope.ServiceProvider.GetRequiredService<IBlaterSDK>();
+await blaterSdk.Login("test", "test");
 
 AutoComponentsBuilders.Initialize();
         

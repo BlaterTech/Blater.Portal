@@ -13,10 +13,4 @@
     <ItemGroup>
         <ProjectReference Include="..\Blater.Portal.Demo.Client\Blater.Portal.Demo.Client.csproj"/>
      </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css" />
-      <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css.map" />
-    </ItemGroup>
-
 </Project>

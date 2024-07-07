@@ -1,13 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Blater.Frontend.Models;
 using Blater.Frontend.Services;
-using Blater.JsonUtilities;
 using Blater.Models.User;
 using Microsoft.AspNetCore.Components;
 
 namespace Blater.Portal.Client.Layout;
 
-[SuppressMessage("Usage", "CA2252:Esta API requer a aceitação de recursos de visualização")]
+
 public partial class PortalLayout
 {
     [Inject]
