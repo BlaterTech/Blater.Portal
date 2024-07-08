@@ -58,6 +58,11 @@ public partial class FormTestCrud
     {
         TestCrud.UpdatedAt = DateTimeOffset.UtcNow;
         TestCrud.Enabled = true;
+
+        if (Id == null)
+        {
+            TestCrud.CreatedAt = DateTimeOffset.UtcNow;
+        }
             
         var result = await Store.Upsert(TestCrud);
         if (result.HandleErrors(out var blaterErrors, out var response))
