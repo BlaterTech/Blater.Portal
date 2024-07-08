@@ -53,6 +53,6 @@ jobs:
         run: dotnet publish src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj -c Release -r linux-x64 -p:ContainerRepository=blater-demo -p:ContainerImageTag=latest /t:PublishContainer
       - name: Docker Deploy
         run: |
-          export NUGET_VERSION=$(date --utc '+%Y.%m.%d.%H%M' | sed 's/\.\(0*\)/./g')
-          docker tag blater-demo:latest registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
-          docker push registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
+          export VERSION=$(date --utc '+%Y%m%d%H%M')
+          docker tag blater-demo:latest registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$VERSION
+          docker push registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$VERSION
