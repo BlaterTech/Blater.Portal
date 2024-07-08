@@ -15,7 +15,7 @@
             </MudText>
             <MudIconButton
                 Color="Color.Primary"
-                OnClick="@(() => NavigationService.Navigate("formTestCrud"))"
+                OnClick="@(() => Create())"
                 Variant="Variant.Filled"
                 Size="Size.Medium"
                 Icon="@Material.Filled.Add"
@@ -45,7 +45,7 @@
             <MudTd DataLabel="UpdatedAt">@context.UpdatedAt.UtcDateTime</MudTd>
             <MudTd DataLabel="">
                 <div class="d-flex align-center justify-center gap-2">
-                    <MudIconButton Icon="@Material.Outlined.Edit" OnClick="@(() => NavigationService.Navigate($"formTestCrud/{context.Id}"))"/>
+                    <MudIconButton Icon="@Material.Outlined.Edit" OnClick="@(() => Edit(context.Id))"/>
                     <MudIconButton Icon="@Material.Outlined.Delete" OnClick="@(() => Delete(context.Id))"/>
                 </div>
             </MudTd>

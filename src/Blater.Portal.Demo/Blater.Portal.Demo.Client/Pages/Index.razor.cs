@@ -3,8 +3,10 @@ using System.Linq.Expressions;
 using Blater.Frontend.Services;
 using Blater.Interfaces;
 using Blater.Models;
+using Blater.Portal.Demo.Client.Components.Modals;
 using Blater.Portal.Demo.Client.Models;
 using Blater.Query.Extensions;
+using Blater.Query.Models;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -18,12 +20,9 @@ public partial class Index
 
     [Inject]
     protected ISnackbar Snackbar { get; set; } = null!;
-
-    [Inject]
-    protected NavigationService NavigationService { get; set; } = null!;
     
     [Inject]
-    protected AuthenticationService AuthenticationService { get; set; } = null!;
+    protected IDialogService DialogService { get; set; } = null!;
 
     private List<TestCrud> TestCruds { get; set; } = [];
     private bool _loading = true;
@@ -32,6 +31,7 @@ public partial class Index
     {
         if (firstRender)
         {
+            Console.WriteLine("Loading");
             Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
             var query = predicate.ExpressionToBlaterQuery();
             query.Limit = 100;
@@ -51,19 +51,20 @@ public partial class Index
             
             TestCruds = response.OrderByDescending(x => x.Id.GuidValue).ToList();
             
-            //StateHasChanged();
-        
-            //await GetChangesQuery(query);
-
-            //TestCruds = TestCruds.OrderByDescending(x => x.Id.GuidValue).ToList();
             _loading = false;
             StateHasChanged();
         }
     }
 
-    /*private async Task GetChangesQuery(BlaterQuery query)
+    protected override Task OnInitializedAsync()
     {
-        Console.WriteLine("Chegou aqui");
+        InvokeAsync(async () => await GetChangesQuery());
+        return base.OnInitializedAsync();
+    }
+
+    private async Task GetChangesQuery()
+    {
+        /*Console.WriteLine("Chegou aqui");
         var changes = Store.GetChangesQuery(query);
         await foreach (var change in changes)
         {
@@ -97,8 +98,31 @@ public partial class Index
             TestCruds[index] = value;
             Snackbar.Add($"{value.Name} was updated", Severity.Success);
             StateHasChanged();
+        }*/
+        
+        //Gambiarra
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(500));
+        while (true)
+        {
+            await timer.WaitForNextTickAsync();
+            Expression<System.Func<TestCrud, bool>> predicate = x => x.Id != null!;
+            var query = predicate.ExpressionToBlaterQuery();
+            var changes = await Store.FindMany(query);
+            if (changes.HandleErrors(out var errors, out var value))
+            {
+                foreach (var error in errors)
+                {
+                    Snackbar.Add(error.Message, Severity.Error);
+                }
+
+                StateHasChanged();
+                continue;
+            }
+
+            TestCruds = value.OrderByDescending(x => x.Id.GuidValue).ToList();
+            StateHasChanged();
         }
-    }*/
+    }
 
     private async Task Delete(BlaterId id)
     {
@@ -121,5 +145,20 @@ public partial class Index
 
         Snackbar.Add(value ? "Item removed" : "Item not removed", value ? Severity.Success : Severity.Warning);
         StateHasChanged();
+    }
+    
+    private async Task Create()
+    {
+        var parameters = new DialogParameters();
+        await DialogService.ShowAsync<FormTestCrud>("Create", parameters);
+    }
+    
+    private async Task Edit(BlaterId id)
+    {
+        var parameters = new DialogParameters
+        {
+            {"Id", id}
+        };
+        await DialogService.ShowAsync<FormTestCrud>("Edit", parameters);
     }
 }

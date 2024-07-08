@@ -15,10 +15,4 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\Login\Login.razor" />
-      <_ContentIncludedByDefault Remove="Pages\Login\SignUp.razor" />
-    </ItemGroup>
-
 </Project>

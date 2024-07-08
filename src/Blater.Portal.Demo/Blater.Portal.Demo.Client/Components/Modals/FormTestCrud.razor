@@ -1,14 +1,17 @@
-﻿<MudGrid>
-    <MudItem xs="12" sm="7">
-        <MudPaper Class="pa-4">
-            <MudText Align="Align.Center">@Title</MudText>
-            <MudForm @bind-IsValid="@_success">
-                <MudTextField T="string" Label="Name" Required="true" @bind-Value="@TestCrud.Name" RequiredError="User name is required!"/>
-                <MudTextField T="int" Label="Quantity" Required="true" @bind-Value="@TestCrud.Quantity" RequiredError="User name is required!"/>
-                <div class="d-flex align-center justify-space-between">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!_success)" Class="ml-auto mt-4" OnClick="@Save">Save</MudButton>
-                </div>
-            </MudForm>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+﻿<MudDialog>
+    <TitleContent>
+        @Title
+    </TitleContent>
+    <DialogContent>
+        <MudTextField T="string" Label="Name" Required="true" @bind-Value="@TestCrud.Name" RequiredError="User name is required!"/>
+        <MudTextField T="int" Label="Quantity" Required="true" @bind-Value="@TestCrud.Quantity" RequiredError="User name is required!"/>
+        <div class="d-flex align-center justify-space-between">
+            <MudButton
+                Variant="Variant.Filled"
+                Color="Color.Primary"
+                Class="ml-auto mt-4" OnClick="@Save">
+                Save
+            </MudButton>
+        </div>
+    </DialogContent>
+</MudDialog>

@@ -72,14 +72,12 @@ var blaterSdk = scope.ServiceProvider.GetRequiredService<IBlaterSDK>();
 await blaterSdk.Login("test", "test");
 
 AutoComponentsBuilders.Initialize();
-        
-app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 
-app.UseStatusCodePagesWithRedirects("/Error/{0}");
+//app.UseStatusCodePagesWithRedirects("/Error/{0}");
 
 if (!app.Environment.IsDevelopment())
 {
