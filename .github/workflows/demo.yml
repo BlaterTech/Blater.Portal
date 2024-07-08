@@ -1,0 +1,58 @@
+name: Blater API
+
+on:
+  push:
+    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Blater's Registry
+        uses: docker/login-action@v3
+        with:
+          registry: registry.blater.tech/blater
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Checkout Core
+        uses: actions/checkout@v4
+        with:
+          repository: BlaterTech/Blater
+          path: blater/Blater
+      - name: Checkout SDK
+        uses: actions/checkout@v4
+        with:
+          repository: BlaterTech/Blater.SDK
+          path: blater/Blater.SDK
+      - name: Checkout Frontend
+        uses: actions/checkout@v4
+        with:
+          repository: BlaterTech/Blater.Frontend
+          path: blater/Blater.Frontend
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: blater/Blater.Portal
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        working-directory: blater/Blater.Portal
+        run: dotnet restore src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj
+      - name: Build
+        working-directory: blater/Blater.Portal
+        run: dotnet build --no-restore src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj
+      #- name: Test the whole solution
+      #  working-directory: blater/Blater.Portal
+      #  run: dotnet test --verbosity normal src/Blater.Internals.sln
+      - name: Publish
+        working-directory: blater/Blater.Portal
+        run: dotnet publish src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj -c Release -r linux-x64 -p:ContainerRepository=blater-demo -p:ContainerImageTag=latest /t:PublishContainer
+      - name: Docker Deploy
+        run: |
+          export NUGET_VERSION=$(date --utc '+%Y.%m.%d.%H%M' | sed 's/\.\(0*\)/./g')
+          docker tag backend:latest registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
+          docker push registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
