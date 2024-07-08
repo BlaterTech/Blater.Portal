@@ -52,58 +52,16 @@ public partial class Index
 
             _loading = false;
             StateHasChanged();
+            await Task.Run(GetChangesQuery).ConfigureAwait(false);
         }
-    }
-
-    protected override Task OnInitializedAsync()
-    {
-        InvokeAsync(async () => await GetChangesQuery());
-        return base.OnInitializedAsync();
     }
 
     private async Task GetChangesQuery()
     {
-        /*Console.WriteLine("Chegou aqui");
-        var changes = Store.GetChangesQuery(query);
-        await foreach (var change in changes)
-        {
-            if (change.HandleErrors(out var errors, out var value))
-            {
-                foreach (var error in errors)
-                {
-                    Snackbar.Add(error.Message, Severity.Error);
-                }
-
-                StateHasChanged();
-                continue;
-            }
-
-            var index = TestCruds.FindIndex(p => p.Id == value.Id);
-
-            if (index == -1)
-            {
-                TestCruds.Add(value);
-                Snackbar.Add($"{value.Name} was added", Severity.Success);
-                StateHasChanged();
-                continue;
-            }
-
-            if (TestCruds[index].Id.Partition.Equals(value.Id.Partition))
-            {
-                StateHasChanged();
-                continue;
-            }
-
-            TestCruds[index] = value;
-            Snackbar.Add($"{value.Name} was updated", Severity.Success);
-            StateHasChanged();
-        }*/
-
         //Gambiarra
-        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(50));
-        while (true)
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(750));
+        while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
         {
-            await timer.WaitForNextTickAsync();
             Expression<System.Func<TestCrud, bool>> predicate = x => x.Id != null! && x.Enabled == true;
             var query = predicate.ExpressionToBlaterQuery();
             var changes = await Store.FindMany(query);
@@ -118,8 +76,11 @@ public partial class Index
                 continue;
             }
 
-            TestCruds = value.OrderByDescending(x => x.Id.GuidValue).ToList();
-            StateHasChanged();
+            await InvokeAsync(() =>
+            {
+                TestCruds = value.OrderByDescending(x => x.CreatedAt).ToList();
+                StateHasChanged();
+            });
         }
     }
 
