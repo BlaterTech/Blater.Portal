@@ -12,7 +12,6 @@ using MudBlazor;
 
 namespace Blater.Portal.Demo.Client.Pages;
 
-
 public partial class Index
 {
     [Inject]
@@ -20,7 +19,7 @@ public partial class Index
 
     [Inject]
     protected ISnackbar Snackbar { get; set; } = null!;
-    
+
     [Inject]
     protected IDialogService DialogService { get; set; } = null!;
 
@@ -32,7 +31,7 @@ public partial class Index
         if (firstRender)
         {
             Console.WriteLine("Loading");
-            Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty;
+            Expression<Func<TestCrud, bool>> predicate = x => x.Name != string.Empty && x.Enabled == true;
             var query = predicate.ExpressionToBlaterQuery();
             query.Limit = 100;
 
@@ -48,9 +47,9 @@ public partial class Index
                 StateHasChanged();
                 return;
             }
-            
+
             TestCruds = response.OrderByDescending(x => x.Id.GuidValue).ToList();
-            
+
             _loading = false;
             StateHasChanged();
         }
@@ -99,13 +98,13 @@ public partial class Index
             Snackbar.Add($"{value.Name} was updated", Severity.Success);
             StateHasChanged();
         }*/
-        
+
         //Gambiarra
-        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(500));
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(50));
         while (true)
         {
             await timer.WaitForNextTickAsync();
-            Expression<System.Func<TestCrud, bool>> predicate = x => x.Id != null!;
+            Expression<System.Func<TestCrud, bool>> predicate = x => x.Id != null! && x.Enabled == true;
             var query = predicate.ExpressionToBlaterQuery();
             var changes = await Store.FindMany(query);
             if (changes.HandleErrors(out var errors, out var value))
@@ -124,9 +123,11 @@ public partial class Index
         }
     }
 
-    private async Task Delete(BlaterId id)
+    private async Task Delete(TestCrud testCrud)
     {
-        var result = await Store.Delete(id);
+        testCrud.Enabled = false;
+        var result = await Store.Upsert(testCrud);
+
         if (result.HandleErrors(out var errors, out var value))
         {
             foreach (var error in errors)
@@ -134,30 +135,25 @@ public partial class Index
                 Snackbar.Add(error.Message, Severity.Error);
             }
 
+            StateHasChanged();
             return;
         }
 
-        var testCrud = TestCruds.FirstOrDefault(x => x.Id == id);
-        if (testCrud != null && value)
-        {
-            TestCruds.Remove(testCrud);
-        }
-
-        Snackbar.Add(value ? "Item removed" : "Item not removed", value ? Severity.Success : Severity.Warning);
+        Snackbar.Add("Item removed", Severity.Success);
         StateHasChanged();
     }
-    
+
     private async Task Create()
     {
         var parameters = new DialogParameters();
         await DialogService.ShowAsync<FormTestCrud>("Create", parameters);
     }
-    
+
     private async Task Edit(BlaterId id)
     {
         var parameters = new DialogParameters
         {
-            {"Id", id}
+            { "Id", id }
         };
         await DialogService.ShowAsync<FormTestCrud>("Edit", parameters);
     }
