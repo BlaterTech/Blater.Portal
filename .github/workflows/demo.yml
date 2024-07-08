@@ -54,5 +54,5 @@ jobs:
       - name: Docker Deploy
         run: |
           export NUGET_VERSION=$(date --utc '+%Y.%m.%d.%H%M' | sed 's/\.\(0*\)/./g')
-          docker tag backend:latest registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
+          docker tag blater-demo:latest registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
           docker push registry.blater.tech/blater/blater-demo:${{github.REF_NAME}}-$NUGET_VERSION
