@@ -1,0 +1,20 @@
+﻿@page "/auth"
+
+@using Blater.JsonUtilities
+@using Blater.Portal.Core.Extensions
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+@rendermode InteractiveAuto
+
+<PageTitle>Auth</PageTitle>
+
+<h1>You are authenticated</h1>
+
+<AuthorizeView>
+    <p>Name -> @context.User.Identity?.Name!</p>
+    <p>UserId -> @context.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value!</p>
+    <p>AuthenticationType -> @context.User.Identity?.AuthenticationType!</p>
+    <p>IsAuthenticated -> @context.User.Identity?.IsAuthenticated!</p>
+    <p>BlaterUserToken -> @context.User.GetUserAuthenticated().ToJson()</p>
+</AuthorizeView>

@@ -1,97 +1,79 @@
-using Blater.Frontend.Auto;
-using Blater.Frontend.Services;
-using Blater.Models.User;
-using Blater.Portal.Apps;
-using Blater.Portal.Client.Services;
+using Blater;
+using Blater.Portal.Client.Handlers;
+using Microsoft.AspNetCore.Components.Authorization;
+using Blater.Portal.Components;
+using Blater.Portal.Components.Account;
+using Blater.Portal.Core;
 using Blater.SDK.Extensions;
-using Blazored.LocalStorage;
-using Microsoft.IdentityModel.Logging;
-using MudBlazor;
-using MudBlazor.Services;
-using Serilog;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
-#pragma warning disable CA2252
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddSerilog();
-
-builder.Services.Configure<HostOptions>(hostOptions =>
-{
-    hostOptions.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;
-});
-
-IdentityModelEventSource.ShowPII = true;
-
-if (!builder.Environment.IsDevelopment())
-{
-    builder.Services.AddResponseCompression();
-}
-
-builder.Services.AddMudServices(config =>
-{
-    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
-    config.SnackbarConfiguration.PreventDuplicates = true;
-    config.SnackbarConfiguration.NewestOnTop = false;
-    config.SnackbarConfiguration.ShowCloseIcon = true;
-    config.SnackbarConfiguration.VisibleStateDuration = 10000;
-    config.SnackbarConfiguration.HideTransitionDuration = 500;
-    config.SnackbarConfiguration.ShowTransitionDuration = 500;
-    config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
-});
-        
-builder.Services.AddBlazoredLocalStorage(config =>
-{
-    config.JsonSerializerOptions.WriteIndented = true;
-});
-
-//TODO builder.Services.AddScoped<BlaterAuthState>();
-builder.Services.AddScoped<BrowserViewportObserverService>();
-builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddScoped<NavigationService>();
-
-builder.Services.AddSingleton<LocalizationService>();
-        
-builder.Services.AddBlaterServices();
-
+// Add services to the container.
 builder.Services
        .AddRazorComponents()
        .AddInteractiveServerComponents()
-       .AddInteractiveWebAssemblyComponents();
+       .AddInteractiveWebAssemblyComponents()
+       .AddAuthenticationStateSerialization();
+
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<IdentityUserAccessor>();
+builder.Services.AddScoped<IdentityRedirectManager>();
+builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+
+builder.Services
+       .AddAuthentication(options =>
+        {
+            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        })
+       .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            options.LogoutPath = "/Account/Login";
+            options.ExpireTimeSpan = TimeSpan.FromDays(1);
+            options.Cookie = new CookieBuilder
+            {
+                Name = Configuration.CookieAuthName,
+                IsEssential = true,
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict
+            };
+        });
+
+builder.Services.AddScoped<CookieHandler>();
+
+builder.Services.AddHttpClient<BlaterHttpClient>((_, client) =>
+{
+    client.BaseAddress = new Uri("http://localhost:5296");
+}).AddHttpMessageHandler<CookieHandler>();
+
+builder.Services.AddBlaterDatabase();
+builder.Services.AddBlaterManagement();
+builder.Services.AddBlaterKeyValue();
+builder.Services.AddBlaterAuthStores();
+builder.Services.AddBlaterAuthRepositories();
 
 var app = builder.Build();
 
-AutoComponentsBuilders.Initialize();
-        
-app.UseHttpsRedirection();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseWebAssemblyDebugging();
+}
+else
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-
-app.UseStatusCodePagesWithRedirects("/Error/{0}");
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error", true);
-    app.UseHsts();
-}
-else
-{
-    app.UseWebAssemblyDebugging();
-}
-
 app.MapRazorComponents<App>()
    .AddInteractiveServerRenderMode()
    .AddInteractiveWebAssemblyRenderMode()
    .AddAdditionalAssemblies(typeof(Blater.Portal.Client._Imports).Assembly);
 
-try
-{
-    await app.StartAsync();
-    await app.WaitForShutdownAsync();
-}
-finally
-{
-    await app.DisposeAsync();
-}
-#pragma warning restore CA2252
+app.Run();

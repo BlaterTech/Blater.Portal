@@ -1,47 +1,27 @@
-using Blater.Frontend.Services;
-using Blater.Logging;
+using System.Net.Http.Headers;
+using Blater;
 using Blater.Models.User;
-using Blater.Portal.Client.Services;
+using Blater.Portal.Client.Handlers;
 using Blater.SDK.Extensions;
-using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Http;
-using MudBlazor.Services;
-
-#pragma warning disable CA2252
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.SetupSerilog();
+builder.Services.AddAuthorizationCore();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddAuthenticationStateDeserialization();
 
-builder.Services.AddMudServices();
+builder.Services.AddScoped<CookieHandler>();
 
-builder.Services.AddBlazoredLocalStorage(config =>
+builder.Services.AddHttpClient<BlaterHttpClient>((sp, client) =>
 {
-    config.JsonSerializerOptions.WriteIndented = true;
-});
+    client.BaseAddress = new Uri("http://localhost:5296");
+}).AddHttpMessageHandler<CookieHandler>();
 
-builder.Services.RemoveAll<IHttpMessageHandlerBuilderFilter>();
+builder.Services.AddBlaterDatabase();
+builder.Services.AddBlaterManagement();
+builder.Services.AddBlaterKeyValue();
+builder.Services.AddBlaterAuthStores();
+builder.Services.AddBlaterAuthRepositories();
 
-builder.Services.AddScoped<BrowserViewportObserverService>();
-//TODO builder.Services.AddScoped<BlaterAuthState>();
-builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddScoped<NavigationService>();
-
-builder.Services.AddSingleton<LocalizationService>();
-
-builder.Services.AddBlaterServices();
-
-var app = builder.Build();
-
-try
-{
-    await app.RunAsync();
-}
-finally
-{
-    await app.DisposeAsync();
-}
-
-#pragma warning restore CA2252
+await builder.Build().RunAsync();
