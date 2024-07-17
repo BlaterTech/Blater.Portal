@@ -1,0 +1,44 @@
+﻿
+@inherits LayoutComponentBase
+
+<MudRTLProvider>
+    <MudThemeProvider IsDarkMode="true" Theme="@Theme"/>
+    <MudPopoverProvider />
+    <MudSnackbarProvider/>
+    <MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.ExtraSmall"/>
+    @Body
+</MudRTLProvider>
+
+@code
+{
+    private static MudTheme Theme => new()
+    {
+        PaletteDark =
+        {
+            Primary = "#0B0813",
+            PrimaryDarken = "#0B0813",
+            PrimaryLighten = "#0B0813",
+            Secondary = "#1A153B",
+            SecondaryDarken = "#1A153B",
+            SecondaryLighten = "#1A153B",
+            Tertiary = "#C26EE2",
+            TertiaryDarken = "#C26EE2",
+            TertiaryLighten = "#C26EE2",
+            DrawerText = "#FFFFFF",
+            DrawerIcon = "#0B9DD0",
+            AppbarBackground = "#0B0813",
+            AppbarText = "#FFFFFF",
+            Background = "#0B0813",
+            Surface = "#1c1c1c",
+            PrimaryContrastText = "#1c1c1c"
+        },
+        Typography = new Typography
+        {
+            Button = new Button
+            {
+                FontWeight = 700,
+                FontSize = "0.85rem"
+            }
+        }
+    };
+}

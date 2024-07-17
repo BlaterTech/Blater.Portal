@@ -1,0 +1,122 @@
+﻿@using Blater.Portal.Core.Extensions
+
+@inherits LayoutComponentBase
+
+@layout BlaterMainLayout
+
+<MudLayout>
+    <AuthorizeView>
+        <Authorized>
+            @{
+                var blaterUserToken = context.User.GetUserAuthenticated();
+                <MudAppBar Elevation="1">
+                    <MudIconButton Icon="@Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())"/>
+                    <MudSpacer/>
+
+                    <MudIconButton
+                        Icon="@Material.Outlined.Notifications"
+                        Color="Color.Inherit"/>
+
+                    <MudText Class="pr-2">
+                        Olá, @(blaterUserToken.Name)!
+                    </MudText>
+
+                    <MudAvatar>
+                        <MudImage Src="@blaterUserToken.AvatarImage"/>
+                    </MudAvatar>
+                </MudAppBar>
+            }
+        </Authorized>
+    </AuthorizeView>
+    <MudDrawer @bind-Open="@_drawerOpen"
+               Elevation="2"
+               Variant="DrawerVariant.Mini"
+               Class="overflow-hidden"
+               MiniWidth="50px">
+        <MudDrawerHeader Class="pa-1 d-flex align-center justify-center">
+            @if (_drawerOpen)
+            {
+                <div class="d-flex align-center gap-1">
+                    <MudImage
+                        Class="pa-1"
+                        Src="blater-icon.svg"
+                        Width="50">
+                    </MudImage>
+                    <MudImage
+                        Class="pa-1"
+                        Src="blater-logo.svg"
+                        Width="100">
+                    </MudImage>
+                </div>
+            }
+            else
+            {
+                <MudImage
+                    Class="pa-1"
+                    Src="blater-icon.svg"
+                    Width="50">
+                </MudImage>
+            }
+        </MudDrawerHeader>
+
+        @{
+            @*foreach (var route in Routes)
+                        {
+                            if (route.IsSubMenu)
+                            {
+                                <MudNavGroup
+                                    Icon="@route.Icon"
+                                    Title="@route.Name"
+                                    ExpandIcon="@ExpandIcon">
+                                    @foreach (var subRoute in route.ChildRoutes)
+                                    {
+                                        <MudNavLink
+                                            Icon="@subRoute.Icon"
+                                            Href="@subRoute.Route"
+                                            Match="NavLinkMatch.Prefix">
+                                            <MudText>
+                                                @subRoute.Name
+                                            </MudText>
+                                        </MudNavLink>
+                                    }
+                                </MudNavGroup>
+                            }
+                            else
+                            {
+                                <MudNavLink
+                                    Icon="@route.Icon"
+                                    Href="@route.Route"
+                                    Match="NavLinkMatch.Prefix">
+                                    <MudText>
+                                        @route.Name
+                                    </MudText>
+                                </MudNavLink>
+                            }
+                        }*@
+        }
+        
+        <MudSpacer/>
+
+        @*<MudNavLink
+                        Icon="@Material.Filled.ExitToApp"
+                        Match="NavLinkMatch.Prefix"
+                        IconColor="Color.Error"
+                        OnClick="@(async e => await AuthenticationService.Logout())">
+                        <MudText Color="Color.Error">
+                            Sair
+                        </MudText>
+                    </MudNavLink>*@
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.ExtraExtraLarge">
+            <AuthorizeView>
+                <Authorized>
+                    @Body
+                </Authorized>
+                <NotAuthorized>
+                    <p>Permission is required access this content</p>
+                </NotAuthorized>
+            </AuthorizeView>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

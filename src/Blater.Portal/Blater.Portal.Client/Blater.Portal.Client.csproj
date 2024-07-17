@@ -27,7 +27,6 @@
 
     <ItemGroup>
       <AdditionalFiles Include="Layout\MainLayout.razor" />
-      <AdditionalFiles Include="Layout\NavMenu.razor" />
     </ItemGroup>
 
 </Project>

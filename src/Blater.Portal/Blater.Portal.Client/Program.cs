@@ -2,6 +2,7 @@ using Blater;
 using Blater.Portal.Client.Handlers;
 using Blater.SDK.Extensions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddAuthenticationStateDeserialization();
 
 builder.Services.AddScoped<CookieHandler>();
 
-builder.Services.AddHttpClient<BlaterHttpClient>((sp, client) =>
+builder.Services.AddHttpClient<BlaterHttpClient>((_, client) =>
 {
     client.BaseAddress = new Uri("http://localhost:5296");
 }).AddHttpMessageHandler<CookieHandler>();
@@ -22,4 +23,15 @@ builder.Services.AddBlaterKeyValue();
 builder.Services.AddBlaterAuthStores();
 builder.Services.AddBlaterAuthRepositories();
 
-await builder.Build().RunAsync();
+builder.Services.AddMudServices();
+
+var app = builder.Build();
+
+try
+{
+    await app.RunAsync();
+}
+finally
+{
+    await app.DisposeAsync();
+}

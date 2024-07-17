@@ -36,10 +36,14 @@
       <_ContentIncludedByDefault Remove="Components\Account\Pages\Manage\SetPassword.razor" />
       <_ContentIncludedByDefault Remove="Components\Account\Pages\Manage\TwoFactorAuthentication.razor" />
       <_ContentIncludedByDefault Remove="Components\Account\Pages\Manage\_Imports.razor" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css.map" />
+      <_ContentIncludedByDefault Remove="Components\Layout\MainLayout2.razor" />
+      <_ContentIncludedByDefault Remove="Components\Layout\NavMenu2.razor" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Components\Account\Base\" />
+      <Folder Include="wwwroot\js\" />
     </ItemGroup>
 
 </Project>
