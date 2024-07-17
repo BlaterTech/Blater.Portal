@@ -25,4 +25,9 @@
       <ProjectReference Include="..\..\Blater.Portal.Core\Blater.Portal.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Layout\MainLayout.razor" />
+      <AdditionalFiles Include="Layout\NavMenu.razor" />
+    </ItemGroup>
+
 </Project>
