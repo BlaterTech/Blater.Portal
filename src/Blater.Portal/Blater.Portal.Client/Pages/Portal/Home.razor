@@ -1,6 +1,4 @@
-﻿@page "/auth"
-
-<PageTitle>Auth</PageTitle>
+﻿@page "/home"
 
 <BlaterAuthorizeView @ref="@_blaterAuthorizeView" Roles="@_roles" Permissions="@_permissions">
     <Authorized>
@@ -23,10 +21,8 @@
 
 @code{
 
-    readonly List<string> _roles = ["ProjectOwner"];
-    readonly List<string> _permissions = ["ProjectOwner:Create"];
+readonly List<string> _roles = ["ProjectOwner"];
+readonly List<string> _permissions = ["ProjectOwner:Create"];
 
-    BlaterAuthorizeView _blaterAuthorizeView;
+BlaterAuthorizeView _blaterAuthorizeView;
 }
-
-
