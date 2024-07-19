@@ -1,94 +1,93 @@
 ﻿@page "/Account/Register"
 
+@using System.ComponentModel.DataAnnotations
 @inherits BaseAccount
 
-<MudGrid Justify="Justify.Center">
-    <MudItem xs="12" sm="12" md="8" lg="8" xl="8" xxl="8">
-        <MudPaper Class="mud-width-full pa-8">
-            <div class="d-flex align-center justify-center">
-                <BlaterLogo/>
-            </div>
-            <div>
-                <MudText Typo="@Typo.h4" Color="Color.Primary" Class="mb-6 mt-4">
-                    Create your account
-                </MudText>
-            </div>
-            <div class="d-flex flex-row align-start gap-2">
-                <MudButton
-                    StartIcon="@Custom.Brands.GitHub"
-                    IconClass="px-2"
-                    Class="d-flex justify-start align-center mud-width-full"
-                    Size="Size.Medium"
-                    Variant="Variant.Outlined">
-                    Continue with GitHub
-                </MudButton>
-                <MudButton
-                    StartIcon="@Custom.Brands.Google"
-                    IconClass="px-2"
-                    Class="d-flex justify-start align-center mud-width-full"
-                    Size="Size.Medium"
-                    Variant="Variant.Outlined">
-                    Continue with Google
-                </MudButton>
-            </div>
-            <div class="d-flex align-center mt-4" style="height: 50px;">
-                <MudDivider Style="width: 30%"/>
-                <MudText Typo="@Typo.subtitle1" Class="pa-4"> or </MudText>
-                <MudDivider Style="width: 30%"/>
-            </div>
-            <EditForm
-                Model="InputRegister"
-                FormName="@nameof(InputRegister)"
-                OnValidSubmit="OnValidRegisterSubmit">
-                <DataAnnotationsValidator/>
+<BlaterLogin T="InputModel" IsLogin="false" FormName="register" OnValidSubmit="RegisterUser">
+    <FormInputs>
 
-                <BlaterTextInput
-                    T="string"
-                    @rendermode="InteractiveServer"
-                    Label="Name"
-                    Required="true"
-                    RequiredError="Name is required"
-                    Value="@InputRegister.Name"
-                    ValueChanged="@(x => InputRegister.Name = x)"/>
+        <MudStaticTextField
+            @bind-Value="@Input.Name"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Material.Outlined.Email"
+            autocomplete="name"
+            Class="pb-2"
+            Margin="Margin.Dense"
+            Variant="Variant.Outlined"
+            Label="Name"
+            Placeholder="name"
+            For="() => Input.Name"/>
 
-                <BlaterTextInput
-                    T="string"
-                    @rendermode="InteractiveServer"
-                    Label="Email"
-                    Required="true"
-                    RequiredError="Email is required"
-                    InputType="InputType.Email"
-                    Value="@InputRegister.Email"
-                    ValueChanged="@(x => InputRegister.Email = x)"/>
-                
-                <BlaterPasswordInput
-                    @rendermode="InteractiveServer"
-                    Value="@InputRegister.Password"
-                    ValueChanged="@(x => InputRegister.Password = x)"/>
+        <MudStaticTextField
+            @bind-Value="@Input.Email"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Material.Outlined.Email"
+            autocomplete="username"
+            Class="pb-2"
+            Margin="Margin.Dense"
+            Variant="Variant.Outlined"
+            Label="Email"
+            Placeholder="static@mail.com"
+            For="() => Input.Email"/>
 
-                <BlaterPasswordInput
-                    @rendermode="InteractiveServer"
-                    Label="Confirm password"
-                    Value="@InputRegister.ConfirmPassword"
-                    ValueChanged="@(x => InputRegister.ConfirmPassword = x)"/>
+        <MudStaticTextField
+            @bind-Value="@Input.Password"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Material.Outlined.Lock"
+            autocomplete="current-password"
+            Class="pb-2"
+            Margin="Margin.Dense"
+            Variant="Variant.Outlined"
+            Label="Password"
+            Placeholder="********"
+            InputType="InputType.Password"
+            For="() => Input.Password"/>
 
-                <div class="mt-8">
-                    <MudButton
-                        ButtonType="ButtonType.Submit"
-                        Style="width: 100%"
-                        Variant="Variant.Filled"
-                        Color="Color.Primary">
-                        Continue
-                    </MudButton>
-                </div>
-            </EditForm>
+        <MudStaticTextField
+            @bind-Value="@Input.ConfirmPassword"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Material.Outlined.Lock"
+            autocomplete="confirm-current-password"
+            Class="pb-2"
+            Margin="Margin.Dense"
+            Variant="Variant.Outlined"
+            Label="Confirm password"
+            Placeholder="********"
+            InputType="InputType.Password"
+            For="() => Input.ConfirmPassword"/>
+    </FormInputs>
+</BlaterLogin>
 
-            <div class="d-flex align-center">
-                <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                    @("Have an account?")
-                    <MudLink Href="/Account/Login">Sign in</MudLink>
-                </MudText>
-            </div>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+@code
+{
+    [SupplyParameterFromForm(FormName = "register")]
+    private InputModel Input { get; set; } = new();
+
+    public async Task RegisterUser()
+    {
+        await Register(Input.Email, Input.Name, Input.Password);
+    }
+
+    protected sealed class InputModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; } = "";
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+}

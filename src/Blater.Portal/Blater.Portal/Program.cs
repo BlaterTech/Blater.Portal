@@ -5,6 +5,7 @@ using Blater.Portal.Components;
 using Blater.Portal.Components.Account;
 using Blater.Portal.Core;
 using Blater.SDK.Extensions;
+using Blazr.RenderState.Server;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MudBlazor.Services;
 
@@ -20,7 +21,7 @@ builder.Services
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
-builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 
 builder.Services
        .AddAuthentication(options =>
@@ -58,6 +59,7 @@ builder.Services.AddBlaterAuthStores();
 builder.Services.AddBlaterAuthRepositories();
 
 builder.Services.AddMudServices();
+builder.AddBlazrRenderStateServerServices();
 
 var app = builder.Build();
 

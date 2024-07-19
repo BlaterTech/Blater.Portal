@@ -1,5 +1,6 @@
 ﻿@page "/auth"
 
+@using System.Security.Claims
 @using Blater.JsonUtilities
 @using Blater.Portal.Core.Extensions
 
@@ -9,6 +10,7 @@
 
 <AuthorizeView>
     <p>UserId -> @context.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value!</p>
+    <p>Role -> @context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value!</p>
     <p>AuthenticationType -> @context.User.Identity?.AuthenticationType!</p>
     <p>IsAuthenticated -> @context.User.Identity?.IsAuthenticated!</p>
     <p>BlaterUserToken -> @context.User.GetUserAuthenticated().ToJson()</p>

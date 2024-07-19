@@ -1,12 +1,48 @@
-﻿<div class="d-flex align-center gap-1">
-    <MudImage
-        Class="pa-1"
-        Src="img/blater-icon.svg"
-        Width="50">
-    </MudImage>
-    <MudImage
-        Class="pa-1"
-        Src="img/blater-logo.svg"
-        Width="100">
-    </MudImage>
+﻿<div class="d-flex align-center @(ContainsIcon ? "gap-1" : "")">
+    
+    @if (ContainsIcon)
+    {
+        <MudImage
+            Class="@IconClass"
+            Src="@Icon"
+            Width="@IconWidth">
+        </MudImage>
+    }
+    
+    @if (!OnlyIcon)
+    {
+        <MudImage
+            Class="@ImageClass"
+            Src="@Image"
+            Width="@ImageWidth">
+        </MudImage>
+    }
+    
 </div>
+
+@code
+{
+    [Parameter]
+    public bool ContainsIcon { get; set; } = true;
+    
+    [Parameter]
+    public bool OnlyIcon { get; set; } = false;
+    
+    [Parameter]
+    public string Icon { get; set; } = "img/blater-icon.svg";
+    
+    [Parameter]
+    public string IconClass { get; set; } = "pa-1";
+
+    [Parameter]
+    public int IconWidth { get; set; } = 50;
+    
+    [Parameter]
+    public string Image { get; set; } = "img/blater-logo.svg";
+    
+    [Parameter]
+    public string ImageClass { get; set; } = "pa-1";
+    
+    [Parameter]
+    public int ImageWidth { get; set; } = 100;
+}

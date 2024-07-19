@@ -1,75 +1,94 @@
-﻿<MudGrid Justify="Justify.Center">
-    <MudItem xs="12" sm="12" md="8" lg="8" xl="8" xxl="8">
-        <MudPaper Class="mud-width-full pa-8">
-            <div class="d-flex align-center justify-center">
-                <BlaterLogo/>
-            </div>
-            <div>
-                <MudText Typo="@Typo.h4" Color="Color.Primary" Class="mb-6 mt-4">
-                    @(IsLogin ? "Login" : "Create your account")
-                </MudText>
-            </div>
-            <div class="d-flex flex-row align-start gap-2">
-                <MudButton
-                    StartIcon="@Custom.Brands.GitHub"
-                    IconClass="px-2"
-                    Class="d-flex justify-start align-center mud-width-full"
-                    Size="Size.Medium"
-                    Variant="Variant.Outlined">
-                    Continue with GitHub
-                </MudButton>
-                <MudButton
-                    StartIcon="@Custom.Brands.Google"
-                    IconClass="px-2"
-                    Class="d-flex justify-start align-center mud-width-full"
-                    Size="Size.Medium"
-                    Variant="Variant.Outlined">
-                    Continue with Google
-                </MudButton>
-            </div>
-            <div class="d-flex align-center mt-4" style="height: 50px;">
-                <MudDivider Style="width: 30%"/>
-                <MudText Typo="@Typo.subtitle1" Class="pa-4"> or </MudText>
-                <MudDivider Style="width: 30%"/>
-            </div>
-            <div class="d-flex align-center">
-                @if (!string.IsNullOrWhiteSpace(ErrorMessage))
-                {
-                    <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                        @ErrorMessage
-                    </MudText>
-                }
-            </div>
-            
-            @ChildContent
-            
-            <div class="d-flex align-center">
-                <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                    @if (IsLogin)
+﻿@typeparam T where T : class
+
+<MudPaper Elevation="5" Class="pa-16">
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12">
+            <MudStack Row="true" Spacing="2" Class="justify-center" AlignItems="AlignItems.Center">
+                <BlaterLogo IconWidth="70"/>
+            </MudStack>
+        </MudItem>
+        <MudItem>
+            <EditForm Model="typeof(T)" method="post" OnValidSubmit="@OnValidSubmit" FormName="@FormName">
+                <DataAnnotationsValidator/>
+
+                <MudText Typo="Typo.h4" Class="mb-4">@(IsLogin ? "Log in to your Account" : "Create your Account")</MudText>
+
+                <MudStack Row="true" Justify="Justify.SpaceEvenly" Spacing="1">
+                    @if (EnabledOAuth)
                     {
-                        @("No account?")
-                        <MudLink Href="/Account/Register">Sign up</MudLink>
+                        <MudStaticButton
+                            StartIcon="@Custom.Brands.GitHub"
+                            IconColor="Color.Error"
+                            Variant="Variant.Filled"
+                            Disabled="true">
+                            Github
+                        </MudStaticButton>
+                        <MudStaticButton
+                            StartIcon="@Custom.Brands.Google"
+                            IconColor="Color.Info"
+                            Variant="Variant.Filled"
+                            Disabled="true">
+                            Google
+                        </MudStaticButton>
+                        <MudStaticButton
+                            StartIcon="@Custom.Brands.Discord"
+                            IconColor="Color.Info"
+                            Variant="Variant.Filled"
+                            Disabled="true">
+                            Discord
+                        </MudStaticButton>
+                        @OAuthButtons
                     }
-                    else
-                    {
-                        @("Have an account?")
-                        <MudLink Href="/Account/Login">Sign in</MudLink>
-                    }
-                </MudText>
-            </div>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+                </MudStack>
+
+                <MudStack Row="true" Class="ma-4" Justify="Justify.SpaceAround" AlignItems="AlignItems.Center" Wrap="Wrap.Wrap">
+                    <MudDivider Class="d-flex flex-grow-1" DividerType="DividerType.Middle" Style=@($"border-color: var(--mud-pallet-primary)")/>
+                    <MudText Typo="Typo.caption"> or </MudText>
+                    <MudDivider Class="d-flex flex-grow-1" DividerType="DividerType.Middle" Style=@($"border-color: var(--mud-pallet-primary)")/>
+                </MudStack>
+
+                @FormInputs
+
+                <MudStaticButton
+                    Class="my-4"
+                    FormAction="FormAction.Submit"
+                    Color="Color.Primary"
+                    Variant="Variant.Filled"
+                    FullWidth="true">
+                    Continue
+                </MudStaticButton>
+                
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="2">
+                    <MudText Typo="Typo.body2">@(IsLogin ? "Don't have an account?" : "I have an account?")</MudText>
+                    <MudLink Href="@(IsLogin ? "/Account/Register" : "/Account/Login")" Typo="Typo.body2" Color="Color.Primary" Underline="Underline.None">
+                        <b>@(IsLogin ? "Create an account" : "Login to your account")</b>
+                    </MudLink>
+                </MudStack>
+            </EditForm>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
 
 @code {
 
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public RenderFragment? OAuthButtons { get; set; }
 
     [Parameter]
+    public bool EnabledOAuth { get; set; } = true;
+
+    [Parameter]
+    public RenderFragment? FormInputs { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<EditContext> OnValidSubmit { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public string FormName { get; set; } = null!;
+
+    [Parameter]
+    [EditorRequired]
     public bool IsLogin { get; set; }
-
-    [Parameter]
-    public string? ErrorMessage { get; set; }
-
 }

@@ -27,26 +27,28 @@ public class BaseAccount : ComponentBase
     [Inject]
     private IdentityRedirectManager RedirectManager { get; set; } = default!;
     
-    protected ModelAccountLogin InputLogin { get; set; } = new();
-    
-    protected ModelAccountRegister InputRegister { get; set; } = new();
-    
-    protected bool Success { get; set; }
-    protected MudForm Form { get; set; }
-
     #endregion
 
     #region Methods
     
     //TODO: Criar componente para utilizar os erros
+
+    protected async Task LoginInitialized()
+    {
+        if (HttpMethods.IsGet(HttpContext.Request.Method))
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+    }
     
-    public async Task OnValidRegisterSubmit()
+    protected async Task Register(string email, string name, string password)
     {
         var result = await LoginStore.Register(new RegisterBlaterUserRequest
         {
-            Email = InputRegister.Email,
-            Name = InputRegister.Name,
-            Password = InputRegister.Password
+            Email = email,
+            Name = name,
+            Password = password
         });
 
         if (result.HandleErrors(out var errors, out var user))
@@ -54,21 +56,15 @@ public class BaseAccount : ComponentBase
             return;
         }
 
-        InputLogin = new ModelAccountLogin
-        {
-            Password = InputRegister.Password,
-            Email = user.Email
-        };
-
-        //await OnValidLoginSubmit();
+        await Login(email, password);
     }
 
-    public async Task OnValidLoginSubmit()
+    protected async Task Login(string email, string password)
     {
         var result = await LoginStore.LoginLocal(new AuthRequest
         {
-            Email = InputLogin.Email,
-            Password = InputLogin.Password
+            Email = email,
+            Password = password
         });
 
         if (result.HandleErrors(out var errors, out var jwt))
@@ -101,47 +97,6 @@ public class BaseAccount : ComponentBase
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
         RedirectManager.RedirectTo("home");
-    }
-
-    #endregion
-
-    #region Models
-
-    protected sealed class ModelAccountRegister
-    {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; } = "";
-        
-        [Required]
-        [Display(Name = "Name")]
-        public string Name { get; set; } = "";
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; } = "";
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; } = "";
-    }
-    
-    protected sealed class ModelAccountLogin
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = "";
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = "";
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
     }
 
     #endregion

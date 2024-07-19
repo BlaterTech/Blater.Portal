@@ -5,9 +5,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/"/>
-    <link rel="stylesheet" href="@Assets["bootstrap/bootstrap.min.css"]"/>
     <link rel="stylesheet" href="@Assets["css/app.css"]"/>
-    <link rel="stylesheet" href="@Assets["Blater.Portal.styles.css"]"/>
+    @*<link rel="stylesheet" href="@Assets["Blater.Portal.styles.css"]"/>*@
     <link rel="stylesheet" href="@Assets["https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"]"/>
     <link rel="stylesheet" href="@Assets["_content/MudBlazor/MudBlazor.min.css"]"/>
     <link rel="icon" type="image/png" href="@Assets["img/blater-favicon.png"]"/>
@@ -18,11 +17,11 @@
 
 <body>
 <Routes @rendermode="PageRenderMode"/>
-<script src="@Assets["_framework/blazor.web.js"]"></script>
-<script src="@Assets["_content/MudBlazor/MudBlazor.min.js"]"></script>
-<script src="@Assets["_content/BlazorMonaco/jsInterop.js"]"></script>
-<script src="@Assets["_content/BlazorMonaco/lib/monaco-editor/min/vs/loader.js"]"></script>
-<script src="@Assets["_content/BlazorMonaco/lib/monaco-editor/min/vs/editor/editor.main.js"]"></script>
+<script src="_framework/blazor.web.js"></script>
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+@*<script src="_content/BlazorMonaco/jsInterop.js"></script>
+<script src="_content/BlazorMonaco/lib/monaco-editor/min/vs/loader.js"></script>
+<script src="_content/BlazorMonaco/lib/monaco-editor/min/vs/editor/editor.main.js"></script>*@
 </body>
 
 </html>

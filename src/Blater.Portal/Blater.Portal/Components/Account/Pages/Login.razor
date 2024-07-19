@@ -1,80 +1,64 @@
 ﻿@page "/Account/Login"
 
+@using System.ComponentModel.DataAnnotations
+
 @inherits BaseAccount
 
-<MudGrid Justify="Justify.Center">
-    <MudItem xs="12" sm="12" md="8" lg="8" xl="8" xxl="8">
-        <MudPaper Class="mud-width-full pa-8">
-            <div class="d-flex align-center justify-center">
-                <BlaterLogo/>
-            </div>
-            <div>
-                <MudText Typo="@Typo.h4" Color="Color.Primary" Class="mb-6 mt-4">
-                    Login
-                </MudText>
-            </div>
-            <div class="d-flex flex-row align-start gap-2">
-                <MudButton
-                    StartIcon="@Custom.Brands.GitHub"
-                    IconClass="px-2"
-                    Class="d-flex justify-start align-center mud-width-full"
-                    Size="Size.Medium"
-                    Variant="Variant.Outlined">
-                    Continue with GitHub
-                </MudButton>
-                <MudButton
-                    StartIcon="@Custom.Brands.Google"
-                    IconClass="px-2"
-                    Class="d-flex justify-start align-center mud-width-full"
-                    Size="Size.Medium"
-                    Variant="Variant.Outlined">
-                    Continue with Google
-                </MudButton>
-            </div>
-            <div class="d-flex align-center mt-4" style="height: 50px;">
-                <MudDivider Style="width: 30%"/>
-                <MudText Typo="@Typo.subtitle1" Class="pa-4"> or </MudText>
-                <MudDivider Style="width: 30%"/>
-            </div>
-            
-            <EditForm
-                Model="InputLogin"
-                method="post"
-                FormName="@nameof(InputLogin)"
-                OnValidSubmit="OnValidLoginSubmit">
-                <DataAnnotationsValidator/>
+<BlaterLogin T="InputModel" IsLogin="true" FormName="login" OnValidSubmit="LoginUser">
+    <FormInputs>
+        <MudStaticTextField 
+            @bind-Value="@Input.Email"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Material.Outlined.Email"
+            Margin="Margin.Normal"
+            autocomplete="username"
+            Label="Email"
+            Class="pb-2"
+            Variant="Variant.Filled" 
+            Placeholder="email@mail.com" 
+            For="() => Input.Email" />
 
-                <BlaterTextInput
-                    T="string"
-                    @rendermode="InteractiveServer"
-                    Label="Email"
-                    Required="true"
-                    RequiredError="Email is required"
-                    InputType="InputType.Email"
-                    Value="@InputRegister.Email"
-                    ValueChanged="@(x => InputRegister.Email = x)"/>
+        <MudStaticTextField 
+            @bind-Value="@Input.Password" 
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Material.Outlined.Lock" 
+            autocomplete="current-password"
+            Class="pb-2"
+            Variant="Variant.Filled" 
+            Label="Password"
+            Placeholder="********" 
+            InputType="InputType.Password" 
+            For="() => Input.Password" />
+    </FormInputs>
+</BlaterLogin>
 
-                <BlaterPasswordInput
-                    @rendermode="InteractiveServer"
-                    Value="@InputRegister.Password"
-                    ValueChanged="@(x => InputRegister.Password = x)"/>
-                
-                <div class="mt-8">
-                    <BlaterButtonInput
-                        @rendermode="InteractiveServer"
-                        Style="width: 100%;"
-                        ButtonType="ButtonType.Button"
-                        Label="Continue"
-                        OnClick="OnValidLoginSubmit"/>
-                </div>
-            </EditForm>
+@code{
+    
+    [SupplyParameterFromForm(FormName = "login")]
+    private InputModel Input { get; set; } = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await LoginInitialized();
+    }
 
-            <div class="d-flex align-center">
-                <MudText Typo="@Typo.subtitle1" Class="mt-6">
-                    @("No account?")
-                    <MudLink Href="/Account/Register">Sign up</MudLink>
-                </MudText>
-            </div>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+    public async Task LoginUser()
+    {
+        await Login(Input.Email, Input.Password);
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = "";
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+    }
+
+}

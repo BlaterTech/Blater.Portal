@@ -1,5 +1,4 @@
 ﻿@using Blater.Portal.Core.Extensions
-
 @inherits LayoutComponentBase
 
 @layout BlaterMainLayout
@@ -36,26 +35,11 @@
         <MudDrawerHeader Class="pa-1 d-flex align-center justify-center">
             @if (_drawerOpen)
             {
-                <div class="d-flex align-center gap-1">
-                    <MudImage
-                        Class="pa-1"
-                        Src="blater-icon.svg"
-                        Width="50">
-                    </MudImage>
-                    <MudImage
-                        Class="pa-1"
-                        Src="blater-logo.svg"
-                        Width="100">
-                    </MudImage>
-                </div>
+                <BlaterLogo/>
             }
             else
             {
-                <MudImage
-                    Class="pa-1"
-                    Src="blater-icon.svg"
-                    Width="50">
-                </MudImage>
+                <BlaterLogo OnlyIcon="true"/>
             }
         </MudDrawerHeader>
 
