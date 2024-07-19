@@ -8,8 +8,11 @@ using Blater.SDK.Extensions;
 using Blazr.RenderState.Server;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MudBlazor.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddSerilog();
 
 // Add services to the container.
 builder.Services

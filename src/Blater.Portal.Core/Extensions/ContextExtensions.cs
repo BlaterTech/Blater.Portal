@@ -42,39 +42,32 @@ public static class ContextExtensions
 
         return principal;
     }
-    
+
     public static BlaterUserToken GetUserAuthenticated(this ClaimsPrincipal principal)
     {
-        var claims = principal.Claims
-                              .GroupBy(x => x.Type)
-                              .ToDictionary(
-                                   g => g.Key, 
-                                   g => g
-                                       .Select(c => c.Value)
-                                       .ToList());
-//problema está ao obter e criar o userToken
+        var claims = principal
+                    .Claims
+                    .GroupBy(x => x.Type)
+                    .ToDictionary(
+                         g => g.Key,
+                         g => g.Select(c => c.Value).ToList()
+                     );
+        
         var userToken = new BlaterUserToken();
         foreach (var prop in typeof(BlaterUserToken).GetProperties())
         {
-            var key = prop.Name;
-
-            if (key.Equals("roles"))
-            {
-                key = "role";
-            }
-            
-            if (!claims.TryGetValue(key, out var claimValues))
+            if (!claims.TryGetValue(prop.Name, out var claimValues))
             {
                 continue;
             }
-            
+
             object value;
 
             if (prop.Name == "LockoutEnabled")
             {
                 value = claimValues.First() == "enabled";
             }
-            else if(prop.PropertyType == typeof(List<string>))
+            else if (prop.PropertyType == typeof(List<string>))
             {
                 value = claimValues;
             }
@@ -82,10 +75,10 @@ public static class ContextExtensions
             {
                 value = claimValues.First();
             }
-            
+
             prop.SetValue(userToken, value);
         }
-        
+
         return userToken;
     }
 }

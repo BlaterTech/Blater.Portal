@@ -1,4 +1,5 @@
 using Blater;
+using Blater.Logging;
 using Blater.Portal.Client;
 using Blater.Portal.Client.Handlers;
 using Blater.SDK.Extensions;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+builder.SetupSerilog();
 
 builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
