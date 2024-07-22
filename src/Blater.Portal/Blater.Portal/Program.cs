@@ -1,12 +1,15 @@
 using Blater;
 using Blater.Frontend.Interfaces;
 using Blater.Frontend.Services;
+using Blater.Frontend.StateManagement;
+using Blater.Frontend.StateManagement.Database;
 using Blater.Portal.Client.Handlers;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blater.Portal.Components;
 using Blater.Portal.Components.Account;
 using Blater.Portal.Core;
 using Blater.SDK.Extensions;
+using Blazored.LocalStorage;
 using Blazr.RenderState.Server;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MudBlazor.Services;
@@ -48,14 +51,14 @@ builder.Services
             };
         });
 
-builder.Services.AddScoped<CookieHandler>();
+//builder.Services.AddScoped<CookieHandler>();
 
 builder.Services
        .AddHttpClient<BlaterHttpClient>((_, client) =>
         {
             client.BaseAddress = new Uri("http://localhost:5296");
-        })
-       .AddHttpMessageHandler<CookieHandler>();
+        });
+       //.AddHttpMessageHandler<CookieHandler>();
 
 builder.Services.AddBlaterDatabase();
 builder.Services.AddBlaterManagement();
@@ -65,6 +68,9 @@ builder.Services.AddBlaterAuthRepositories();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICookieService, CookieService>();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<IBlaterMemoryDatabase, BlaterMemoryDatabase>();
+builder.Services.AddScoped<IBlaterStateStore, BlaterStateStore>();
 
 builder.Services.AddMudServices();
 builder.AddBlazrRenderStateServerServices();
