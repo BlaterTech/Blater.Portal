@@ -1,4 +1,6 @@
 using Blater;
+using Blater.Frontend.Interfaces;
+using Blater.Frontend.Services;
 using Blater.Logging;
 using Blater.Portal.Client;
 using Blater.Portal.Client.Handlers;
@@ -29,6 +31,9 @@ builder.Services.AddBlaterManagement();
 builder.Services.AddBlaterKeyValue();
 builder.Services.AddBlaterAuthStores();
 builder.Services.AddBlaterAuthRepositories();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<ICookieService, CookieService>();
 
 builder.Services.AddMudServices();
 builder.AddBlazrRenderStateWASMServices();

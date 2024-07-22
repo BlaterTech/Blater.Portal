@@ -1,4 +1,6 @@
 using Blater;
+using Blater.Frontend.Interfaces;
+using Blater.Frontend.Services;
 using Blater.Portal.Client.Handlers;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blater.Portal.Components;
@@ -60,6 +62,9 @@ builder.Services.AddBlaterManagement();
 builder.Services.AddBlaterKeyValue();
 builder.Services.AddBlaterAuthStores();
 builder.Services.AddBlaterAuthRepositories();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICookieService, CookieService>();
 
 builder.Services.AddMudServices();
 builder.AddBlazrRenderStateServerServices();

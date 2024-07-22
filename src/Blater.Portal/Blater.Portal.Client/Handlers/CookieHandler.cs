@@ -1,16 +1,26 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Http;
+﻿using System.Net.Http.Headers;
+using Blater.Extensions;
+using Blater.Frontend.Interfaces;
+using Blater.Portal.Core;
+using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace Blater.Portal.Client.Handlers;
 
-public class CookieHandler : DelegatingHandler
+public class CookieHandler(ICookieService cookieService) : DelegatingHandler
 {
-    protected override Task<HttpResponseMessage> SendAsync(
+    protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, 
         CancellationToken cancellationToken)
     {
-        request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
-        request.Headers.Add("X-Requested-With", ["XMLHttpRequest"]);
-
-        return base.SendAsync(request, cancellationToken);
+        var result = await cookieService.GetCookie(Configuration.CookieAuthName);
+        if (!string.IsNullOrWhiteSpace(result))
+        {
+            request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
+            request.Headers.Add("X-Requested-With", ["XMLHttpRequest"]);
+            var jwtDecoded = await result.FromBase64ToString();
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwtDecoded);
+        }
+        
+        return await base.SendAsync(request, cancellationToken);
     }
 }

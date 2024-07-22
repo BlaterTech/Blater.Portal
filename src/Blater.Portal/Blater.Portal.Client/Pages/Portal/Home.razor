@@ -1,5 +1,8 @@
 ﻿@page "/home"
 
+@using Blater.Interfaces
+@using Blater.Models.User
+
 <BlaterAuthorizeView @ref="@_blaterAuthorizeView" Roles="@_roles" Permissions="@_permissions">
     <Authorized>
         <h1>You are authenticated using BlaterAuthorizedView</h1>
@@ -21,8 +24,32 @@
 
 @code{
 
-readonly List<string> _roles = ["ProjectOwner"];
-readonly List<string> _permissions = ["ProjectOwner:Create"];
+    readonly List<string> _roles = ["ProjectOwner"];
+    readonly List<string> _permissions = ["ProjectOwner:Create"];
 
-BlaterAuthorizeView _blaterAuthorizeView;
+    BlaterAuthorizeView _blaterAuthorizeView;
+
+    [Inject]
+    private IBlaterDatabaseStoreT<BlaterUser> UserStore { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var userAuthenticated = _blaterAuthorizeView.GetUserAuthenticated();
+            var result = await UserStore.FindOne(x => x.Email == userAuthenticated.Email);
+
+            if (result.HandleErrors(out var errors, out var response))
+            {
+                errors.ForEach(x => Snackbar.Add(x.Message, Severity.Error));
+                return;
+            }
+
+            Snackbar.Add(response.ToJson(), Severity.Success);
+        }
+    }
+
 }
