@@ -7,25 +7,38 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @CounterState?.Count</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@if (_loading)
+{
+    <MudProgressCircular Indeterminate="true"/>
+}
+else
+{
+    <p role="status">Current count: @CounterState.Count</p> 
+    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+}
 
 @code {
-    private CounterState? CounterState { get; set; }
+    private CounterState CounterState { get; set; } = new();
+    private bool _loading;
+
+    protected override void OnInitialized()
+    {
+        _loading = true;
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            CounterState = await GetState<CounterState>();
+            CounterState = await GetState<CounterState>() ?? new CounterState();
+            _loading = false;
             StateHasChanged();
         }
     }
 
     private async Task IncrementCount()
     {
-        CounterState!.Count++;
+        CounterState.Count++;
         await SetState(CounterState);
         StateHasChanged();
     }

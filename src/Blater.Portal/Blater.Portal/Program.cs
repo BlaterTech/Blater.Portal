@@ -69,7 +69,7 @@ builder.Services.AddBlaterAuthRepositories();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<IBlaterMemoryDatabase, BlaterMemoryDatabase>();
+builder.Services.AddScoped<IBlaterMemoryCache, BlaterMemoryCache>();
 builder.Services.AddScoped<IBlaterStateStore, BlaterStateStore>();
 
 builder.Services.AddMudServices();
