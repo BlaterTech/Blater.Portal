@@ -19,6 +19,7 @@ else
 
 @code {
     private CounterState CounterState { get; set; } = new();
+    
     private bool _loading;
 
     protected override void OnInitialized()
@@ -30,7 +31,7 @@ else
     {
         if (firstRender)
         {
-            CounterState = await GetState<CounterState>() ?? new CounterState();
+            CounterState = await GetState<CounterState>();
             _loading = false;
             StateHasChanged();
         }
