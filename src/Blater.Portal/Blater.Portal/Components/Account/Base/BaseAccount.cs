@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Blater.Frontend;
+using Blater.Frontend.Extensions;
+using Blater.Frontend.Interfaces;
 using Blater.SDK.Contracts.Authentication.Request;
 using Blater.SDK.Contracts.Common.Request;
 using Blater.SDK.Interfaces.BlaterAuth;
@@ -82,16 +85,17 @@ public class BaseAccount : ComponentBase
 
     private async Task ReadJwtAndRedirectTo(string jwt)
     {
-        var jwtTokenHandler = new JwtSecurityTokenHandler();
+        var (isValid, jwtTokenDecoded) = jwt.ValidateJwt();
 
-        var jwtTokenDecoded = jwtTokenHandler.ReadJwtToken(jwt);
-
-        if (jwtTokenDecoded.ValidTo.ToUniversalTime() <= DateTime.UtcNow)
+        if (!isValid)
         {
             return;
         }
 
-        var claims = jwtTokenDecoded.Claims;
+        Configuration.Jwt = jwt;
+        
+        var claims = jwtTokenDecoded.Claims.ToList();
+        claims.Add(new Claim("Jwt", jwt));
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 

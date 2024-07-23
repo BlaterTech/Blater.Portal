@@ -1,5 +1,7 @@
 ﻿@page "/auth"
 
+@layout BlaterPortalLayout
+
 <PageTitle>Auth</PageTitle>
 
 <BlaterAuthorizeView @ref="@_blaterAuthorizeView" Roles="@_roles" Permissions="@_permissions">
@@ -15,6 +17,7 @@
         <br/>
         <p>=== Features ===</p>
         <p>GetUserAuthenticated -> @_blaterAuthorizeView.GetUserAuthenticated().ToJson()</p>
+        <p>GetUserAuthenticated -> @_blaterAuthorizeView.GetUserAuthenticated().Jwt</p>
     </Authorized>
     <NotAuthorized>
         <h1>You are not authenticated using BlaterAuthorizedView</h1>

@@ -4,7 +4,7 @@
 @layout BlaterMainLayout
 
 <MudLayout>
-    <AuthorizeView>
+    <BlaterAuthorizeView @ref="@_blaterAuthorizeView">
         <Authorized>
             @{
                 var blaterUserToken = context.User.GetUserAuthenticated();
@@ -25,26 +25,24 @@
                     </MudAvatar>
                 </MudAppBar>
             }
-        </Authorized>
-    </AuthorizeView>
-    <MudDrawer @bind-Open="@_drawerOpen"
-               Elevation="2"
-               Variant="DrawerVariant.Mini"
-               Class="overflow-hidden"
-               MiniWidth="50px">
-        <MudDrawerHeader Class="pa-1 d-flex align-center justify-center">
-            @if (_drawerOpen)
-            {
-                <BlaterLogo/>
-            }
-            else
-            {
-                <BlaterLogo OnlyIcon="true"/>
-            }
-        </MudDrawerHeader>
+            <MudDrawer @bind-Open="@_drawerOpen"
+                       Elevation="2"
+                       Variant="DrawerVariant.Mini"
+                       Class="overflow-hidden"
+                       MiniWidth="50px">
+                <MudDrawerHeader Class="pa-1 d-flex align-center justify-center">
+                    @if (_drawerOpen)
+                    {
+                        <BlaterLogo/>
+                    }
+                    else
+                    {
+                        <BlaterLogo OnlyIcon="true"/>
+                    }
+                </MudDrawerHeader>
 
-        @{
-            @*foreach (var route in Routes)
+                @{
+                    @*foreach (var route in Routes)
                         {
                             if (route.IsSubMenu)
                             {
@@ -77,11 +75,11 @@
                                 </MudNavLink>
                             }
                         }*@
-        }
-        
-        <MudSpacer/>
+                }
 
-        @*<MudNavLink
+                <MudSpacer/>
+
+                @*<MudNavLink
                         Icon="@Material.Filled.ExitToApp"
                         Match="NavLinkMatch.Prefix"
                         IconColor="Color.Error"
@@ -90,17 +88,15 @@
                             Sair
                         </MudText>
                     </MudNavLink>*@
-    </MudDrawer>
-    <MudMainContent>
-        <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.ExtraExtraLarge">
-            <AuthorizeView>
-                <Authorized>
+            </MudDrawer>
+            <MudMainContent>
+                <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.ExtraExtraLarge">
                     @Body
-                </Authorized>
-                <NotAuthorized>
-                    <p>Permission is required access this content</p>
-                </NotAuthorized>
-            </AuthorizeView>
-        </MudContainer>
-    </MudMainContent>
+                </MudContainer>
+            </MudMainContent>
+        </Authorized>
+        <NotAuthorized>
+            <p>Permission is required access this content</p>
+        </NotAuthorized>
+    </BlaterAuthorizeView>
 </MudLayout>

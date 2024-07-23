@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using Blater.Interfaces;
+using Blater.JsonUtilities;
 using Blater.Models;
 using Blater.Models.User;
 using Blater.Portal.Core.Extensions;
@@ -87,7 +88,6 @@ internal sealed class PersistingRevalidatingAuthenticationStateProvider : Revali
         if (principal.Identity?.IsAuthenticated == true)
         {
             var blaterUserToken = principal.GetUserAuthenticated();
-
             if (!string.IsNullOrWhiteSpace(blaterUserToken.UserId))
             {
                 _state.PersistAsJson(nameof(BlaterUserToken), blaterUserToken);

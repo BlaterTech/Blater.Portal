@@ -1,14 +1,19 @@
-﻿using Blater.Models.User;
+﻿using Blater.Frontend;
+using Blater.Frontend.Extensions;
+using Blater.Frontend.Interfaces;
+using Blater.Models.User;
+using Blater.Portal.Client.Components.AuthorizeView;
+using Microsoft.AspNetCore.Components;
 
 namespace Blater.Portal.Client.Layout;
 
 public partial class BlaterPortalLayout
 {
-    /*[Inject]
-    protected NavigationService NavigationService { get; set; } = null!;*/
+    [Inject]
+    private IBlaterStateStore StateStore { get; set; } = null!;
 
-    //protected IEnumerable<NavMenuRouteInfo> Routes { get; set; } = [];
-
+    BlaterAuthorizeView _blaterAuthorizeView;
+    
     private bool _drawerOpen = true;
     private bool _loading;
     private void DrawerToggle()
@@ -21,7 +26,17 @@ public partial class BlaterPortalLayout
     {
         if (firstRender)
         {
-            //await AuthenticationService.TryAutoLogin();
+            var user = _blaterAuthorizeView.GetUserAuthenticated();
+            var (isValid, token) = user.Jwt.ValidateJwt();
+            if (isValid)
+            {
+                Configuration.Jwt = user.Jwt;
+                await StateStore.SetState(user);  
+            }
+            else
+            {
+                //todo: voltar ao login se jwt nao for válido
+            }
 
             /*Routes = NavigationService
                     .Routes
