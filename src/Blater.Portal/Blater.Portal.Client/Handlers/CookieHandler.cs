@@ -14,12 +14,10 @@ public class CookieHandler : DelegatingHandler
 
         var (isValid, _) = jwt.ValidateJwt();
 
-        if (!isValid)
+        if (isValid)
         {
-            return await base.SendAsync(request, cancellationToken);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         }
-        
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         
         return await base.SendAsync(request, cancellationToken);
     }
