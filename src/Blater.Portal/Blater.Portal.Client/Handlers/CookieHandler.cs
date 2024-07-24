@@ -1,11 +1,10 @@
 ﻿using System.Net.Http.Headers;
 using Blater.Frontend.Extensions;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using Configuration = Blater.Frontend.Configuration;
 
 namespace Blater.Portal.Client.Handlers;
 
-public class CookieHandler(IServiceProvider provider) : DelegatingHandler
+public class CookieHandler : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, 
@@ -19,9 +18,8 @@ public class CookieHandler(IServiceProvider provider) : DelegatingHandler
         {
             return await base.SendAsync(request, cancellationToken);
         }
-
-        var httpClient = provider.GetRequiredService<BlaterHttpClient>();
-        httpClient.SetToken(jwt);
+        
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
         
         return await base.SendAsync(request, cancellationToken);
     }

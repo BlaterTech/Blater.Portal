@@ -95,7 +95,7 @@ public class BaseAccount : ComponentBase
         Configuration.Jwt = jwt;
         
         var claims = jwtTokenDecoded.Claims.ToList();
-        claims.Add(new Claim("Jwt", jwt));
+        claims.Add(new Claim("jwt", jwt));
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 

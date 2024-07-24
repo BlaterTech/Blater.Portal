@@ -13,7 +13,12 @@ public static class ContextExtensions
 
         foreach (var prop in typeof(BlaterUserToken).GetProperties())
         {
-            var key = prop.Name;
+            var key = prop.Name.ToCamelCase();
+            if (key == "roles")
+            {
+                key = "role";
+            }
+            
             var value = prop.GetValue(userToken);
 
             if (value == null)
@@ -21,7 +26,7 @@ public static class ContextExtensions
                 continue;
             }
 
-            if (prop.Name == "LockoutEnabled")
+            if (key == "lockoutEnabled")
             {
                 var claimValue = (bool)value ? "enabled" : "disabled";
                 claims.Add(new Claim(key, claimValue));
@@ -56,14 +61,20 @@ public static class ContextExtensions
         var userToken = new BlaterUserToken();
         foreach (var prop in typeof(BlaterUserToken).GetProperties())
         {
-            if (!claims.TryGetValue(prop.Name, out var claimValues))
+            var name = prop.Name.ToCamelCase();
+            if (name == "roles")
+            {
+                name = "role";
+            }
+            
+            if (!claims.TryGetValue(name, out var claimValues))
             {
                 continue;
             }
 
             object value;
 
-            if (prop.Name == "LockoutEnabled")
+            if (name == "lockoutEnabled")
             {
                 value = claimValues.First() == "enabled";
             }
