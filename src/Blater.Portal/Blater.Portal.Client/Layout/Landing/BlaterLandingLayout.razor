@@ -15,13 +15,21 @@
         </MudToolBar>
         <MudNavMenu Color="Color.Primary" Margin="Margin.Dense" Rounded="true" Class="pa-2">
             <MudNavGroup Title="Products" ExpandIcon="@Material.Filled.ExpandMore">
-                <MudNavLink Href="/products/database">Blater</MudNavLink>
+                <MudNavLink Href="/products/database">
+                    <MudText Color="Color.Tertiary">@("Blater ")</MudText><MudText> Database</MudText>
+                </MudNavLink>
+                <MudNavLink Href="/products/authentication">
+                    <MudText Color="Color.Tertiary">@("Blater ")</MudText><MudText> Authentication</MudText>
+                </MudNavLink>
+                <MudNavLink Href="/products/serverless-hosting">
+                    <MudText Color="Color.Tertiary">@("Blater ")</MudText><MudText> Serverless Hosting</MudText>
+                </MudNavLink>
             </MudNavGroup>
             <MudNavLink Href="/pricing">Princing</MudNavLink>
             <MudNavLink Href="/about">About</MudNavLink>
             <MudNavLink Href="/faq">FAQ</MudNavLink>
         </MudNavMenu>
-    </MudDrawer>s
+    </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large">
             @Body
