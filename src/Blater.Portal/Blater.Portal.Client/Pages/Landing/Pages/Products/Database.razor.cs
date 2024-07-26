@@ -5,8 +5,18 @@ namespace Blater.Portal.Client.Pages.Landing.Pages.Products;
 
 public partial class Database : ComponentBase
 {
-    private void InitializedDictGridBreakpoint()
+    private void InitializedBreakpoints()
     {
+        BrowserViewportService.DictTypo = new Dictionary<Breakpoint, (Typo t1, Typo t2)>
+        {
+            { Breakpoint.Xs, (Typo.h5, Typo.caption) },
+            { Breakpoint.Sm, (Typo.h5, Typo.caption) },
+            { Breakpoint.Md, (Typo.h5, Typo.caption) },
+            { Breakpoint.Lg, (Typo.h3, Typo.body2) },
+            { Breakpoint.Xl, (Typo.h3, Typo.body2) }, 
+            { Breakpoint.Xxl, (Typo.h3, Typo.body2) }
+        };
+        
         BrowserViewportService.DictGridBreakpoint = new Dictionary<int, Dictionary<Breakpoint, string>>
         {
             {
@@ -58,12 +68,13 @@ public partial class Database : ComponentBase
     
     protected override async Task OnInitializedAsync()
     {
-        InitializedDictGridBreakpoint();
+        InitializedBreakpoints();
         
         var currentBreakpoint = await BrowserViewportService.GetCurrentBreakpoint().ConfigureAwait(false);
         for (var i = 0; i <= BrowserViewportService.DictGridBreakpoint.Count; i++)
         {
             BrowserViewportService.UpdateGrid(i, currentBreakpoint);
+            BrowserViewportService.UpdateFonts(currentBreakpoint);
         }
         
         await InvokeAsync(StateHasChanged);

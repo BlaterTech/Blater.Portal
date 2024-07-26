@@ -6,8 +6,8 @@
             <MudGrid Justify="Justify.SpaceBetween" Spacing="6" Class="d-flex align-center justify-center">
                 <MudItem xs="6" md="6" lg="6" xl="6" xxl="6">
                     <div class="d-flex flex-column gap-4 pa-8">
-                        <MudText Typo="Typo.h3" Color="Color.Inherit">Database</MudText>
-                        <MudText Typo="Typo.body2">
+                        <MudText Typo="@BrowserViewportService.Title" Color="Color.Inherit">Database</MudText>
+                        <MudText Typo="@BrowserViewportService.SubTitle">
                             Dive into the basics of astronomy. Learn about stars, planets,
                             galaxies, and the tools astronomers use to explore the universe.
                         </MudText>
@@ -15,10 +15,16 @@
                             <MudButton Variant="Variant.Filled" Class="gradient-background-1">Start a project</MudButton>
                             <MudButton Variant="Variant.Outlined" Color="Color.Inherit">See documentation</MudButton>
                         </div>
-                    </div>
+                    </div>      
                 </MudItem>
                 <MudItem xs="6" md="6" lg="6" xl="6" xxl="6">
-                    <MudImage Src="img/database.svg" Class="mud-height-full mud-width-full"/>
+                    <div class="d-flex align-center justify-center mud-height-full">
+                        <MudImage
+                            Src="img/database.svg"
+                            Fluid="true"
+                            ObjectFit="ObjectFit.Cover"
+                            ObjectPosition="ObjectPosition.Center"/>
+                    </div>
                 </MudItem>
             </MudGrid>
         </MudBreakpointProvider>

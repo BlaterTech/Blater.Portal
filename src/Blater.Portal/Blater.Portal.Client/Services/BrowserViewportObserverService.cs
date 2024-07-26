@@ -6,61 +6,67 @@ public class BrowserViewportObserverService(IBrowserViewportService browserViewp
 {
     public Dictionary<int, Dictionary<Breakpoint, string>> DictGridBreakpoint { get; set; } = [];
     public Dictionary<int, string> DictGridStyle { get; set; } = [];
-    
-    public Typo Title = Typo.h1;
-    public Typo SubTitle = Typo.h2;
-    
+    public Dictionary<Breakpoint, (Typo t1, Typo t2)> DictTypo { get; set; } = [];
+
+    public Typo Title;
+    public Typo SubTitle;
+
     public async Task<Breakpoint> GetCurrentBreakpoint()
     {
         return await browserViewportService.GetCurrentBreakpointAsync().ConfigureAwait(false);
     }
-    
+
     public string? GetStyleValue(int key)
     {
         return DictGridStyle.GetValueOrDefault(key);
     }
-    
+
     public void UpdateGrid(int key, Breakpoint obj)
     {
         if (!DictGridBreakpoint.TryGetValue(key, out var value))
         {
             return;
         }
-        
+
         if (!value.TryGetValue(obj, out var gridStyleValue))
         {
             return;
         }
-        
+
         if (!DictGridStyle.TryAdd(key, gridStyleValue))
         {
             DictGridStyle[key] = gridStyleValue;
         }
     }
-    
-    private void UpdateFonts(Typo title, Typo subTitle)
+
+    public void UpdateFonts(Breakpoint key)
     {
-        Title = title;
-        SubTitle = subTitle;
+        if (!DictTypo.TryGetValue(key, out var value))
+        {
+            return;
+        }
+
+        Title = value.t1;
+        SubTitle = value.t2;
     }
-    
+
     public void OnBreakpointCallback(int value, Breakpoint obj)
     {
         switch (obj)
         {
             case Breakpoint.Xs:
-                UpdateFonts(Typo.h4, Typo.h5);
+                UpdateFonts(obj);
                 UpdateGrid(value, obj);
                 break;
             case Breakpoint.Sm:
             case Breakpoint.Md:
-                UpdateFonts(Typo.h3, Typo.h4);
+                UpdateFonts(obj);
                 UpdateGrid(value, obj);
                 break;
             case Breakpoint.Lg:
             case Breakpoint.Xl:
             case Breakpoint.Xxl:
-                UpdateFonts(Typo.h2, Typo.h3);
+                UpdateFonts(obj);
                 UpdateGrid(value, obj);
                 break;
             default:
