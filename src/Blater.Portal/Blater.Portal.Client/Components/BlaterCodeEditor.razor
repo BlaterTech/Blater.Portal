@@ -1,11 +1,20 @@
-﻿
-@*
-@using BlazorMonaco.Editor
+﻿@using BlazorMonaco.Editor
+
 @inject IJSRuntime JSRuntime
 
-<StandaloneCodeEditor Id="my-editor-instance-id" ConstructionOptions="EditorConstructionOptions" />
+<div class="d-flex flex-column">
+    <div class="d-flex align-center justify-end">
+        <MudIconButton Icon="@Material.Outlined.ContentPaste" OnClick="CopyValue" Size="Size.Small"/>
+    </div>  
+    <div class="mud-height-full">
+        <StandaloneCodeEditor @ref="@_editor" Id="my-editor-instance-id" ConstructionOptions="EditorConstructionOptions"  />
+    </div>
+</div>
+
 @code
 {
+    private StandaloneCodeEditor _editor = null!;
+    
     private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
     {
         return new StandaloneEditorConstructionOptions
@@ -16,7 +25,7 @@
             Dimension = new Dimension
             {
                 Width = 500,
-                Height = 100
+                Height = 150
             },
             Comments = new EditorCommentsOptions
             {
@@ -35,5 +44,10 @@
             ReadOnly = true
         };
     }
+
+    private async Task CopyValue()
+    {
+        var value = await _editor.GetValue();
+        await JSRuntime.InvokeVoidAsync("copyToClipboard", value);
+    }
 }
-*@
