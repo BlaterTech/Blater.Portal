@@ -19,26 +19,27 @@
             <MudIconButton Href="#" Target="_blank" Icon="@Custom.Brands.GitHub" Color="Color.Inherit" Edge="Edge.End"/>
         </MudTooltip>
         <MudButton
-            Href="/login"
-            Color="Color.Inherit"
-            Size="Size.Small"
-            Variant="Variant.Outlined">Log In</MudButton>
-        <MudButton
-            Href="/sign-up"
-            Size="Size.Small"
-            Class="gradient-background-2"
-            Variant="Variant.Filled">
+            Href="/account/register"
+            Size="Size.Medium"
+            Variant="Variant.Outlined">
             Sign Up
+        </MudButton>
+        <MudButton
+            Href="/account/login"
+            Class="gradient-background-2"
+            Size="Size.Medium"
+            Variant="Variant.Filled">
+            Log In
         </MudButton>
     </div>
 </div>
 
 @code {
-    
+
     [Inject]
     private NavigationManager NavigationManager { get; set; } = null!;
-    
+
     [Parameter]
     public EventCallback<MouseEventArgs> DrawerToggleCallback { get; set; }
-    
+
 }

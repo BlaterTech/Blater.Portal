@@ -13,7 +13,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -42,10 +42,94 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+}
+
+/* === GRADIENT ===*/
+.gradient-background-3 {
+    background: linear-gradient(90deg, #270634, #C26EE2);
+}
+
+.gradient-border-3 {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-top: 4px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(180deg, #C26EE2, #270634);
+}
+
+.gradient-background-2 {
+    background: linear-gradient(45deg, #FFD380, #FF6361);
+}
+
+.gradient-background-1 {
+    background: linear-gradient(45deg, #FF6361, #C26EE2);
+}
+
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+}
+
+.card {
+    position: relative;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #1A153B;
+}
+
+.card:hover:before, .card:hover:after {
+    animation: none;
+    opacity: 0;
+}
+
+.card::before {
+    content: "";
+    width: 101%;
+    height: 101%;
+    border-radius: 8px;
+    background-image: linear-gradient(180deg, #C26EE2, #270634);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -0.5%;
+    animation: spin 2.5s linear infinite;
+}
+
+.card::after {
+    position: absolute;
+    content: "";
+    top: calc(65vh / 6);
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(65vh / 6));
+    background-image: linear-gradient(180deg, #C26EE2, #270634);
+    opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        --rotate: 0deg;
+    }
+    100% {
+        --rotate: 360deg;
+    }
 }

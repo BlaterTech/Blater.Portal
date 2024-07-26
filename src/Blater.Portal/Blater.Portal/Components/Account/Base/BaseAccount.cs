@@ -1,16 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Blater.Frontend;
 using Blater.Frontend.Extensions;
-using Blater.Frontend.Interfaces;
 using Blater.SDK.Contracts.Authentication.Request;
 using Blater.SDK.Contracts.Common.Request;
 using Blater.SDK.Interfaces.BlaterAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace Blater.Portal.Components.Account.Base;
 

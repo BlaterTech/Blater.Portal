@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using Blater.Interfaces;
-using Blater.JsonUtilities;
 using Blater.Models;
 using Blater.Models.User;
 using Blater.Portal.Core.Extensions;

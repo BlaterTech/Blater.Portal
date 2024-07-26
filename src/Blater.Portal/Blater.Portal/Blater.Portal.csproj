@@ -41,6 +41,11 @@
       <_ContentIncludedByDefault Remove="wwwroot\bootstrap\bootstrap.min.css.map" />
       <_ContentIncludedByDefault Remove="Components\Layout\MainLayout2.razor" />
       <_ContentIncludedByDefault Remove="Components\Layout\NavMenu2.razor" />
+      <_ContentIncludedByDefault Remove="Components\Landing\Pages\About.razor" />
+      <_ContentIncludedByDefault Remove="Components\Landing\Pages\FAQ.razor" />
+      <_ContentIncludedByDefault Remove="Components\Landing\Pages\Home.razor" />
+      <_ContentIncludedByDefault Remove="Components\Landing\Pages\Pricing.razor" />
+      <_ContentIncludedByDefault Remove="Components\Landing\Pages\Products\Database.razor" />
     </ItemGroup>
 
     <ItemGroup>

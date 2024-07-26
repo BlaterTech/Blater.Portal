@@ -6,6 +6,7 @@ using Blater.Frontend.StateManagement.Database;
 using Blater.Logging;
 using Blater.Portal.Client;
 using Blater.Portal.Client.Handlers;
+using Blater.Portal.Client.Services;
 using Blater.SDK.Extensions;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -41,6 +42,7 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<IBlaterMemoryCache, BlaterMemoryCache>();
 builder.Services.AddScoped<IBlaterStateStore, BlaterStateStore>();
+builder.Services.AddScoped<BrowserViewportObserverService>();
 builder.Services.AddMudServices();
 builder.AddBlazrRenderStateWASMServices();
 
