@@ -11,18 +11,15 @@
     <link rel="stylesheet" href="@Assets["_content/MudBlazor/MudBlazor.min.css"]"/>
     <link rel="icon" type="image/png" href="@Assets["img/blater-favicon.png"]"/>
     <ImportMap/>
-    <HeadOutlet @rendermode="PageRenderMode"/>
+    <HeadOutlet @rendermode="RenderModeForPage"/>
     <title>Blater</title>
 </head>
 
 <body>
-<Routes @rendermode="PageRenderMode"/>
+<Routes @rendermode="RenderModeForPage"/>
 <script src="@Assets["_framework/blazor.web.js"]"></script>
 <script src="@Assets["js/app.js"]"></script>
 <script src="@Assets["_content/MudBlazor/MudBlazor.min.js"]"></script>
-<script src="@Assets["_content/BlazorMonaco/jsInterop.js"]"></script>
-<script src="@Assets["_content/BlazorMonaco/lib/monaco-editor/min/vs/loader.js"]"></script>
-<script src="@Assets["_content/BlazorMonaco/lib/monaco-editor/min/vs/editor/editor.main.js"]"></script>
 </body>
 
 </html>
@@ -32,7 +29,8 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-    private IComponentRenderMode? PageRenderMode =>
-        HttpContext.AcceptsInteractiveRouting() ? InteractiveAuto : null;
+    private IComponentRenderMode? RenderModeForPage => HttpContext.Request.Path.StartsWithSegments("/Account")
+        ? null
+        : InteractiveAuto;
 
 }
