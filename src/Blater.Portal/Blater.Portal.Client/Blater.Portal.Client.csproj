@@ -1,30 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
         <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Blazr.RenderState.WASM" Version="1.0.0" />
-        <PackageReference Include="BlazorMonaco" Version="3.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0-preview.6.24328.4"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.0-preview.6.24328.4"/>
-    </ItemGroup>
-
+    
     <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
-
+    
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0-preview.6.24328.4"  />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.0-preview.6.24328.4"/>
+        
       <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj" />
-      <ProjectReference Include="..\..\Blater.Portal.Core\Blater.Portal.Core.csproj" />
+      <ProjectReference Include="..\..\Blater.Portal.Core\Blater.Portal.Core.csproj"  />
     </ItemGroup>
 
 </Project>

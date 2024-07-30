@@ -4,7 +4,6 @@ using Blater.Frontend.Services;
 using Blater.Frontend.StateManagement;
 using Blater.Frontend.StateManagement.Database;
 using Blater.Portal.Client.Handlers;
-using Blater.Portal.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blater.Portal.Components;
 using Blater.Portal.Components.Account;
@@ -74,7 +73,7 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddScoped<IBlaterMemoryCache, BlaterMemoryCache>();
 builder.Services.AddScoped<IBlaterStateStore, BlaterStateStore>();
-builder.Services.AddScoped<BrowserViewportObserverService>();
+builder.Services.AddScoped<IBrowserViewportObserverService, BrowserViewportObserverService>();
 builder.Services.AddMudServices();
 builder.AddBlazrRenderStateServerServices();
 
