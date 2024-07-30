@@ -19,13 +19,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Portal", "Blater.Por
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Portal.Client", "Blater.Portal\Blater.Portal.Client\Blater.Portal.Client.csproj", "{ADC595CE-94BA-4092-A1A1-AC34487F082C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Portal.Core", "Blater.Portal.Core\Blater.Portal.Core.csproj", "{9F9D4DE9-B4F7-433B-8E7E-06A7B36E5C77}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{E1E68E05-139B-48FD-905D-E6A941AFA269}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Frontend.Client", "..\..\Blater.Frontend\src\Blater.Frontend.Client\Blater.Frontend.Client.csproj", "{0D2E9740-C097-40D1-A9E8-3DB4FE19196E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,15 +57,16 @@ Global
 		{ADC595CE-94BA-4092-A1A1-AC34487F082C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADC595CE-94BA-4092-A1A1-AC34487F082C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADC595CE-94BA-4092-A1A1-AC34487F082C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F9D4DE9-B4F7-433B-8E7E-06A7B36E5C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F9D4DE9-B4F7-433B-8E7E-06A7B36E5C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F9D4DE9-B4F7-433B-8E7E-06A7B36E5C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F9D4DE9-B4F7-433B-8E7E-06A7B36E5C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2E9740-C097-40D1-A9E8-3DB4FE19196E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2E9740-C097-40D1-A9E8-3DB4FE19196E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2E9740-C097-40D1-A9E8-3DB4FE19196E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2E9740-C097-40D1-A9E8-3DB4FE19196E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{95BA0764-4BAC-451D-8DD4-D87E40EDD069} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
 		{E02DF0AB-40E8-4B5E-8458-860B802BD97B} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
 		{E9BDE1AD-FF0C-4FFF-AD29-27401AB2384E} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
 		{A141C583-5740-4A1F-ABFD-64F16D7E74A3} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
+		{0D2E9740-C097-40D1-A9E8-3DB4FE19196E} = {E3957BA9-26D9-4F89-AB13-7C19966CCBD1}
 	EndGlobalSection
 EndGlobal

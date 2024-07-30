@@ -1,15 +1,15 @@
 ﻿@page "/"
 
 <MudGrid Spacing="2">
-<MudItem xs="12" Class="mb-8" Style="@(BrowserViewportService.GetStyleValue(1))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(1, i))">
-        <div class="mud-height-full effect-container d-flex align-center justify-center">
+<MudItem xs="12">
+    <MudBreakpointProvider >
+        <div class="mud-height-full effect-container d-flex align-center justify-center" style="height: 80vh">
             <BlaterBackgroundEffect Scale="0.6"/>
             <div class="secondary-container d-flex align-center justify-center flex-column">
-                <MudText Typo="@BrowserViewportService.Title" Style="line-height: 1">Your Complete</MudText>
-                <MudText Typo="@BrowserViewportService.Title" Style="line-height: 1">Framework Solution</MudText>
+                <MudText Typo="Typo.h2" Style="line-height: 1">Your Complete</MudText>
+                <MudText Typo="Typo.h3" Style="line-height: 1">Framework Solution</MudText>
                 <div class="d-flex align-center justify-center mt-6">
-                    <MudText Typo="@BrowserViewportService.SubTitle" Align="Align.Center" Style="line-height: 1.75rem">
+                    <MudText Typo="Typo.subtitle1" Align="Align.Center" Style="line-height: 1.75rem">
                         Blater: your all-in-one solution.
                         <br/>
                         Deploy globally in 5 minutes and create resources automatically across 30+ regions.
@@ -23,8 +23,8 @@
     </MudBreakpointProvider>
 </MudItem>
 
-<MudItem xs="12" Class="mb-8" Style="@(BrowserViewportService.GetStyleValue(2))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(2, i))">
+<MudItem xs="12" Class="mb-8">
+    <MudBreakpointProvider>
         <MudGrid Justify="Justify.SpaceBetween" Spacing="6">
             <MudItem xs="12" md="6" lg="6" xl="6" xxl="6">
                 <div class="d-flex flex-column gap-4 pa-8 card">
@@ -61,8 +61,8 @@
     </MudBreakpointProvider>
 </MudItem>
 
-<MudItem xs="12" Class="mb-8" Style="@(BrowserViewportService.GetStyleValue(3))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(3, i))">
+<MudItem xs="12" Class="mb-8">
+    <MudBreakpointProvider >
         <MudGrid Justify="Justify.SpaceBetween" Spacing="6">
             <MudItem xs="12" md="4" lg="4" xl="4" xxl="4" Class="d-flex align-center justify-center pa-8">
                 <div class="d-flex flex-column gap-4">
@@ -114,8 +114,8 @@
     </MudBreakpointProvider>
 </MudItem>
 
-<MudItem xs="12" Class="mb-8" Style="@(BrowserViewportService.GetStyleValue(4))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(4, i))">
+<MudItem xs="12" Class="mb-8" >
+    <MudBreakpointProvider >
         <MudGrid Justify="Justify.SpaceBetween" Spacing="6">
             <MudItem xs="12" Class="d-flex align-center justify-center pa-8">
                 <div class="d-flex flex-column align-center gap-4">
@@ -148,8 +148,8 @@
     </MudBreakpointProvider>
 </MudItem>
 
-<MudItem xs="12" Class="mb-8" Style="@(BrowserViewportService.GetStyleValue(5))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(5, i))">
+<MudItem xs="12" Class="mb-8">
+    <MudBreakpointProvider >
         <MudGrid Justify="Justify.SpaceBetween" Spacing="0">
             <MudItem xs="12" md="6" lg="6" xl="6" xxl="6" Class="d-flex align-center justify-start pa-8">
                 <div class="d-flex flex-column gap-4 content z-20" style="width: 70%">
@@ -182,8 +182,8 @@
     </MudBreakpointProvider>
 </MudItem>
 
-<MudItem xs="12" Class="mb-8" Style="@(BrowserViewportService.GetStyleValue(6))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(6, i))">
+<MudItem xs="12" Class="mb-8">
+    <MudBreakpointProvider>
         <MudGrid Justify="Justify.SpaceBetween" Spacing="6">
             <MudItem xs="12" Class="d-flex align-center justify-center pa-8">
                 <div class="d-flex flex-column align-center gap-4">
@@ -247,8 +247,8 @@
     </MudBreakpointProvider>
 </MudItem>
 
-<MudItem xs="12" Style="@(BrowserViewportService.GetStyleValue(7))">
-    <MudBreakpointProvider OnBreakpointChanged="@(i => BrowserViewportService.OnBreakpointCallback(7, i))">
+<MudItem xs="12">
+    <MudBreakpointProvider >
         <MudGrid Justify="Justify.SpaceBetween" Spacing="6" Style="width: 100%">
             <MudItem xs="12" Class="d-flex align-center justify-center pa-8">
                 <div class="d-flex flex-column align-center gap-4" style="width: 50%">

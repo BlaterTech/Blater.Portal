@@ -1,9 +1,9 @@
 ﻿@page "/home"
-
-@layout BlaterPortalLayout
-
+@using Blater.Frontend.Client.Extensions
 @using Blater.Interfaces
 @using Blater.Models.User
+
+@layout BlaterPortalLayout
 
 <BlaterAuthorizeView @ref="@_blaterAuthorizeView" Roles="@_roles" Permissions="@_permissions">
     <Authorized>
@@ -17,7 +17,7 @@
         <p>BlaterUserToken -> @context.User.GetUserAuthenticated().ToJson()</p>
         <br/>
         <p>=== Features ===</p>
-        <p>GetUserAuthenticated -> @_blaterAuthorizeView.GetUserAuthenticated().ToJson()</p>
+        <p>GetUserAuthenticated -> @_blaterAuthorizeView?.GetUserAuthenticated().ToJson()</p>
     </Authorized>
     <NotAuthorized>
         <h1>You are not authenticated using BlaterAuthorizedView</h1>
@@ -29,7 +29,7 @@
     readonly List<string> _roles = ["ProjectOwner"];
     readonly List<string> _permissions = ["ProjectOwner:Create"];
 
-    BlaterAuthorizeView _blaterAuthorizeView;
+    BlaterAuthorizeView? _blaterAuthorizeView;
 
     [Inject]
     private IBlaterDatabaseStoreT<BlaterUser> UserStore { get; set; } = null!;
@@ -41,7 +41,14 @@
     {
         if (firstRender)
         {
-            var userAuthenticated = _blaterAuthorizeView.GetUserAuthenticated();
+            var userAuthenticated = _blaterAuthorizeView?.GetUserAuthenticated();
+            
+            if (userAuthenticated is null)
+            {
+                Snackbar.Add("User not authenticated", Severity.Error);
+                return;
+            }
+            
             var result = await UserStore.FindOne(x => x.Email == userAuthenticated.Email);
 
             if (result.HandleErrors(out var errors, out var response))

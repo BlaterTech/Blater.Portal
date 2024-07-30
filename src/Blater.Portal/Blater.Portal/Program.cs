@@ -1,17 +1,15 @@
 using Blater;
-using Blater.Frontend.Interfaces;
-using Blater.Frontend.Services;
-using Blater.Frontend.StateManagement;
-using Blater.Frontend.StateManagement.Database;
-using Blater.Portal.Client.Handlers;
+using Blater.Frontend.Account;
+using Blater.Frontend.Authentication;
+using Blater.Frontend.Client;
+using Blater.Frontend.Client.Handlers;
+using Blater.Frontend.Client.Interfaces;
+using Blater.Frontend.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blater.Portal.Components;
-using Blater.Portal.Components.Account;
-using Blater.Portal.Core;
 using Blater.SDK.Extensions;
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
-using Blazr.RenderState.Server;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MudBlazor.Services;
 using Serilog;
@@ -24,8 +22,7 @@ builder.Logging.AddSerilog();
 builder.Services
        .AddRazorComponents()
        .AddInteractiveServerComponents()
-       .AddInteractiveWebAssemblyComponents()
-       .AddAuthenticationStateSerialization();
+       .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -68,14 +65,14 @@ builder.Services.AddBlaterAuthStores();
 builder.Services.AddBlaterAuthRepositories();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ICookieService, CookieService>();
+//builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddBlazoredSessionStorage();
-builder.Services.AddScoped<IBlaterMemoryCache, BlaterMemoryCache>();
-builder.Services.AddScoped<IBlaterStateStore, BlaterStateStore>();
+//builder.Services.AddScoped<IBlaterMemoryCache, BlaterMemoryCache>();
+//builder.Services.AddScoped<IBlaterStateStore, BlaterStateStore>();
 builder.Services.AddScoped<IBrowserViewportObserverService, BrowserViewportObserverService>();
 builder.Services.AddMudServices();
-builder.AddBlazrRenderStateServerServices();
+//builder.AddBlazrRenderStateServerServices();
 
 var app = builder.Build();
 

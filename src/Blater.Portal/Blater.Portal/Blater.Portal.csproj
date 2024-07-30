@@ -5,21 +5,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.NET.Sdk.BlazorWebAssembly" />
-    </ItemGroup>
-    
-    <ItemGroup>
-        <PackageReference Include="Blazr.RenderState.Server" Version="1.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Content Include="..\..\.dockerignore">
             <Link>.dockerignore</Link>
         </Content>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0-preview.6.24328.4"  />
+      <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj" />
+      <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Login.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\Register.razor" />
+      <_ContentIncludedByDefault Remove="Components\Account\Pages\_Imports.razor" />
     </ItemGroup>
 
 </Project>

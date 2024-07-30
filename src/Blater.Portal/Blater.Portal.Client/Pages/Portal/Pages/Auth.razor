@@ -1,4 +1,7 @@
 ﻿@page "/auth"
+@using Blater.Frontend.Client.Components.AuthorizeView
+@using Blater.Frontend.Client.Extensions
+@using Blater.Frontend.Client.Layouts
 
 @layout BlaterPortalLayout
 
@@ -16,8 +19,8 @@
         <p>BlaterUserToken -> @context.User.GetUserAuthenticated().ToJson()</p>
         <br/>
         <p>=== Features ===</p>
-        <p>GetUserAuthenticated -> @_blaterAuthorizeView.GetUserAuthenticated().ToJson()</p>
-        <p>GetUserAuthenticated -> @_blaterAuthorizeView.GetUserAuthenticated().Jwt</p>
+        <p>GetUserAuthenticated -> @_blaterAuthorizeView?.GetUserAuthenticated().ToJson()</p>
+        <p>GetUserAuthenticated -> @_blaterAuthorizeView?.GetUserAuthenticated().Jwt</p>
     </Authorized>
     <NotAuthorized>
         <h1>You are not authenticated using BlaterAuthorizedView</h1>
@@ -29,7 +32,7 @@
     readonly List<string> _roles = ["ProjectOwner"];
     readonly List<string> _permissions = ["ProjectOwner:Create"];
 
-    BlaterAuthorizeView _blaterAuthorizeView;
+    BlaterAuthorizeView? _blaterAuthorizeView;
 }
 
 

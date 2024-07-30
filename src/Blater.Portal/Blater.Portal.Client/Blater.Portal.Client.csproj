@@ -6,17 +6,7 @@
     </PropertyGroup>
     
     <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-    
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0-preview.6.24328.4"  />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="9.0.0-preview.6.24328.4"/>
-        
-      <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj" />
-      <ProjectReference Include="..\..\Blater.Portal.Core\Blater.Portal.Core.csproj"  />
+      <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend.Client\Blater.Frontend.Client.csproj" />
     </ItemGroup>
 
 </Project>
