@@ -15,4 +15,12 @@
       <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\app.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+
 </Project>
