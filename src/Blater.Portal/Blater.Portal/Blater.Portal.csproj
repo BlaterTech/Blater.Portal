@@ -15,10 +15,4 @@
       <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Components\Account\Pages\Login.razor" />
-      <_ContentIncludedByDefault Remove="Components\Account\Pages\Register.razor" />
-      <_ContentIncludedByDefault Remove="Components\Account\Pages\_Imports.razor" />
-    </ItemGroup>
-
 </Project>
