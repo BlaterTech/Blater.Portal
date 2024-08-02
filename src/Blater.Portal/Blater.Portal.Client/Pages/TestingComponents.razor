@@ -3,6 +3,7 @@
 @using Blater.Attributes.Auto
 @using Blater.Models
 @using Blater.Models.Bases
+@using Blater.Portal.Client.Models
 
 @attribute [AutoIgnore]
 
@@ -11,16 +12,7 @@
 </div>
 
 @code {
-
-    public class Employee : BaseDataModel
-    {
-        public string? Name { get; set; }
-        public string? Position { get; set; }
-        public int YearsEmployed { get; set; }
-        public int Salary { get; set; }
-        public int Rating { get; set; }
-    }
-
+    
     public List<Employee> Employees { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
