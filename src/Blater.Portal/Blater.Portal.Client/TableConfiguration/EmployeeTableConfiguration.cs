@@ -1,5 +1,5 @@
-﻿using Blater.Frontend.Client.Auto.AutoTable.Implementations;
-using Blater.Frontend.Client.Auto.AutoTable.Interfaces;
+﻿using Blater.Frontend.Client.Auto.Components.AutoTable.Implementations;
+using Blater.Frontend.Client.Auto.Components.AutoTable.Interfaces;
 using Blater.Portal.Client.Models;
 
 namespace Blater.Portal.Client.TableConfiguration;
@@ -13,6 +13,7 @@ public class EmployeeTableConfiguration : ITableConfiguration<Employee>
 
         builder
            .Property(x => x.Name)
+           .HasColumnName("_name")
            .Order(1);
         builder
            .Property(x => x.Position)
