@@ -13,7 +13,7 @@ public class EmployeeTableConfiguration : ITableConfiguration<Employee>
 
         builder
            .Property(x => x.Name)
-           .HasColumnName("_name")
+           .SetName("_name")
            .Order(1);
         builder
            .Property(x => x.Position)
