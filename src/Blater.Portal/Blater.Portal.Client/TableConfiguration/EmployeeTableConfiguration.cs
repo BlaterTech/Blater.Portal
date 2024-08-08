@@ -1,4 +1,4 @@
-﻿using Blater.Frontend.Client.Auto.Components.AutoTable.Implementations;
+﻿using Blater.Frontend.Client.Auto.Components.AutoTable.Builders;
 using Blater.Frontend.Client.Auto.Components.AutoTable.Interfaces;
 using Blater.Portal.Client.Models;
 
@@ -13,7 +13,7 @@ public class EmployeeTableConfiguration : ITableConfiguration<Employee>
 
         builder
            .Property(x => x.Name)
-           .SetName("_name")
+           .Name("_name")
            .Order(1);
         builder
            .Property(x => x.Position)
@@ -30,18 +30,18 @@ public class EmployeeTableConfiguration : ITableConfiguration<Employee>
 
         builder
            .Property(x => x.Id)
-           .DisabledColumn();
+           .DisableColumn();
         builder
            .Property(x => x.CreatedAt)
-           .DisabledColumn();
+           .DisableColumn();
         builder
            .Property(x => x.UpdatedAt)
-           .DisabledColumn();
+           .DisableColumn();
         builder
            .Property(x => x.Enabled)
-           .DisabledColumn();
+           .DisableColumn();
         builder
            .Property(x => x.Deleted)
-           .DisabledColumn();
+           .DisableColumn();
     }
 }
