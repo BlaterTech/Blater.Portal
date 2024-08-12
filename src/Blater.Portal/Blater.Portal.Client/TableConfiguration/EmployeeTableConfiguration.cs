@@ -30,18 +30,18 @@ public class EmployeeTableConfiguration : ITableConfiguration<Employee>
 
         builder
            .Property(x => x.Id)
-           .DisableColumn();
+           .DisableColumn(true);
         builder
            .Property(x => x.CreatedAt)
-           .DisableColumn();
+           .DisableColumn(true);
         builder
            .Property(x => x.UpdatedAt)
-           .DisableColumn();
+           .DisableColumn(true);
         builder
            .Property(x => x.Enabled)
-           .DisableColumn();
+           .DisableColumn(true);
         builder
            .Property(x => x.Deleted)
-           .DisableColumn();
+           .DisableColumn(true);
     }
 }
