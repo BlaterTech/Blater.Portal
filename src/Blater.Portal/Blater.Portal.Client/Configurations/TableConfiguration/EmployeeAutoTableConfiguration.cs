@@ -1,12 +1,12 @@
-﻿using Blater.Frontend.Client.Auto.Components.AutoTable.Builders;
-using Blater.Frontend.Client.Auto.Components.AutoTable.Interfaces;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders.Configurations.Table;
+using Blater.Frontend.Client.Auto.Interfaces.AutoTable;
 using Blater.Portal.Client.Models;
 
-namespace Blater.Portal.Client.TableConfiguration;
+namespace Blater.Portal.Client.Configurations.TableConfiguration;
 
-public class EmployeeTableConfiguration : ITableConfiguration<Employee>
+public class EmployeeAutoTableConfiguration : IAutoTableConfiguration<Employee>
 {
-    public void Configure(TableConfigurationBuilder<Employee> builder)
+    public void Configure(AutoTableConfigurationBuilder<Employee> builder)
     {
         builder
            .ToTable("Employees");
