@@ -2,7 +2,6 @@
 using Blater.Frontend.Client.Auto.AutoBuilders.Table;
 using Blater.Frontend.Client.Auto.Interfaces;
 using Blater.Portal.Client.Models;
-using FluentValidation;
 
 namespace Blater.Portal.Client.Configurations;
 
@@ -21,16 +20,15 @@ public class EmployeeAutoConfiguration : IAutoConfiguration<Employee>
         builder.Form("FormName", configurationBuilder =>
         {
             configurationBuilder
-               .AddPartner(x => x.Name)
-               .Order(1)
-               .Validate(initial => { initial.NotEmpty(); });
+               .AddMember(x => x.Name)
+               .Order(1);
         });
 
         builder.FormGroup("GroupName", configurationBuilder =>
         {
-            configurationBuilder.AddPartner(x => x.Name);
-            configurationBuilder.AddPartner(x => x.Name);
-            configurationBuilder.AddPartner(x => x.Name);
+            configurationBuilder.AddMember(x => x.Name);
+            configurationBuilder.AddMember(x => x.Name);
+            configurationBuilder.AddMember(x => x.Name);
         });
     }
 }
