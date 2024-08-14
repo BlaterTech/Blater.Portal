@@ -1,4 +1,4 @@
-﻿using Blater.Frontend.Client.Auto.AutoBuilders.Configurations.Table;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders.Table;
 using Blater.Frontend.Client.Auto.Interfaces.AutoTable;
 using Blater.Portal.Client.Models;
 
@@ -12,7 +12,7 @@ public class EmployeeAutoTableConfiguration : IAutoTableConfiguration<Employee>
            .ToTable("Employees");
 
         builder
-           .Property(x => x.Name)
+           .Property(x => x.CreatedAt)
            .Name("_name")
            .Order(1);
         builder
@@ -30,18 +30,18 @@ public class EmployeeAutoTableConfiguration : IAutoTableConfiguration<Employee>
 
         builder
            .Property(x => x.Id)
-           .DisableColumn(true);
+           .Disable(true);
         builder
            .Property(x => x.CreatedAt)
-           .DisableColumn(true);
+           .Disable(true);
         builder
            .Property(x => x.UpdatedAt)
-           .DisableColumn(true);
+           .Disable(true);
         builder
            .Property(x => x.Enabled)
-           .DisableColumn(true);
+           .Disable(true);
         builder
            .Property(x => x.Deleted)
-           .DisableColumn(true);
+           .Disable(true);
     }
 }

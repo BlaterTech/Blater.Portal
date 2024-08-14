@@ -1,4 +1,4 @@
-﻿using Blater.Frontend.Client.Auto.AutoBuilders.Configurations.Form;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders.Form;
 using Blater.Frontend.Client.Auto.Interfaces.AutoForm;
 using Blater.Portal.Client.Models;
 using FluentValidation;
