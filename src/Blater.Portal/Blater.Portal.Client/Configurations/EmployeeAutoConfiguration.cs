@@ -1,12 +1,21 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders.Form;
-using Blater.Frontend.Client.Auto.Interfaces.AutoForm;
+using Blater.Frontend.Client.Auto.AutoBuilders.Table;
+using Blater.Frontend.Client.Auto.Interfaces;
 using Blater.Portal.Client.Models;
 using FluentValidation;
 
-namespace Blater.Portal.Client.Configurations.FormConfiguration;
+namespace Blater.Portal.Client.Configurations;
 
-public class EmployeeAutoFormConfiguration : IAutoFormConfiguration<Employee>
+public class EmployeeAutoConfiguration : IAutoConfiguration<Employee>
 {
+    public void Configure(AutoTableConfigurationBuilder<Employee> builder)
+    {
+        builder.Table("Employees", configurationBuilder =>
+        {
+            configurationBuilder.AddMember(x => x.Position);
+        });
+    }
+
     public void Configure(AutoFormConfigurationBuilder<Employee> builder)
     {
         builder.Form("FormName", configurationBuilder =>
