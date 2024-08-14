@@ -9,10 +9,19 @@ public class EmployeeAutoFormConfiguration : IAutoFormConfiguration<Employee>
 {
     public void Configure(AutoFormConfigurationBuilder<Employee> builder)
     {
-       builder.Property(x => x.Name);
-       
-       
-       //validations
-       builder.RuleFor(x => x.Name).NotEmpty().WithMessage("Não pode ser null");
+        builder.Form("FormName", configurationBuilder =>
+        {
+            configurationBuilder
+               .AddPartner(x => x.Name)
+               .Order(1)
+               .Validate(initial => { initial.NotEmpty(); });
+        });
+
+        builder.FormGroup("GroupName", configurationBuilder =>
+        {
+            configurationBuilder.AddPartner(x => x.Name);
+            configurationBuilder.AddPartner(x => x.Name);
+            configurationBuilder.AddPartner(x => x.Name);
+        });
     }
 }

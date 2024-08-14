@@ -8,40 +8,30 @@ public class EmployeeAutoTableConfiguration : IAutoTableConfiguration<Employee>
 {
     public void Configure(AutoTableConfigurationBuilder<Employee> builder)
     {
-        builder
-           .ToTable("Employees");
-
-        builder
-           .Property(x => x.CreatedAt)
-           .Name("_name")
-           .Order(1);
-        builder
-           .Property(x => x.Position)
-           .Order(2);
-        builder
-           .Property(x => x.Rating)
-           .Order(3);
-        builder
-           .Property(x => x.Salary)
-           .Order(4);
-        builder
-           .Property(x => x.YearsEmployed)
-           .Order(5);
-
-        builder
-           .Property(x => x.Id)
-           .Disable(true);
-        builder
-           .Property(x => x.CreatedAt)
-           .Disable(true);
-        builder
-           .Property(x => x.UpdatedAt)
-           .Disable(true);
-        builder
-           .Property(x => x.Enabled)
-           .Disable(true);
-        builder
-           .Property(x => x.Deleted)
-           .Disable(true);
+        builder.Table("Employees");
+        
+        builder.Column(x => x.Position, configurationBuilder =>
+        {
+            configurationBuilder.Name("");
+            configurationBuilder.Order(1);
+        });
+        
+        builder.Column(x => x.Position, configurationBuilder =>
+        {
+            configurationBuilder.Name("");
+            configurationBuilder.Order(1);
+        });
+        
+        builder.Column(x => x.Position, configurationBuilder =>
+        {
+            configurationBuilder.Name("");
+            configurationBuilder.Order(1);
+        });
+        
+        builder.Column(x => x.Position, configurationBuilder =>
+        {
+            configurationBuilder.Name("");
+            configurationBuilder.Order(1);
+        });
     }
 }
