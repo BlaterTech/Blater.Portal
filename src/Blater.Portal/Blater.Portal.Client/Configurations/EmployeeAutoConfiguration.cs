@@ -24,7 +24,7 @@ public class EmployeeAutoConfiguration : IAutoConfiguration<Employee>
         builder.Form("FormName", configurationBuilder =>
         {
             configurationBuilder
-               .AddFormMember(x => x.Name)
+               .AddMember(x => x.Name)
                .Order(1);
 
             configurationBuilder.AddGroup("GroupName", AutoFormGroupScope.Create, groupConfigurationBuilder =>
@@ -47,7 +47,7 @@ public class EmployeeAutoConfiguration : IAutoConfiguration<Employee>
         builder.Details("DetailsName", configurationBuilder =>
         {
             configurationBuilder
-               .AddDetailsMember(x => x.Name)
+               .AddMember(x => x.Name)
                .Breakpoint(Breakpoint.Lg, 12);
 
             configurationBuilder.AddGroup("GroupName", false, groupConfigurationBuilder =>
