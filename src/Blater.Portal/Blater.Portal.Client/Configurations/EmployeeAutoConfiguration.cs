@@ -1,8 +1,10 @@
-﻿using Blater.Frontend.Client.Auto.AutoBuilders.Form;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders.Details;
+using Blater.Frontend.Client.Auto.AutoBuilders.Form;
 using Blater.Frontend.Client.Auto.AutoBuilders.Table;
 using Blater.Frontend.Client.Auto.Interfaces;
 using Blater.Frontend.Client.Enumerations;
 using Blater.Portal.Client.Models;
+using MudBlazor;
 
 namespace Blater.Portal.Client.Configurations;
 
@@ -10,7 +12,11 @@ public class EmployeeAutoConfiguration : IAutoConfiguration<Employee>
 {
     public void Configure(AutoTableConfigurationBuilder<Employee> builder)
     {
-        builder.Table("Employees", configurationBuilder => { configurationBuilder.AddMember(x => x.Position); });
+        builder.Table("TableName", configurationBuilder =>
+        {
+            configurationBuilder
+               .AddMember(x => x.Position);
+        });
     }
 
     public void Configure(AutoFormConfigurationBuilder<Employee> builder)
@@ -32,6 +38,31 @@ public class EmployeeAutoConfiguration : IAutoConfiguration<Employee>
                 groupConfigurationBuilder
                    .AddMember(x => x.Name)
                    .LabelName("");
+            });
+        });
+    }
+
+    public void Configure(AutoDetailsConfigurationBuilder<Employee> builder)
+    {
+        builder.Details("DetailsName", configurationBuilder =>
+        {
+            configurationBuilder
+               .AddDetailsMember(x => x.Name)
+               .Breakpoint(Breakpoint.Lg, 12);
+
+            configurationBuilder.AddGroup("GroupName", false, groupConfigurationBuilder =>
+            {
+                groupConfigurationBuilder
+                   .AddMember(x => x.Name)
+                   .ComponentType("");
+
+                groupConfigurationBuilder
+                   .AddMember(x => x.Name)
+                   .ComponentType("");
+
+                groupConfigurationBuilder
+                   .AddMember(x => x.Name)
+                   .ComponentType("");
             });
         });
     }
