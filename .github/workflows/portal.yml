@@ -41,16 +41,16 @@ jobs:
           dotnet-version: 9.0.x
       - name: Restore dependencies
         working-directory: blater/Blater.Portal
-        run: dotnet restore src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj
+        run: dotnet restore src/Blater.Portal/Blater.Portal/Blater.Portal.csproj
       - name: Build
         working-directory: blater/Blater.Portal
-        run: dotnet build --no-restore src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj
+        run: dotnet build --no-restore src/Blater.Portal/Blater.Portal/Blater.Portal.csproj
       #- name: Test the whole solution
       #  working-directory: blater/Blater.Portal
       #  run: dotnet test --verbosity normal src/Blater.Internals.sln
       - name: Publish
         working-directory: blater/Blater.Portal
-        run: dotnet publish src/Blater.Portal.Demo/Blater.Portal.Demo/Blater.Portal.Demo.csproj -c Release -r linux-x64 -p:ContainerRepository=blater-demo -p:ContainerImageTag=latest /t:PublishContainer
+        run: dotnet publish src/Blater.Portal/Blater.Portal/Blater.Portal.csproj -c Release -r linux-x64 -p:ContainerRepository=blater-demo -p:ContainerImageTag=latest /t:PublishContainer
       - name: Docker Deploy
         run: |
           export VERSION=$(date --utc '+%Y%m%d%H%M')

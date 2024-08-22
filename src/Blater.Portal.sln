@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Frontend.SourceGener
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{AD26236F-79EF-43FE-B700-C563D73A5590}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\demo.yml = ..\.github\workflows\demo.yml
+		..\.github\workflows\portal.yml = ..\.github\workflows\portal.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Portal", "Blater.Portal\Blater.Portal\Blater.Portal.csproj", "{26154414-3D3A-46D5-8ED6-3C263F21950C}"
