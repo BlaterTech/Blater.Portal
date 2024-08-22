@@ -51,4 +51,5 @@ jobs:
           export VERSION=$(date --utc '+%Y%m%d%H%M')
           docker tag blater-portal:latest autosystem/blater-portal:${{github.REF_NAME}}-$VERSION
           docker push autosystem/blater-portal:${{github.REF_NAME}}-$VERSION
+          docker tag blater-portal:latest autosystem/blater-portal:latest
           docker push autosystem/blater-portal:latest
