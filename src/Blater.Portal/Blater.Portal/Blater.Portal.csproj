@@ -14,9 +14,4 @@
       <ProjectReference Include="..\..\..\..\Blater.Frontend\src\Blater.Frontend\Blater.Frontend.csproj" />
       <ProjectReference Include="..\Blater.Portal.Client\Blater.Portal.Client.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\js\app.js" />
-    </ItemGroup>
-
 </Project>

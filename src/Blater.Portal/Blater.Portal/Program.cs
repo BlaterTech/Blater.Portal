@@ -1,4 +1,12 @@
 using Blater.Frontend;
 using Blater.Portal.Components;
 
-await WebSetup.RunBlaterApp<App>(typeof(Blater.Portal.Client._Imports).Assembly);
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddBlaterFrontendServer();
+
+var app = builder.Build();
+
+app.UseBlaterFrontendServer<App>(typeof(Blater.Portal.Client._Imports).Assembly);
+
+app.Run();
