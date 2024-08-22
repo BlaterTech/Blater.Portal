@@ -40,7 +40,7 @@ jobs:
       #  run: dotnet test --verbosity normal src/Blater.Internals.sln
       - name: Publish
         working-directory: blater/Blater.Portal
-        run: dotnet publish src/Blater.Portal/Blater.Portal/Blater.Portal.csproj -c Release -r linux-x64 -p:ContainerRepository=Blater.Portal -p:ContainerImageTag=latest /t:PublishContainer
+        run: dotnet publish src/Blater.Portal/Blater.Portal/Blater.Portal.csproj -c Release -r linux-x64 -p:ContainerRepository=blater-portal -p:ContainerImageTag=latest /t:PublishContainer
       #- name: Docker Deploy
       #  run: |
       #    export VERSION=$(date --utc '+%Y%m%d%H%M')
@@ -49,6 +49,6 @@ jobs:
       - name: Docker Deploy
         run: |
           export VERSION=$(date --utc '+%Y%m%d%H%M')
-          docker tag Blater.Portal:latest autosystem/Blater.Portal:${{github.REF_NAME}}-$VERSION
-          docker push autosystem/Blater.Portal:${{github.REF_NAME}}-$VERSION
-          docker push autosystem/Blater.Portal:latest
+          docker tag blater-portal:latest autosystem/blater-portal:${{github.REF_NAME}}-$VERSION
+          docker push autosystem/blater-portal:${{github.REF_NAME}}-$VERSION
+          docker push autosystem/blater-portal:latest
