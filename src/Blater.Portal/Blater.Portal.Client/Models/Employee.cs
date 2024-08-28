@@ -1,7 +1,6 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders;
-using Blater.Frontend.Client.Enumerations;
+using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
 using Blater.Frontend.Client.Models.Bases;
-using FluentValidation;
 using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
@@ -24,12 +23,19 @@ public class Employee : BaseFrontendModel
 
         builder.Form("FormName", configurationBuilder =>
         {
-            configurationBuilder
-               .AddMember(() => Name)
-               .Validate(initial => initial.NotEmpty())
-               .Order(1);
+            configurationBuilder.ConfigureActions(actionConfigurationBuilder =>
+            {
+                actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit);
+            });
 
-            configurationBuilder.AddGroup("GroupName", AutoFormGroupScope.Create, groupConfigurationBuilder =>
+            configurationBuilder.AddAvatar(avatarConfigurationBuilder =>
+            {
+                avatarConfigurationBuilder.AvatarUrl("");
+                avatarConfigurationBuilder.ContainerPublic(false);
+                avatarConfigurationBuilder.ContainerPrefix("test");
+            });
+            
+            configurationBuilder.AddGroup("GroupName", AutoFormGroupDisplayType.Create, groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
                    .AddMember(() => Name)
@@ -52,16 +58,13 @@ public class Employee : BaseFrontendModel
             configurationBuilder.AddGroup("GroupName", false, groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .ComponentType("");
+                   .AddMember(() => Name);
 
                 groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .ComponentType("");
+                   .AddMember(() => Name);
 
                 groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .ComponentType("");
+                   .AddMember(() => Name);
             });
         });
     }
