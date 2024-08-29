@@ -16,7 +16,7 @@
 <div class="pa-2">
     <AutoForm 
         T="Employee" 
-        Model="@Employee" />
+        Model="@Employees.FirstOrDefault()" />
 </div>
 
 @code {
@@ -26,8 +26,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(1500);
-        
+        await Task.Delay(1);
         var random = new Random();
         var positions = new List<string>
         {

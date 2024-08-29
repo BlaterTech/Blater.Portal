@@ -6,8 +6,8 @@ namespace Blater.Portal.Client.Models;
 
 public class Employee : BaseFrontendModel
 {
-    public string? Name { get; set; }
-    public string? Position { get; set; }
+    public string Name { get; set; } = null!;
+    public string Position { get; set; } = null!;
     public int YearsEmployed { get; set; }
     public int Salary { get; set; }
     public int Rating { get; set; }
