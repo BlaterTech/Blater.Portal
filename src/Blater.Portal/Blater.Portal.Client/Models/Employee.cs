@@ -35,17 +35,10 @@ public class Employee : BaseFrontendModel
                 avatarConfigurationBuilder.ContainerPrefix("test");
             });
             
-            configurationBuilder.AddGroup("GroupName", AutoFormGroupDisplayType.Create, groupConfigurationBuilder =>
+            configurationBuilder.AddGroup(groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .LabelName("");
-                groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .LabelName("");
-                groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .LabelName("");
+                   .AddMember(() => Name);
             });
         });
 
