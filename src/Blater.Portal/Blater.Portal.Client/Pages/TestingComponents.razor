@@ -6,13 +6,23 @@
 
 @attribute [AutoIgnore]
 
+@*<div class="pa-2">
+    <BlaterTable 
+    T="Employee" 
+    Items="Employees" 
+    EnabledDefaultActions="true"/> 
+</div>*@
+
 <div class="pa-2">
-    <BlaterTable T="Employee" Items="Employees" EnabledDefaultActions="true"/> 
+    <AutoForm 
+        T="Employee" 
+        Model="@Employee" />
 </div>
 
 @code {
     
     public List<Employee> Employees { get; set; } = [];
+    public Employee Employee { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,5 +1,4 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders;
-using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
 using Blater.Frontend.Client.Models.Bases;
 using MudBlazor;
 
@@ -26,13 +25,6 @@ public class Employee : BaseFrontendModel
             configurationBuilder.ConfigureActions(actionConfigurationBuilder =>
             {
                 actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit);
-            });
-
-            configurationBuilder.AddAvatar(avatarConfigurationBuilder =>
-            {
-                avatarConfigurationBuilder.AvatarUrl("");
-                avatarConfigurationBuilder.ContainerPublic(false);
-                avatarConfigurationBuilder.ContainerPrefix("test");
             });
             
             configurationBuilder.AddGroup(groupConfigurationBuilder =>
