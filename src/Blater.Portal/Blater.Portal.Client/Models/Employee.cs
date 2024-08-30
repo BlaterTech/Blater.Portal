@@ -1,5 +1,6 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders;
 using Blater.Frontend.Client.Models.Bases;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
@@ -30,7 +31,12 @@ public class Employee : BaseFrontendModel
             configurationBuilder.AddGroup(groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
-                   .AddMember(() => Name);
+                   .AddMember(() => Name)
+                   .Placeholder("Name")
+                   .HelpMessage("Name")
+                   .IsReadOnly(true)
+                   .LabelName("Name")
+                   .OnValueChanged(Asd);
             });
         });
 
@@ -48,5 +54,10 @@ public class Employee : BaseFrontendModel
                    .AddMember(() => Name);
             });
         });
+    }
+
+    public void Asd(string value)
+    {
+        Name += " test";
     }
 }
