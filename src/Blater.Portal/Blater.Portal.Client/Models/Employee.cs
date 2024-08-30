@@ -16,27 +16,23 @@ public class Employee : BaseFrontendModel
 
     public override void Configure(AutoModelConfigurationBuilder builder)
     {
-        builder.Table("TableName", configurationBuilder =>
-        {
-            configurationBuilder.AddMember(() => Salary);
-        });
+        builder.Table("TableName", configurationBuilder => { configurationBuilder.AddMember(() => Salary); });
 
         builder.Form("FormName", configurationBuilder =>
         {
-            configurationBuilder.ConfigureActions(actionConfigurationBuilder =>
-            {
-                actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit);
-            });
-            
+            configurationBuilder.ConfigureActions(actionConfigurationBuilder => { actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit); });
+
             configurationBuilder.AddGroup(groupConfigurationBuilder =>
             {
-                groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .Placeholder("Name")
-                   .HelpMessage("Name")
-                   .IsReadOnly(true)
-                   .LabelName("Name")
-                   .OnValueChanged(Asd);
+                groupConfigurationBuilder.AddMember(() => Name, componentConfigurationBuilder =>
+                {
+                    componentConfigurationBuilder
+                       .Placeholder("Name")
+                       .HelpMessage("Name")
+                       .IsReadOnly(true)
+                       .LabelName("Name")
+                       .OnValueChanged(Asd);
+                });
             });
         });
 
@@ -44,12 +40,6 @@ public class Employee : BaseFrontendModel
         {
             configurationBuilder.AddGroup("GroupName", false, groupConfigurationBuilder =>
             {
-                groupConfigurationBuilder
-                   .AddMember(() => Name);
-
-                groupConfigurationBuilder
-                   .AddMember(() => Name);
-
                 groupConfigurationBuilder
                    .AddMember(() => Name);
             });
