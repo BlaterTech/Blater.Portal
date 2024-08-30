@@ -13,7 +13,7 @@ public class Employee : BaseFrontendModel
     public int Rating { get; set; }
 
 
-    public override void Configure(AutoComponentConfigurationBuilder builder)
+    public override void Configure(AutoModelConfigurationBuilder builder)
     {
         builder.Table("TableName", configurationBuilder =>
         {
@@ -36,10 +36,6 @@ public class Employee : BaseFrontendModel
 
         builder.Details("DetailsName", configurationBuilder =>
         {
-            configurationBuilder
-               .AddMember(() => Name)
-               .Breakpoint(Breakpoint.Lg, 12);
-
             configurationBuilder.AddGroup("GroupName", false, groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
