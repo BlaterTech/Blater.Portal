@@ -16,8 +16,6 @@ public class Employee : BaseFrontendModel
 
     public override void Configure(AutoModelConfigurationBuilder builder)
     {
-        builder.Table("TableName", configurationBuilder => { configurationBuilder.AddMember(() => Salary); });
-
         builder.Form("FormName", configurationBuilder =>
         {
             configurationBuilder.ConfigureActions(actionConfigurationBuilder => { actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit); });
@@ -35,19 +33,11 @@ public class Employee : BaseFrontendModel
                 });
             });
         });
-
-        builder.Details("DetailsName", configurationBuilder =>
-        {
-            configurationBuilder.AddGroup("GroupName", false, groupConfigurationBuilder =>
-            {
-                groupConfigurationBuilder
-                   .AddMember(() => Name);
-            });
-        });
     }
 
     public void Asd(string value)
     {
+        Console.WriteLine($"Asd foi chamado com valor: {value}");
         Name += " test";
     }
 }

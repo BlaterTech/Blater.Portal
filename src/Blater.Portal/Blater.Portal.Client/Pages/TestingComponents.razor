@@ -16,7 +16,7 @@
 <div class="pa-2">
     <AutoForm 
         T="Employee" 
-        Model="@Employees.FirstOrDefault()" />
+        Model="@Employee" />
 </div>
 
 @code {
@@ -24,7 +24,7 @@
     public List<Employee> Employees { get; set; } = [];
     public Employee Employee { get; set; } = new();
 
-    protected override async Task OnInitializedAsync()
+    /*protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
         var random = new Random();
@@ -57,12 +57,12 @@
                 YearsEmployed = experience
             });
         }
-    }
+    }*/
     
-    private static DateTimeOffset GetRandomDate(Random random, DateTimeOffset startDate, DateTimeOffset endDate)
+    /*private static DateTimeOffset GetRandomDate(Random random, DateTimeOffset startDate, DateTimeOffset endDate)
     {
         var range = (endDate - startDate).Days;
         return startDate.AddDays(random.Next(range));
-    }
+    }*/
     
 }
