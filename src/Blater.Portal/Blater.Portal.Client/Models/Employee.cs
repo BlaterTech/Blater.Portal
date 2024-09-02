@@ -7,7 +7,7 @@ using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
 
-public class Employee : BaseFrontendModel
+public class Employee : BaseFrontendModel<Employee>
 {
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;
@@ -15,7 +15,7 @@ public class Employee : BaseFrontendModel
     public int Salary { get; set; }
     public int Rating { get; set; }
 
-    public override void Configure(AutoModelConfigurationBuilder builder)
+    public override void Configure(AutoModelConfigurationBuilder<Employee> builder)
     {
         builder.Form("FormName", configurationBuilder =>
         {
@@ -25,49 +25,68 @@ public class Employee : BaseFrontendModel
             configurationBuilder.AddGroup(groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
-                   .AddMember(() => Name)
-                   .Placeholder("Name")
-                   .HelpMessage("Name")
-                   .IsReadOnly(true)
-                   .LabelName("Name")
-                   .OnValueChanged(NameChanged);
+                   .AddMember(() => Name, componentConfigurationBuilder =>
+                    {
+                        componentConfigurationBuilder
+                           .Placeholder("Name")
+                           .HelpMessage("Name")
+                           .IsReadOnly(true)
+                           .LabelName("Name")
+                           .Validate(initial =>
+                            {
+                                initial.NotEmpty();
+                            })
+                           .OnValueChanged(NameChanged);
+                    });
 
                 groupConfigurationBuilder
-                   .AddMember(() => Position)
-                   .Placeholder("Position")
-                   .HelpMessage("Position")
-                   .IsReadOnly(true)
-                   .LabelName("Position")
-                   .OnValueChanged(PositionChanged);
+                   .AddMember(() => Position, componentConfigurationBuilder =>
+                    {
+                        componentConfigurationBuilder
+                           .Placeholder("Position")
+                           .HelpMessage("Position")
+                           .IsReadOnly(true)
+                           .LabelName("Position")
+                           .OnValueChanged(PositionChanged);
+                    });
             });
-            
+
             configurationBuilder.AddGroup(groupConfigurationBuilder =>
             {
                 groupConfigurationBuilder
-                   .AddMember(() => YearsEmployed)
-                   .Placeholder("YearsEmployed")
-                   .HelpMessage("YearsEmployed")
-                   .IsReadOnly(true)
-                   .Validate(initial =>
+                   .AddMember(() => YearsEmployed, componentConfigurationBuilder =>
                     {
-                        initial.LessThanOrEqualTo(5);
-                        initial.GreaterThan(1);
-                    })
-                   .LabelName("YearsEmployed");
-                
+                        componentConfigurationBuilder
+                           .Placeholder("YearsEmployed")
+                           .HelpMessage("YearsEmployed")
+                           .IsReadOnly(true)
+                           .Validate(initial =>
+                            {
+                                initial.LessThanOrEqualTo(5);
+                                initial.GreaterThan(1);
+                            })
+                           .LabelName("YearsEmployed");
+                    });
+
                 groupConfigurationBuilder
-                   .AddMember(() => Salary)
-                   .Placeholder("Salary")
-                   .HelpMessage("Salary")
-                   .IsReadOnly(true)
-                   .LabelName("Salary");
-                
+                   .AddMember(() => Salary, componentConfigurationBuilder =>
+                    {
+                        componentConfigurationBuilder
+                           .Placeholder("Salary")
+                           .HelpMessage("Salary")
+                           .IsReadOnly(true)
+                           .LabelName("Salary");
+                    });
+
                 groupConfigurationBuilder
-                   .AddMember(() => Rating)
-                   .Placeholder("Rating")
-                   .HelpMessage("Rating")
-                   .IsReadOnly(true)
-                   .LabelName("Rating");
+                   .AddMember(() => Rating, componentConfigurationBuilder =>
+                    {
+                        componentConfigurationBuilder
+                           .Placeholder("Rating")
+                           .HelpMessage("Rating")
+                           .IsReadOnly(true)
+                           .LabelName("Rating");
+                    });
             });
         });
     }
@@ -76,7 +95,7 @@ public class Employee : BaseFrontendModel
     {
         Console.WriteLine($"NameChanged foi chamado com valor: {value}");
         Name = $"{value} + test = {value}test";
-        
+
         StateNotifierService.NotifyStateChanged(() => Name);
     }
 
@@ -84,7 +103,7 @@ public class Employee : BaseFrontendModel
     {
         Console.WriteLine($"PositionChanged foi chamado com valor: {value}");
         Position = $"{value} + test = {value}test";
-        
+
         StateNotifierService.NotifyStateChanged(() => Position);
     }
 }
