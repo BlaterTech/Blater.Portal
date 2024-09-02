@@ -1,5 +1,6 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders;
 using Blater.Frontend.Client.Models.Bases;
+using Blater.Frontend.Client.Services;
 using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
@@ -32,16 +33,13 @@ public class Employee : BaseFrontendModel
                 });
             });
         });
-        
-        return;
-
-        void Asd(string value)
-        {
-            //todo: pensar em algo nesse ponto, para dps de atualizar devolver o valor para tela
-            Console.WriteLine($"Asd foi chamado com valor: {value}");
-            Name += " test";
+    }
+    
+    public void Asd(string value)
+    {
+        Console.WriteLine($"Asd foi chamado com valor: {value}");
+        Name = $"{value} + test = {value}test";
             
-            builder.NotifyStateChanged();
-        }
+        StateNotifierService<string>.NotifyStateChanged(Name);
     }
 }
