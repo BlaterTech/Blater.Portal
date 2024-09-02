@@ -13,8 +13,6 @@ public class Employee : BaseFrontendModel
     public int YearsEmployed { get; set; }
     public int Salary { get; set; }
     public int Rating { get; set; }
-    public Guid Test { get; set; } = default!;
-
 
     public override void Configure(AutoModelConfigurationBuilder builder)
     {
@@ -40,6 +38,27 @@ public class Employee : BaseFrontendModel
                    .IsReadOnly(true)
                    .LabelName("Position")
                    .OnValueChanged(PositionChanged);
+
+                groupConfigurationBuilder
+                   .AddMember(() => YearsEmployed)
+                   .Placeholder("YearsEmployed")
+                   .HelpMessage("YearsEmployed")
+                   .IsReadOnly(true)
+                   .LabelName("YearsEmployed");
+                
+                groupConfigurationBuilder
+                   .AddMember(() => Salary)
+                   .Placeholder("Salary")
+                   .HelpMessage("Salary")
+                   .IsReadOnly(true)
+                   .LabelName("Salary");
+                
+                groupConfigurationBuilder
+                   .AddMember(() => Rating)
+                   .Placeholder("Rating")
+                   .HelpMessage("Rating")
+                   .IsReadOnly(true)
+                   .LabelName("Rating");
             });
         });
     }
