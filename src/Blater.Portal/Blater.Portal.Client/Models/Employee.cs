@@ -2,6 +2,7 @@
 using Blater.Frontend.Client.Auto.AutoBuilders;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
+using FluentValidation;
 using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
@@ -38,12 +39,20 @@ public class Employee : BaseFrontendModel
                    .IsReadOnly(true)
                    .LabelName("Position")
                    .OnValueChanged(PositionChanged);
-
+            });
+            
+            configurationBuilder.AddGroup(groupConfigurationBuilder =>
+            {
                 groupConfigurationBuilder
                    .AddMember(() => YearsEmployed)
                    .Placeholder("YearsEmployed")
                    .HelpMessage("YearsEmployed")
                    .IsReadOnly(true)
+                   .Validate(initial =>
+                    {
+                        initial.LessThanOrEqualTo(5);
+                        initial.GreaterThan(1);
+                    })
                    .LabelName("YearsEmployed");
                 
                 groupConfigurationBuilder
