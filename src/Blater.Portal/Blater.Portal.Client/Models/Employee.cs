@@ -1,12 +1,14 @@
-﻿using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using Blater.Frontend.Client.Auto.AutoBuilders;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders.Details;
 using Blater.Frontend.Client.Auto.AutoBuilders.Form;
 using Blater.Frontend.Client.Auto.AutoBuilders.Table;
+using Blater.Frontend.Client.Auto.AutoBuilders.Valitador;
+using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
 using Blater.Frontend.Client.Auto.AutoModels.Form;
-using Blater.Frontend.Client.Auto.Interfaces.Types;
-using Blater.Frontend.Client.Models;
+using Blater.Frontend.Client.Auto.AutoModels.Validator;
+using Blater.Frontend.Client.Auto.Interfaces.Details;
+using Blater.Frontend.Client.Auto.Interfaces.Form;
+using Blater.Frontend.Client.Auto.Interfaces.Table;
+using Blater.Frontend.Client.Auto.Interfaces.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
 using FluentValidation;
@@ -15,11 +17,15 @@ using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
 
-public class Employee : BaseFrontendModel, IAutoTable<Employee>, IAutoForm<Employee>
+public class Employee : 
+    BaseFrontendModel, 
+    IAutoTableConfiguration<Employee>, 
+    IAutoFormConfiguration<Employee>, 
+    IAutoValidatorConfiguration<Employee>,
+    IAutoDetailsConfiguration<Employee>
 {
-    
     public string Name { get; set; } = null!;
-    
+
     public string Position { get; set; } = null!;
     public int YearsEmployed { get; set; }
     public int Salary { get; set; }
@@ -27,10 +33,10 @@ public class Employee : BaseFrontendModel, IAutoTable<Employee>, IAutoForm<Emplo
 
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
-    
+
     private AutoFormActionConfiguration _formActionConfiguration = new();
 
-    public override void Configure(AutoModelConfigurationBuilder<Employee> builder)
+    /*public override void Configure(AutoModelConfigurationBuilder<Employee> builder)
     {
         _formActionConfiguration = new AutoFormActionConfiguration
         {
@@ -55,7 +61,7 @@ public class Employee : BaseFrontendModel, IAutoTable<Employee>, IAutoForm<Emplo
                            .Validate(initial =>
                             {
                                 initial.NotEmpty();
-                                
+
                             })
                            .OnValueChanged(NameChanged);
                     });
@@ -70,7 +76,7 @@ public class Employee : BaseFrontendModel, IAutoTable<Employee>, IAutoForm<Emplo
                            .LabelName("Position")
                            .OnValueChanged(PositionChanged);
                     });
-                
+
                 groupConfigurationBuilder
                    .AddMember(() => Position, config);
             });
@@ -114,15 +120,7 @@ public class Employee : BaseFrontendModel, IAutoTable<Employee>, IAutoForm<Emplo
             });
         });
     }
-
-    public void ConfigureTable(AutoTableMemberConfigurationBuilder builder)
-    {
-    }
-
-    public void ConfigureForm(AutoModelConfigurationBuilder<Employee> builder)
-    {
-        throw new NotImplementedException();
-    }
+    */
 
     public void NameChanged(string value)
     {
@@ -143,5 +141,47 @@ public class Employee : BaseFrontendModel, IAutoTable<Employee>, IAutoForm<Emplo
         Position = $"{value} + test = {value}test";
 
         StateNotifierService.NotifyStateChanged(() => Position);
+    }
+
+    public void ConfigureTable(AutoTableConfigurationBuilder<Employee> builder)
+    {
+        throw new NotImplementedException();
+    }
+
+    public AutoFormModelConfiguration<Employee> Configuration { get; private set; } = default!;
+    public void ConfigureForm(AutoFormConfigurationBuilder<Employee> builder)
+    {
+        Configuration = new AutoFormModelConfiguration<Employee>
+        {
+            
+        };
+        builder.Configure(Configuration);
+    }
+    
+    public void ConfigureDetails(AutoDetailsConfigurationBuilder<Employee> builder)
+    {
+        throw new NotImplementedException();
+    }
+    
+    public void ConfigureValidator(AutoValidatorBuilder<Employee> builder)
+    {
+        var inlineValidator = new InlineValidator<Employee>
+        {
+            v => v.RuleFor(x => x.Name).NotEmpty(),
+        };
+
+        builder.Validate(AutoComponentDisplayType.Form, inlineValidator);
+
+        var validator = new AutoValidatorConfiguration<Employee>
+        {
+            Validators =
+            {
+                [AutoComponentDisplayType.FormCreate] = new InlineValidator<Employee>
+                {
+                    v => v.RuleFor(x => x.Name).NotEmpty()
+                }
+            }
+        };
+        builder.Validate(validator);
     }
 }
