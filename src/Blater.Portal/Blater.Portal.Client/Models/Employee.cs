@@ -20,7 +20,7 @@ public class Employee : BaseFrontendModel<Employee>
         builder.Form("FormName", configurationBuilder =>
         {
             configurationBuilder
-               .ConfigureActions(actionConfigurationBuilder => { actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit); });
+               .FormActions(actionConfigurationBuilder => { actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit); });
 
             configurationBuilder.AddGroup(groupConfigurationBuilder =>
             {
