@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
+		.globalconfig = .globalconfig
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blater.Frontend.Client", "..\..\Blater.Frontend\src\Blater.Frontend.Client\Blater.Frontend.Client.csproj", "{0D2E9740-C097-40D1-A9E8-3DB4FE19196E}"

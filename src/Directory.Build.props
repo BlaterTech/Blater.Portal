@@ -10,7 +10,6 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <AnalysisLevel>latest-Recommended</AnalysisLevel>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <NoWarn>CA1848;CA5394;CA1304;CA1062;CA1002;CA2201;CA2225;CA1040;CA1311;CA1852;CA1716;CA1711;CA2227;CA1812;CA2007;CA1303;CA1305;EPS12;CA1310</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
