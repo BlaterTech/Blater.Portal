@@ -4,16 +4,12 @@ using Blater.Frontend.Client.Auto.AutoBuilders.Table;
 using Blater.Frontend.Client.Auto.AutoBuilders.Valitador;
 using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
 using Blater.Frontend.Client.Auto.AutoModels.Form;
-using Blater.Frontend.Client.Auto.AutoModels.Validator;
 using Blater.Frontend.Client.Auto.Interfaces.Details;
 using Blater.Frontend.Client.Auto.Interfaces.Form;
 using Blater.Frontend.Client.Auto.Interfaces.Table;
 using Blater.Frontend.Client.Auto.Interfaces.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
-using FluentValidation;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
 
 namespace Blater.Portal.Client.Models;
 
@@ -25,16 +21,10 @@ public class Employee :
     IAutoDetailsConfiguration<Employee>
 {
     public string Name { get; set; } = null!;
-
     public string Position { get; set; } = null!;
     public int YearsEmployed { get; set; }
     public int Salary { get; set; }
     public int Rating { get; set; }
-
-    [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
-
-    private AutoFormActionConfiguration _formActionConfiguration = new();
 
     /*public override void Configure(AutoModelConfigurationBuilder<Employee> builder)
     {
@@ -121,16 +111,57 @@ public class Employee :
         });
     }
     */
+    
+    public void ConfigureTable(AutoTableConfigurationBuilder<Employee> builder)
+    {
+        throw new NotImplementedException();
+    }
+    
+    
+    private AutoFormModelConfiguration<Employee> _configurationBuilder = new();
 
+    public void ConfigureForm(AutoFormConfigurationBuilder<Employee> builder)
+    {
+        builder.Configuration = new AutoFormModelConfiguration<Employee>
+        {
+            GroupConfigurations = new List<AutoFormGroupConfiguration>
+            {
+                new AutoFormGroupConfiguration
+                {
+                    ComponentConfigurations =
+                    {
+                        [AutoComponentDisplayType.Form] = new List<AutoFormComponentConfiguration>
+                        {
+                            new AutoFormComponentConfiguration{}
+                        }
+                    }
+                }
+            }
+        };
+        
+        _configurationBuilder = builder.Configuration;
+    }
+
+    public AutoFormModelConfiguration<Employee> GetConfiguration()
+    {
+        return _configurationBuilder;
+    }
+
+    public void ConfigureValidator(AutoValidatorBuilder<Employee> builder)
+    {
+        throw new NotImplementedException();
+    }
+    
+    public void ConfigureDetails(AutoDetailsConfigurationBuilder<Employee> builder)
+    {
+        throw new NotImplementedException();
+    }
+    
+    
     public void NameChanged(string value)
     {
         Console.WriteLine($"NameChanged foi chamado com valor: {value}");
         Name = $"{value} + test = {value}test";
-
-        if (Name == "Xablau")
-        {
-            _formActionConfiguration.ColorCancelButton = Color.Primary;
-        }
 
         StateNotifierService.NotifyStateChanged(() => Name);
     }
@@ -141,47 +172,5 @@ public class Employee :
         Position = $"{value} + test = {value}test";
 
         StateNotifierService.NotifyStateChanged(() => Position);
-    }
-
-    public void ConfigureTable(AutoTableConfigurationBuilder<Employee> builder)
-    {
-        throw new NotImplementedException();
-    }
-
-    public AutoFormModelConfiguration<Employee> Configuration { get; private set; } = default!;
-    public void ConfigureForm(AutoFormConfigurationBuilder<Employee> builder)
-    {
-        Configuration = new AutoFormModelConfiguration<Employee>
-        {
-            
-        };
-        builder.Configure(Configuration);
-    }
-    
-    public void ConfigureDetails(AutoDetailsConfigurationBuilder<Employee> builder)
-    {
-        throw new NotImplementedException();
-    }
-    
-    public void ConfigureValidator(AutoValidatorBuilder<Employee> builder)
-    {
-        var inlineValidator = new InlineValidator<Employee>
-        {
-            v => v.RuleFor(x => x.Name).NotEmpty(),
-        };
-
-        builder.Validate(AutoComponentDisplayType.Form, inlineValidator);
-
-        var validator = new AutoValidatorConfiguration<Employee>
-        {
-            Validators =
-            {
-                [AutoComponentDisplayType.FormCreate] = new InlineValidator<Employee>
-                {
-                    v => v.RuleFor(x => x.Name).NotEmpty()
-                }
-            }
-        };
-        builder.Validate(validator);
     }
 }
