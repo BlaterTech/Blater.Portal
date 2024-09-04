@@ -1,21 +1,25 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders;
 using Blater.Frontend.Client.Auto.AutoBuilders.Form;
 using Blater.Frontend.Client.Auto.AutoBuilders.Valitador;
+using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
 using Blater.Frontend.Client.Auto.AutoModels.Form;
+using Blater.Frontend.Client.Auto.AutoModels.Validator;
 using Blater.Frontend.Client.Auto.Interfaces;
 using Blater.Frontend.Client.Auto.Interfaces.Form;
 using Blater.Frontend.Client.Auto.Interfaces.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Components;
 
 namespace Blater.Portal.Client.Models;
 
-public class Employee : 
-    BaseFrontendModel, 
-    IAutoFormConfiguration, 
+public class Employee :
+    BaseFrontendModel,
+    IAutoFormConfiguration,
     IAutoValidatorConfiguration<Employee>
 {
+    private AutoValidatorBuilder<Employee> _configuration;
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;
     public int YearsEmployed { get; set; }
@@ -107,8 +111,8 @@ public class Employee :
         });
     }
     */
-    
-    
+
+
     public void NameChanged(string value)
     {
         Name = $"{value} + test = {value}test";
@@ -127,19 +131,40 @@ public class Employee :
     {
         Title = "asdasdas"
     };
+
     public void Configure(AutoFormConfigurationBuilder builder)
     {
-        builder.AddGroup(configurationBuilder =>
-        {
-            configurationBuilder.AddMember(() => Name, new AutoFormAutoComponentConfiguration
+        builder
+           .AddGroup(new AutoFormGroupConfiguration
             {
-                OnValueChanged = EventCallback.Factory.Create<string>(this, NameChanged),
+                Title = "FormGroupName"
+            })
+           .AddMember(() => Name, new AutoFormAutoComponentConfiguration
+            {
+                LabelName = "Name",
+                Placeholder = "Insert Name Value",
+                OnValueChanged = EventCallback.Factory.Create<string>(this,
+                                                                      NameChanged),
+            })
+           .AddMember(() => Position, new AutoFormAutoComponentConfiguration
+            {
+                LabelName = "Position",
+                Placeholder = "Insert Position Value",
+                OnValueChanged = EventCallback.Factory.Create<string>(this, PositionChanged)
             });
-        });
     }
 
     public void Configure(AutoValidatorBuilder<Employee> builder)
     {
-        throw new NotImplementedException();
+        builder.Validate(new AutoValidatorConfiguration<Employee>
+        {
+            Validators =
+            {
+                [AutoComponentDisplayType.Form] = new InlineValidator<Employee>
+                {
+                    v => v.RuleFor(x => x.Name).NotEmpty()
+                }
+            }
+        });
     }
 }

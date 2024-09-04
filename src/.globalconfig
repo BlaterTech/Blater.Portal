@@ -14,7 +14,6 @@ dotnet_diagnostic.NU1507.severity = none		# NU1507: Package does not support any
 
 
 dotnet_diagnostic.CA1848.severity = none        # CA1848: Use the correct version of the caller
-dotnet_diagnostic.CA1848.severity = none        # CA1848: Use the correct version of the caller
 dotnet_diagnostic.CA5394.severity = none        # CA5394: Do not use insecure randomness
 dotnet_diagnostic.CA1304.severity = none        # CA1304: Specify CultureInfo
 dotnet_diagnostic.CA1062.severity = none        # CA1062: Validate arguments of public methods
