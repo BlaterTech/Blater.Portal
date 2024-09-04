@@ -1,24 +1,20 @@
-﻿using Blater.Frontend.Client.Auto.AutoBuilders.Details;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders;
 using Blater.Frontend.Client.Auto.AutoBuilders.Form;
-using Blater.Frontend.Client.Auto.AutoBuilders.Table;
 using Blater.Frontend.Client.Auto.AutoBuilders.Valitador;
-using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
 using Blater.Frontend.Client.Auto.AutoModels.Form;
-using Blater.Frontend.Client.Auto.Interfaces.Details;
+using Blater.Frontend.Client.Auto.Interfaces;
 using Blater.Frontend.Client.Auto.Interfaces.Form;
-using Blater.Frontend.Client.Auto.Interfaces.Table;
 using Blater.Frontend.Client.Auto.Interfaces.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
+using Microsoft.AspNetCore.Components;
 
 namespace Blater.Portal.Client.Models;
 
 public class Employee : 
     BaseFrontendModel, 
-    IAutoTableConfiguration<Employee>, 
-    IAutoFormConfiguration<Employee>, 
-    IAutoValidatorConfiguration<Employee>,
-    IAutoDetailsConfiguration<Employee>
+    IAutoFormConfiguration, 
+    IAutoValidatorConfiguration<Employee>
 {
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;
@@ -112,55 +108,9 @@ public class Employee :
     }
     */
     
-    public void ConfigureTable(AutoTableConfigurationBuilder<Employee> builder)
-    {
-        throw new NotImplementedException();
-    }
-    
-    
-    private AutoFormModelConfiguration<Employee> _configurationBuilder = new();
-
-    public void ConfigureForm(AutoFormConfigurationBuilder<Employee> builder)
-    {
-        builder.Configuration = new AutoFormModelConfiguration<Employee>
-        {
-            GroupConfigurations = new List<AutoFormGroupConfiguration>
-            {
-                new AutoFormGroupConfiguration
-                {
-                    ComponentConfigurations =
-                    {
-                        [AutoComponentDisplayType.Form] = new List<AutoFormComponentConfiguration>
-                        {
-                            new AutoFormComponentConfiguration{}
-                        }
-                    }
-                }
-            }
-        };
-        
-        _configurationBuilder = builder.Configuration;
-    }
-
-    public AutoFormModelConfiguration<Employee> GetConfiguration()
-    {
-        return _configurationBuilder;
-    }
-
-    public void ConfigureValidator(AutoValidatorBuilder<Employee> builder)
-    {
-        throw new NotImplementedException();
-    }
-    
-    public void ConfigureDetails(AutoDetailsConfigurationBuilder<Employee> builder)
-    {
-        throw new NotImplementedException();
-    }
-    
     
     public void NameChanged(string value)
     {
-        Console.WriteLine($"NameChanged foi chamado com valor: {value}");
         Name = $"{value} + test = {value}test";
 
         StateNotifierService.NotifyStateChanged(() => Name);
@@ -168,9 +118,28 @@ public class Employee :
 
     public void PositionChanged(string value)
     {
-        Console.WriteLine($"PositionChanged foi chamado com valor: {value}");
         Position = $"{value} + test = {value}test";
 
         StateNotifierService.NotifyStateChanged(() => Position);
+    }
+
+    public AutoFormConfiguration Configuration { get; set; } = new()
+    {
+        Title = "asdasdas"
+    };
+    public void Configure(AutoFormConfigurationBuilder builder)
+    {
+        builder.AddGroup(configurationBuilder =>
+        {
+            configurationBuilder.AddMember(() => Name, new AutoFormAutoComponentConfiguration
+            {
+                OnValueChanged = EventCallback.Factory.Create<string>(this, NameChanged),
+            });
+        });
+    }
+
+    public void Configure(AutoValidatorBuilder<Employee> builder)
+    {
+        throw new NotImplementedException();
     }
 }
