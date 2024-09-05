@@ -19,7 +19,6 @@ public class Employee :
     IAutoFormConfiguration,
     IAutoValidatorConfiguration<Employee>
 {
-    private AutoValidatorBuilder<Employee> _configuration;
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;
     public int YearsEmployed { get; set; }
@@ -127,7 +126,7 @@ public class Employee :
         StateNotifierService.NotifyStateChanged(() => Position);
     }
 
-    public AutoFormConfiguration Configuration { get; set; } = new()
+    public AutoFormConfiguration FormConfiguration { get; set; } = new()
     {
         Title = "asdasdas"
     };
@@ -154,17 +153,12 @@ public class Employee :
             });
     }
 
+    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; set; } = new();
     public void Configure(AutoValidatorBuilder<Employee> builder)
     {
-        builder.Validate(new AutoValidatorConfiguration<Employee>
+        builder.FormValidate(new InlineValidator<Employee>
         {
-            Validators =
-            {
-                [AutoComponentDisplayType.Form] = new InlineValidator<Employee>
-                {
-                    v => v.RuleFor(x => x.Name).NotEmpty()
-                }
-            }
+            v => v.RuleFor(x => x.Name).NotEmpty()
         });
     }
 }
