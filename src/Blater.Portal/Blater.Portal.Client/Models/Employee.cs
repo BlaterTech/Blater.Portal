@@ -12,6 +12,7 @@ using Blater.Frontend.Client.Auto.Interfaces.Types.Table;
 using Blater.Frontend.Client.Auto.Interfaces.Types.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
+using Blater.JsonUtilities;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 
@@ -53,7 +54,7 @@ public class Employee :
                     Placeholder = "Insert Position Value",
                     OnValueChanged = EventCallback.Factory.Create<string>(this, PositionChanged)
                 });
-        
+
         builder.AddGroup(new AutoFormGroupConfiguration
                 {
                     Title = "SecondGroup"
@@ -73,6 +74,8 @@ public class Employee :
                     LabelName = "Rating",
                     Placeholder = "Insert Rating Value"
                 });
+
+        Console.WriteLine("FormConfiguration");
     }
 
     public AutoDetailsConfiguration DetailsConfiguration { get; } = new()
@@ -102,21 +105,16 @@ public class Employee :
         });
     }
 
-    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; set; } = new();
+    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; } = new();
 
     public void Configure(AutoValidatorBuilder<Employee> builder)
     {
-        builder.FormValidate(new InlineValidator<Employee>
-        {
-            v => v
-                .RuleFor(x => x.Name)
-                .NotEmpty(),
+        var formValidator = new ModelValidator<Employee>();
 
-            v => v
-                .RuleFor(x => x.Rating)
-                .NotEqual(1)
-                .WithMessage("Rating not equal 1")
-        });
+        formValidator.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+        formValidator.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
+        
+        builder.FormValidate(formValidator);
     }
 
     public void NameChanged(string value)
