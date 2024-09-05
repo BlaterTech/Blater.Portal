@@ -12,7 +12,6 @@ using Blater.Frontend.Client.Auto.Interfaces.Types.Table;
 using Blater.Frontend.Client.Auto.Interfaces.Types.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
-using Blater.JsonUtilities;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 
@@ -74,8 +73,6 @@ public class Employee :
                     LabelName = "Rating",
                     Placeholder = "Insert Rating Value"
                 });
-
-        Console.WriteLine("FormConfiguration");
     }
 
     public AutoDetailsConfiguration DetailsConfiguration { get; } = new()
@@ -113,13 +110,15 @@ public class Employee :
 
         formValidator.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
         formValidator.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
-        
+
         builder.FormValidate(formValidator);
     }
 
     public void NameChanged(string value)
     {
         Name = $"{value} + name = {value}name";
+
+        Console.WriteLine($"GoBack UI updated value {Name}");
 
         StateNotifierService.NotifyStateChanged(() => Name);
     }
@@ -128,6 +127,7 @@ public class Employee :
     {
         Position = $"{value} + position = {value}position";
 
+        Console.WriteLine($"GoBack UI updated value {Position}");
         StateNotifierService.NotifyStateChanged(() => Position);
     }
 }
