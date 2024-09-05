@@ -1,12 +1,15 @@
-﻿using Blater.Frontend.Client.Auto.AutoBuilders;
+﻿using Blater.Frontend.Client.Auto.AutoBuilders.Details;
 using Blater.Frontend.Client.Auto.AutoBuilders.Form;
+using Blater.Frontend.Client.Auto.AutoBuilders.Table;
 using Blater.Frontend.Client.Auto.AutoBuilders.Valitador;
-using Blater.Frontend.Client.Auto.AutoModels.Enumerations;
+using Blater.Frontend.Client.Auto.AutoModels.Details;
 using Blater.Frontend.Client.Auto.AutoModels.Form;
+using Blater.Frontend.Client.Auto.AutoModels.Table;
 using Blater.Frontend.Client.Auto.AutoModels.Validator;
-using Blater.Frontend.Client.Auto.Interfaces;
-using Blater.Frontend.Client.Auto.Interfaces.Form;
-using Blater.Frontend.Client.Auto.Interfaces.Validator;
+using Blater.Frontend.Client.Auto.Interfaces.Types.Details;
+using Blater.Frontend.Client.Auto.Interfaces.Types.Form;
+using Blater.Frontend.Client.Auto.Interfaces.Types.Table;
+using Blater.Frontend.Client.Auto.Interfaces.Types.Validator;
 using Blater.Frontend.Client.Models.Bases;
 using Blater.Frontend.Client.Services;
 using FluentValidation;
@@ -17,6 +20,8 @@ namespace Blater.Portal.Client.Models;
 public class Employee :
     BaseFrontendModel,
     IAutoFormConfiguration,
+    IAutoDetailsConfiguration,
+    IAutoTableConfiguration,
     IAutoValidatorConfiguration<Employee>
 {
     public string Name { get; set; } = null!;
@@ -25,140 +30,106 @@ public class Employee :
     public int Salary { get; set; }
     public int Rating { get; set; }
 
-    /*public override void Configure(AutoModelConfigurationBuilder<Employee> builder)
+    public AutoFormConfiguration FormConfiguration { get; } = new()
     {
-        _formActionConfiguration = new AutoFormActionConfiguration
+        Title = "FormTitle"
+    };
+
+    public void Configure(AutoFormConfigurationBuilder builder)
+    {
+        builder.AddGroup(new AutoFormGroupConfiguration
+                {
+                    Title = "FirstGroup"
+                })
+               .AddMember(() => Name, new AutoFormAutoComponentConfiguration
+                {
+                    LabelName = "Name",
+                    Placeholder = "Insert Name Value",
+                    OnValueChanged = EventCallback.Factory.Create<string>(this, NameChanged),
+                })
+               .AddMember(() => Position, new AutoFormAutoComponentConfiguration
+                {
+                    LabelName = "Position",
+                    Placeholder = "Insert Position Value",
+                    OnValueChanged = EventCallback.Factory.Create<string>(this, PositionChanged)
+                });
+        
+        builder.AddGroup(new AutoFormGroupConfiguration
+                {
+                    Title = "SecondGroup"
+                })
+               .AddMember(() => YearsEmployed, new AutoFormAutoComponentConfiguration
+                {
+                    LabelName = "YearsEmployed",
+                    Placeholder = "Insert YearsEmployed Value"
+                })
+               .AddMember(() => Salary, new AutoFormAutoComponentConfiguration
+                {
+                    LabelName = "Salary",
+                    Placeholder = "Insert Salary Value"
+                })
+               .AddMember(() => Rating, new AutoFormAutoComponentConfiguration
+                {
+                    LabelName = "Rating",
+                    Placeholder = "Insert Rating Value"
+                });
+    }
+
+    public AutoDetailsConfiguration DetailsConfiguration { get; } = new()
+    {
+        Title = "AutoDetailsTitle"
+    };
+
+    public void Configure(AutoDetailsConfigurationBuilder builder)
+    {
+        builder.AddGroup(new AutoDetailsGroupConfiguration())
+               .AddMember(() => Position, new AutoDetailsAutoComponentConfiguration
+                {
+                    LabelName = "Position Detail"
+                });
+    }
+
+    public AutoTableConfiguration TableConfiguration { get; } = new()
+    {
+        Title = "AutoTableTitle"
+    };
+
+    public void Configure(AutoTableConfigurationBuilder builder)
+    {
+        builder.AddMember(() => Position, new AutoTableAutoComponentConfiguration
         {
-            ColorCancelButton = Color.Dark,
-        };
-
-        builder.Form(_formActionConfiguration, configurationBuilder =>
-        {
-            configurationBuilder.Actions(actionConfigurationBuilder => { actionConfigurationBuilder.TypeCreateEditButton(ButtonType.Submit); });
-
-            configurationBuilder.AddGroup(groupConfigurationBuilder =>
-            {
-                groupConfigurationBuilder
-                   .AddMember(() => Name, componentConfigurationBuilder =>
-                    {
-                        componentConfigurationBuilder
-                           .Placeholder("Name")
-                           .HelpMessage("Name")
-                           .Placeholder("asda")
-                           .IsReadOnly(true)
-                           .LabelName("Name")
-                           .Validate(initial =>
-                            {
-                                initial.NotEmpty();
-
-                            })
-                           .OnValueChanged(NameChanged);
-                    });
-
-                groupConfigurationBuilder
-                   .AddMember(() => Position, componentConfigurationBuilder =>
-                    {
-                        componentConfigurationBuilder
-                           .Placeholder("Position")
-                           .HelpMessage("Position")
-                           .IsReadOnly(true)
-                           .LabelName("Position")
-                           .OnValueChanged(PositionChanged);
-                    });
-
-                groupConfigurationBuilder
-                   .AddMember(() => Position, config);
-            });
-
-            configurationBuilder.AddGroup(groupConfigurationBuilder =>
-            {
-                groupConfigurationBuilder
-                   .AddMember(() => YearsEmployed, componentConfigurationBuilder =>
-                    {
-                        componentConfigurationBuilder
-                           .Placeholder("YearsEmployed")
-                           .HelpMessage("YearsEmployed")
-                           .IsReadOnly(true)
-                           .Validate(initial =>
-                            {
-                                initial.LessThanOrEqualTo(5);
-                                initial.GreaterThan(1);
-                            })
-                           .LabelName("YearsEmployed");
-                    });
-
-                groupConfigurationBuilder
-                   .AddMember(() => Salary, componentConfigurationBuilder =>
-                    {
-                        componentConfigurationBuilder
-                           .Placeholder("Salary")
-                           .HelpMessage("Salary")
-                           .IsReadOnly(true)
-                           .LabelName("Salary");
-                    });
-
-                groupConfigurationBuilder
-                   .AddMember(() => Rating, componentConfigurationBuilder =>
-                    {
-                        componentConfigurationBuilder
-                           .Placeholder("Rating")
-                           .HelpMessage("Rating")
-                           .IsReadOnly(true)
-                           .LabelName("Rating");
-                    });
-            });
+            LabelName = "Position Table"
         });
     }
-    */
 
+    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; set; } = new();
+
+    public void Configure(AutoValidatorBuilder<Employee> builder)
+    {
+        builder.FormValidate(new InlineValidator<Employee>
+        {
+            v => v
+                .RuleFor(x => x.Name)
+                .NotEmpty(),
+
+            v => v
+                .RuleFor(x => x.Rating)
+                .NotEqual(1)
+                .WithMessage("Rating not equal 1")
+        });
+    }
 
     public void NameChanged(string value)
     {
-        Name = $"{value} + test = {value}test";
+        Name = $"{value} + name = {value}name";
 
         StateNotifierService.NotifyStateChanged(() => Name);
     }
 
     public void PositionChanged(string value)
     {
-        Position = $"{value} + test = {value}test";
+        Position = $"{value} + position = {value}position";
 
         StateNotifierService.NotifyStateChanged(() => Position);
-    }
-
-    public AutoFormConfiguration FormConfiguration { get; set; } = new()
-    {
-        Title = "asdasdas"
-    };
-
-    public void Configure(AutoFormConfigurationBuilder builder)
-    {
-        builder
-           .AddGroup(new AutoFormGroupConfiguration
-            {
-                Title = "FormGroupName"
-            })
-           .AddMember(() => Name, new AutoFormAutoComponentConfiguration
-            {
-                LabelName = "Name",
-                Placeholder = "Insert Name Value",
-                OnValueChanged = EventCallback.Factory.Create<string>(this,
-                                                                      NameChanged),
-            })
-           .AddMember(() => Position, new AutoFormAutoComponentConfiguration
-            {
-                LabelName = "Position",
-                Placeholder = "Insert Position Value",
-                OnValueChanged = EventCallback.Factory.Create<string>(this, PositionChanged)
-            });
-    }
-
-    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; set; } = new();
-    public void Configure(AutoValidatorBuilder<Employee> builder)
-    {
-        builder.FormValidate(new InlineValidator<Employee>
-        {
-            v => v.RuleFor(x => x.Name).NotEmpty()
-        });
     }
 }
