@@ -1,28 +1,23 @@
-﻿@page "/TestingComponents"
+﻿@page "/Test/TestAutoForm"
 
 @using Blater.Attributes.Auto
+@using Blater.Frontend.Client.Auto.AutoBuilders.Form
 @using Blater.Portal.Client.Models
 
 @attribute [AutoIgnore]
 
-@*<div class="pa-2">
-    <BlaterTable 
-    T="Employee" 
-    Items="Employees" 
-    EnabledDefaultActions="true"/> 
-</div>*@
-
 <div class="pa-2">
-    <AutoForm 
-        T="Employee" 
-        Model="@Employee" />
+    <AutoFormBuilder
+        @ref="@FormBuilder"
+        T="Employee"
+        Model="@Employee"/>
 </div>
 
 @code {
     
     public List<Employee> Employees { get; set; } = [];
     public Employee Employee { get; set; } = new();
-
+    private AutoFormBuilder<Employee> FormBuilder { get; set; } = null!;
     /*protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);

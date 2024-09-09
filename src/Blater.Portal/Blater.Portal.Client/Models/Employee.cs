@@ -116,18 +116,15 @@ public class Employee :
 
     public void NameChanged(string value)
     {
-        Name = $"{value} + name = {value}name";
-
-        Console.WriteLine($"GoBack UI updated value {Name}");
-
+        Name = $"{value} name";
+        
         StateNotifierService.NotifyStateChanged(() => Name);
     }
 
     public void PositionChanged(string value)
     {
-        Position = $"{value} + position = {value}position";
+        Position = $"{value} position";
 
-        Console.WriteLine($"GoBack UI updated value {Position}");
         StateNotifierService.NotifyStateChanged(() => Position);
     }
 }
