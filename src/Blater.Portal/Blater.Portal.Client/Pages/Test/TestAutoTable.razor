@@ -1,6 +1,22 @@
 ﻿@page "/Test/TestAutoTable"
-<h3>TestAutoTable</h3>
+@using Blater.Attributes.Auto
+@using Blater.Frontend.Client.Auto.AutoBuilders.Form
+@using Blater.Portal.Client.Models
+
+@attribute [AutoIgnore]
+
+<div class="pa-2">
+    <AutoTableBuilder
+        />
+    <AutoFormBuilder
+        @ref="@FormBuilder"
+        T="Employee"
+        Model="@Employee"/>
+</div>
 
 @code {
-    
+
+    public List<Employee> Employees { get; set; } = [];
+    public Employee Employee { get; set; } = new();
+    private AutoFormBuilder<Employee> FormBuilder { get; set; } = null!;
 }
