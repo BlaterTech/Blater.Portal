@@ -104,14 +104,14 @@ public class Employee :
 
     public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; } = new();
 
-    public void Configure(AutoValidatorBuilder<Employee> builder)
+    public void Configure(AutoValidatorConfigurationBuilder<Employee> configurationBuilder)
     {
         var formValidator = new ModelValidator<Employee>();
 
         formValidator.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
         formValidator.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
 
-        builder.FormValidate(formValidator);
+        configurationBuilder.FormValidate(formValidator);
     }
 
     public void NameChanged(string value)
