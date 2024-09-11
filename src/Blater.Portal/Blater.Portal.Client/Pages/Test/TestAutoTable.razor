@@ -1,12 +1,14 @@
 ﻿@page "/Test/TestAutoTable"
+
 @using Blater.Attributes.Auto
-@using Blater.Frontend.Client.Auto.AutoBuilders.Form
 @using Blater.Portal.Client.Models
 
 @attribute [AutoIgnore]
 
 <div class="pa-2">
     <AutoTableBuilder
+        T="Employee"
+        Items="@([])"
         />
     <AutoFormBuilder
         @ref="@FormBuilder"
