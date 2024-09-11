@@ -1,6 +1,7 @@
 ﻿@page "/Test/TestAutoTable"
 
 @using Blater.Attributes.Auto
+@using Blater.Models
 @using Blater.Portal.Client.Models
 
 @attribute [AutoIgnore]
@@ -8,17 +9,52 @@
 <div class="pa-2">
     <AutoTableBuilder
         T="Employee"
-        Items="@([])"
+        Items="@(Employees)"
         />
-    <AutoFormBuilder
-        @ref="@FormBuilder"
-        T="Employee"
-        Model="@Employee"/>
 </div>
 
 @code {
 
-    public List<Employee> Employees { get; set; } = [];
-    public Employee Employee { get; set; } = new();
-    private AutoFormBuilder<Employee> FormBuilder { get; set; } = null!;
+    private List<Employee> Employees { get; set; } = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        var random = new Random();
+        var positions = new List<string>
+        {
+            "CPA", "Product Manager", "Developer", "IT Director", "Designer", "Analyst"
+        };
+
+        for (var i = 0; i < 100; i++)
+        {
+            var position = positions[random.Next(positions.Count)];
+            var name = $"Employee {position} {i + 1}";
+            var experience = random.Next(1, 21);
+            var salary = random.Next(50_000, 250_001);
+            var performanceRating = random.Next(1, 6);
+            var id = BlaterId.New(nameof(Employee));
+            var createdAt = GetRandomDate(random, new DateTime(2024, 1, 1), DateTimeOffset.UtcNow);
+            var updatedAt = GetRandomDate(random, createdAt, DateTimeOffset.UtcNow);
+
+            Employees.Add(new Employee
+            {
+                Id = id,
+                Position = position,
+                Name = name,
+                Enabled = true,
+                CreatedAt = createdAt,
+                UpdatedAt = updatedAt,
+                Rating = performanceRating,
+                Salary = salary,
+                YearsEmployed = experience
+            });
+        }
+    }
+    
+    private static DateTimeOffset GetRandomDate(Random random, DateTimeOffset startDate, DateTimeOffset endDate)
+    {
+        var range = (endDate - startDate).Days;
+        return startDate.AddDays(random.Next(range));
+    }
 }
