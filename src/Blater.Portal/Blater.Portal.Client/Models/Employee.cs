@@ -82,10 +82,21 @@ public class Employee :
 
     public void Configure(AutoDetailsConfigurationBuilder builder)
     {
-        builder.AddGroup(new AutoDetailsGroupConfiguration())
+        builder.AddGroup(new AutoDetailsGroupConfiguration
+                {
+                    Title = "AutoDetailsGroup"
+                })
                .AddMember(() => Position, new AutoDetailsAutoComponentConfiguration
                 {
                     LabelName = "Position Detail"
+                })
+               .AddMember(() => Salary, new AutoDetailsAutoComponentConfiguration
+                {
+                    LabelName = "Salary Detail"
+                })
+               .AddMember(() => Rating, new AutoDetailsAutoComponentConfiguration
+                {
+                    LabelName = "Rating Detail"
                 });
     }
 
