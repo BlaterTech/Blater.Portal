@@ -6,11 +6,13 @@ using Blater.Frontend.Client.Auto.AutoBuilders.Types.Valitador;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Details;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Details.Tabs;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Form;
+using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Form.Timeline;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Table;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Validator;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Details;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Details.Tabs;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Form;
+using Blater.Frontend.Client.Auto.AutoModels.Types.Form.Timeline;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Table;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Validator;
 using Blater.Frontend.Client.Models.Bases;
@@ -22,7 +24,7 @@ namespace Blater.Portal.Client.Models;
 
 public class Employee :
     BaseFrontendModel,
-    IAutoFormConfiguration,
+    IAutoFormTimelineConfiguration,
     IAutoDetailsConfiguration,
     IAutoTableConfiguration,
     IAutoDetailsTabsConfiguration,
@@ -34,10 +36,7 @@ public class Employee :
     public int Salary { get; set; }
     public int Rating { get; set; }
 
-    public AutoFormConfiguration FormConfiguration { get; } = new()
-    {
-        Title = "FormTitle"
-    };
+    public AutoFormConfiguration FormConfiguration { get; } = new("FormTitle");
 
     public void Configure(AutoFormConfigurationBuilder builder)
     {
@@ -79,10 +78,15 @@ public class Employee :
         });
     }
 
-    public AutoDetailsConfiguration DetailsConfiguration { get; } = new()
+    public AutoFormTimelineConfiguration FormTimelineConfiguration { get; set; } = new("Form Timeline Employee");
+    public void Configure(IAutoFormTimelineConfigurationBuilder builder)
     {
-        Title = "AutoDetailsTitle"
-    };
+        builder.AddStep(new AutoFormTimelineStepConfiguration(1, "First Step"));
+        builder.AddStep(new AutoFormTimelineStepConfiguration(2, "Second Step"));
+        builder.AddStep(new AutoFormTimelineStepConfiguration(3, "Tertiary Step"));
+    }
+
+    public AutoDetailsConfiguration DetailsConfiguration { get; } = new("AutoDetailsTitle");
 
     public void Configure(AutoDetailsConfigurationBuilder builder)
     {
@@ -104,10 +108,7 @@ public class Employee :
         });
     }
 
-    public AutoTableConfiguration TableConfiguration { get; } = new()
-    {
-        Title = "AutoTableTitle"
-    };
+    public AutoTableConfiguration TableConfiguration { get; } = new("AutoTableTitle");
 
     public void Configure(AutoTableConfigurationBuilder builder)
     {
