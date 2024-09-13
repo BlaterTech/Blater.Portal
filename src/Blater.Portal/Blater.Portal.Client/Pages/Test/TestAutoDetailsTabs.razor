@@ -1,6 +1,32 @@
 ﻿@page "/Test/TestAutoDetailsTabs"
-<h3>TestAutoDetailsTabs</h3>
+
+@using Blater.Attributes.Auto
+@using Blater.Frontend.Client.Auto.AutoBuilders.Types.Details.Tabs
+@using Blater.Models
+@using Blater.Portal.Client.Models
+
+@attribute [AutoIgnore]
+
+<div class="pa-2">
+    <AutoDetailsTabsBuilder
+        T="Employee"
+        Model="@Employee"
+        Id="@Employee.Id"/>
+</div>
 
 @code {
-    
+
+    private Employee Employee { get; init; } = new()
+    {
+        Id = BlaterId.New(nameof(Employee)),
+        CreatedAt = DateTimeOffset.UtcNow,
+        UpdatedAt = DateTimeOffset.UtcNow,
+        Enabled = true,
+        Name = "Employee 1",
+        Position = "CPA",
+        Rating = 5,
+        Salary = 75_000,
+        YearsEmployed = 5
+    };
+
 }
