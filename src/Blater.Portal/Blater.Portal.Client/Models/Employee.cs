@@ -1,12 +1,15 @@
 ﻿using Blater.Frontend.Client.Auto.AutoBuilders.Types.Details;
+using Blater.Frontend.Client.Auto.AutoBuilders.Types.Details.Tabs;
 using Blater.Frontend.Client.Auto.AutoBuilders.Types.Form;
 using Blater.Frontend.Client.Auto.AutoBuilders.Types.Table;
 using Blater.Frontend.Client.Auto.AutoBuilders.Types.Valitador;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Details;
+using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Details.Tabs;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Form;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Table;
 using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Validator;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Details;
+using Blater.Frontend.Client.Auto.AutoModels.Types.Details.Tabs;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Form;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Table;
 using Blater.Frontend.Client.Auto.AutoModels.Types.Validator;
@@ -22,6 +25,7 @@ public class Employee :
     IAutoFormConfiguration,
     IAutoDetailsConfiguration,
     IAutoTableConfiguration,
+    IAutoDetailsTabsConfiguration,
     IAutoValidatorConfiguration<Employee>
 {
     public string Name { get; set; } = null!;
@@ -128,7 +132,7 @@ public class Employee :
     public void NameChanged(string value)
     {
         Name = $"{value} name";
-        
+
         StateNotifierService.NotifyStateChanged(() => Name);
     }
 
@@ -137,5 +141,21 @@ public class Employee :
         Position = $"{value} position";
 
         StateNotifierService.NotifyStateChanged(() => Position);
+    }
+
+    public AutoDetailsTabsConfiguration DetailsTabsConfiguration { get; set; } = new()
+    {
+        Title = "Details Tabs Title"
+    };
+
+    public void Configure(AutoDetailsTabsConfigurationBuilder builder)
+    {
+        builder.AddPanel(new AutoDetailsTabsPanelConfiguration
+        {
+            Title = "Panel one",
+        }).AddGroup(new AutoDetailsTabsGroupConfiguration
+        {
+            Title = "Group One"
+        }).AddMember(() => Position, new AutoDetailsTabsComponentConfiguration());
     }
 }
