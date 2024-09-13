@@ -41,10 +41,9 @@ public class Employee :
 
     public void Configure(AutoFormConfigurationBuilder builder)
     {
-        builder.AddGroup(new AutoFormGroupConfiguration
-                {
-                    Title = "FirstGroup"
-                })
+        builder.AddGroup(new AutoFormGroupConfiguration("FirstGroup"), configurationBuilder =>
+        {
+            configurationBuilder
                .AddMember(() => Name, new AutoFormAutoComponentConfiguration
                 {
                     LabelName = "Name",
@@ -57,11 +56,11 @@ public class Employee :
                     Placeholder = "Insert Position Value",
                     OnValueChanged = EventCallback.Factory.Create<string>(this, PositionChanged)
                 });
+        });
 
-        builder.AddGroup(new AutoFormGroupConfiguration
-                {
-                    Title = "SecondGroup"
-                })
+        builder.AddGroup(new AutoFormGroupConfiguration("SecondGroup"), configurationBuilder =>
+        {
+            configurationBuilder
                .AddMember(() => YearsEmployed, new AutoFormAutoComponentConfiguration
                 {
                     LabelName = "YearsEmployed",
@@ -77,6 +76,7 @@ public class Employee :
                     LabelName = "Rating",
                     Placeholder = "Insert Rating Value"
                 });
+        });
     }
 
     public AutoDetailsConfiguration DetailsConfiguration { get; } = new()
@@ -86,10 +86,9 @@ public class Employee :
 
     public void Configure(AutoDetailsConfigurationBuilder builder)
     {
-        builder.AddGroup(new AutoDetailsGroupConfiguration
-                {
-                    Title = "AutoDetailsGroup"
-                })
+        builder.AddGroup(new AutoDetailsGroupConfiguration("AutoDetailsGroup"), configurationBuilder =>
+        {
+            configurationBuilder
                .AddMember(() => Position, new AutoDetailsAutoComponentConfiguration
                 {
                     LabelName = "Position Detail"
@@ -102,6 +101,7 @@ public class Employee :
                 {
                     LabelName = "Rating Detail"
                 });
+        });
     }
 
     public AutoTableConfiguration TableConfiguration { get; } = new()
@@ -121,28 +121,13 @@ public class Employee :
 
     public void Configure(AutoValidatorConfigurationBuilder<Employee> configurationBuilder)
     {
-        var formValidator = new ModelValidator<Employee>();
-
-        formValidator.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
-        formValidator.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
-
-        configurationBuilder.FormValidate(formValidator);
+        configurationBuilder.FormValidate(rules =>
+        {
+            rules.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+            rules.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
+        });
     }
-
-    public void NameChanged(string value)
-    {
-        Name = $"{value} name";
-
-        StateNotifierService.NotifyStateChanged(() => Name);
-    }
-
-    public void PositionChanged(string value)
-    {
-        Position = $"{value} position";
-
-        StateNotifierService.NotifyStateChanged(() => Position);
-    }
-
+    
     public AutoDetailsTabsConfiguration DetailsTabsConfiguration { get; set; } = new()
     {
         Title = "Details Tabs Title"
@@ -159,5 +144,19 @@ public class Employee :
                        .AddMember(() => Position, new AutoDetailsTabsComponentConfiguration());
                 });
         });
+    }
+
+    public void NameChanged(string value)
+    {
+        Name = $"{value} name";
+
+        StateNotifierService.NotifyStateChanged(() => Name);
+    }
+
+    public void PositionChanged(string value)
+    {
+        Position = $"{value} position";
+
+        StateNotifierService.NotifyStateChanged(() => Position);
     }
 }
