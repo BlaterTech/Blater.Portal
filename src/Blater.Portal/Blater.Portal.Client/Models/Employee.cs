@@ -150,12 +150,14 @@ public class Employee :
 
     public void Configure(AutoDetailsTabsConfigurationBuilder builder)
     {
-        builder.AddPanel(new AutoDetailsTabsPanelConfiguration
+        builder.AddPanel(new AutoDetailsTabsPanelConfiguration("Panel one"), configurationBuilder =>
         {
-            Title = "Panel one",
-        }).AddGroup(new AutoDetailsTabsGroupConfiguration
-        {
-            Title = "Group One"
-        }).AddMember(() => Position, new AutoDetailsTabsComponentConfiguration());
+            configurationBuilder
+               .AddGroup(new AutoDetailsTabsGroupConfiguration("Group One"), memberConfigurationBuilder =>
+                {
+                    memberConfigurationBuilder
+                       .AddMember(() => Position, new AutoDetailsTabsComponentConfiguration());
+                });
+        });
     }
 }
