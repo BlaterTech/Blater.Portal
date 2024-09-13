@@ -135,13 +135,36 @@ public class Employee :
 
     public void Configure(AutoDetailsTabsConfigurationBuilder builder)
     {
-        builder.AddPanel(new AutoDetailsTabsPanelConfiguration("Panel one"), configurationBuilder =>
+        builder.AddPanel(new AutoDetailsTabsPanelConfiguration("Panel One"), configurationBuilder =>
         {
             configurationBuilder
                .AddGroup(new AutoDetailsTabsGroupConfiguration("Group One"), memberConfigurationBuilder =>
                 {
                     memberConfigurationBuilder
                        .AddMember(() => Position, new AutoDetailsTabsComponentConfiguration());
+                    
+                    memberConfigurationBuilder
+                       .AddMember(() => Salary, new AutoDetailsTabsComponentConfiguration());
+                });
+        });
+        
+        builder.AddPanel(new AutoDetailsTabsPanelConfiguration("Panel Two"), configurationBuilder =>
+        {
+            configurationBuilder
+               .AddGroup(new AutoDetailsTabsGroupConfiguration("Group Two"), memberConfigurationBuilder =>
+                {
+                    memberConfigurationBuilder
+                       .AddMember(() => YearsEmployed, new AutoDetailsTabsComponentConfiguration());
+                });
+        });
+        
+        builder.AddPanel(new AutoDetailsTabsPanelConfiguration("Panel Three"), configurationBuilder =>
+        {
+            configurationBuilder
+               .AddGroup(new AutoDetailsTabsGroupConfiguration("Group Three"), memberConfigurationBuilder =>
+                {
+                    memberConfigurationBuilder
+                       .AddMember(() => Name, new AutoDetailsTabsComponentConfiguration());
                 });
         });
     }
