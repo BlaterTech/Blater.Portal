@@ -173,13 +173,13 @@ public class Employee :
     {
         Name = $"{value} name";
 
-        StateNotifierService.NotifyStateChanged(() => Name);
+        StateNotifierService.NotifyStateChanged(() => Name, typeof(Employee));
     }
 
     public void PositionChanged(string value)
     {
         Position = $"{value} position";
 
-        StateNotifierService.NotifyStateChanged(() => Position);
+        StateNotifierService.NotifyStateChanged(() => Position, typeof(Employee));
     }
 }

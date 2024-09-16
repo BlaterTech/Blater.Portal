@@ -2,8 +2,6 @@
 @using Blater.Frontend.Client.Auto.AutoBuilders.Types.Table
 @using Blater.Portal.Client.Models
 
-@attribute [AutoIgnore]
-
 <div class="pa-2">
     <AutoTableBuilder
         T="Employee"
@@ -31,7 +29,7 @@
             var experience = random.Next(1, 21);
             var salary = random.Next(50_000, 250_001);
             var performanceRating = random.Next(1, 6);
-            var id = BlaterId.New(nameof(Employee));
+            var id = Ulid.NewUlid();
             var createdAt = GetRandomDate(random, new DateTime(2024, 1, 1), DateTimeOffset.UtcNow);
             var updatedAt = GetRandomDate(random, createdAt, DateTimeOffset.UtcNow);
 
@@ -40,7 +38,6 @@
                 Id = id,
                 Position = position,
                 Name = name,
-                Enabled = true,
                 CreatedAt = createdAt,
                 UpdatedAt = updatedAt,
                 Rating = performanceRating,

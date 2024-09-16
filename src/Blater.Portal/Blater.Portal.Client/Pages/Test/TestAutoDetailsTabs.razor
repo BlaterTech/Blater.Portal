@@ -2,8 +2,6 @@
 @using Blater.Frontend.Client.Auto.AutoBuilders.Types.Details.Tabs
 @using Blater.Portal.Client.Models
 
-@attribute [AutoIgnore]
-
 <div class="pa-2">
     <AutoDetailsTabsBuilder
         T="Employee"
@@ -15,10 +13,9 @@
     //todo: falta configurar o botão de editar para ir ao caminho certo do form timeline
     private Employee Employee { get; init; } = new()
     {
-        Id = BlaterId.New(nameof(Employee)),
+        Id = Ulid.NewUlid(),
         CreatedAt = DateTimeOffset.UtcNow,
         UpdatedAt = DateTimeOffset.UtcNow,
-        Enabled = true,
         Name = "Employee 1",
         Position = "CPA",
         Rating = 5,

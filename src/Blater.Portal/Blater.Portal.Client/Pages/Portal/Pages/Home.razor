@@ -1,4 +1,5 @@
 ﻿@page "/home"
+@using Blater.Extensions
 @using Blater.Frontend.Client.Extensions
 @using Blater.Models.User
 
@@ -29,10 +30,7 @@
     readonly List<string> _permissions = ["ProjectOwner:Create"];
 
     BlaterAuthorizeView? _blaterAuthorizeView;
-
-    [Inject]
-    private IBlaterDatabaseStoreT<BlaterUser> UserStore { get; set; } = null!;
-
+    
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
@@ -47,8 +45,10 @@
                 Snackbar.Add("User not authenticated", Severity.Error);
                 return;
             }
-            
-            var result = await UserStore.FindOne(x => x.Email == userAuthenticated.Email);
+
+            await Task.Delay(1);
+
+            /*var result = await UserStore.FindOne(x => x.Email == userAuthenticated.Email);
 
             if (result.HandleErrors(out var errors, out var response))
             {
@@ -56,7 +56,7 @@
                 return;
             }
 
-            Snackbar.Add(response.ToJson(), Severity.Success);
+            Snackbar.Add(response.ToJson(), Severity.Success);*/
         }
     }
 
