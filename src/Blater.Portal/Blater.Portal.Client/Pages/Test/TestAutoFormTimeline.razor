@@ -1,7 +1,18 @@
 ﻿@page "/Test/TestAutoFormTimeline"
 
-<h3>TestAutoFormTimeline</h3>
+@using Blater.Frontend.Client.Auto.AutoBuilders.Types.Form.Timeline
+@using Blater.Portal.Client.Models
+
+<div class="pa-2">
+    <AutoFormTimelineBuilder
+        @ref="@FormBuilder"
+        T="Employee"
+        Model="@Employee"/>
+</div>
 
 @code {
-    
+
+//todo: ainda não está arrumado a questão do value change
+    public Employee Employee { get; set; } = new();
+    private AutoFormTimelineBuilder<Employee> FormBuilder { get; set; } = null!;
 }

@@ -80,9 +80,9 @@ public class Employee :
     public AutoFormTimelineConfiguration FormTimelineConfiguration { get; set; } = new("Form Timeline Employee");
     public void Configure(IAutoFormTimelineConfigurationBuilder builder)
     {
-        builder.AddStep(new AutoFormTimelineStepConfiguration(1, "First Step"));
-        builder.AddStep(new AutoFormTimelineStepConfiguration(2, "Second Step"));
-        builder.AddStep(new AutoFormTimelineStepConfiguration(3, "Tertiary Step"));
+        builder.AddStep("First Step");
+        builder.AddStep("Second Step");
+        builder.AddStep("Tertiary Step");
     }
 
     public AutoDetailsConfiguration DetailsConfiguration { get; } = new("AutoDetailsTitle");
