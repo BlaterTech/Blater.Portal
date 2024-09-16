@@ -54,6 +54,16 @@ public class Employee :
                     Placeholder = "Insert Position Value",
                     OnValueChanged = EventCallback.Factory.Create<string>(this, PositionChanged)
                 });
+
+            configurationBuilder
+               .AddSubgroup(new AutoFormGroupConfiguration("First SubGroup"), memberConfigurationBuilder =>
+                {
+                    memberConfigurationBuilder.AddMember(() => Rating, new AutoFormAutoComponentConfiguration
+                    {
+                        LabelName = "Rating",
+                        Placeholder = "Insert Rating Value"
+                    });
+                });
         });
 
         builder.AddGroup(new AutoFormGroupConfiguration("SecondGroup"), configurationBuilder =>
@@ -68,11 +78,6 @@ public class Employee :
                 {
                     LabelName = "Salary",
                     Placeholder = "Insert Salary Value"
-                })
-               .AddMember(() => Rating, new AutoFormAutoComponentConfiguration
-                {
-                    LabelName = "Rating",
-                    Placeholder = "Insert Rating Value"
                 });
         });
     }
