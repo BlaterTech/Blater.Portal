@@ -1,0 +1,83 @@
+﻿@page "/Test/TestCharts"
+
+@inject IJSRuntime JS
+
+<div id="chart">
+</div>
+
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var options = new
+            {
+                chart = new
+                {
+                    height = 350,
+                    type = "line",
+                    stacked = false
+                },
+                dataLabels = new
+                {
+                    enabled = false
+                },
+                colors = new[] { "#FF1654", "#247BA0" },
+                series = new object[]
+                {
+                    new { name = "Series A", data = new[] { 1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6 } },
+                    new { name = "Series B", data = new[] { 20, 29, 37, 36, 44, 45, 50, 58 } }
+                },
+                stroke = new
+                {
+                    width = new[] { 4, 4 }
+                },
+                plotOptions = new
+                {
+                    bar = new
+                    {
+                        columnWidth = "20%"
+                    }
+                },
+                xaxis = new
+                {
+                    categories = new[] { 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016 }
+                },
+                yaxis = new object[]
+                {
+                    new
+                    {
+                        axisTicks = new { show = true },
+                        axisBorder = new { show = true, color = "#FF1654" },
+                        labels = new { style = new { colors = "#FF1654" } },
+                        title = new { text = "Series A", style = new { color = "#FF1654" } }
+                    },
+                    new
+                    {
+                        opposite = true,
+                        axisTicks = new { show = true },
+                        axisBorder = new { show = true, color = "#247BA0" },
+                        labels = new { style = new { colors = "#247BA0" } },
+                        title = new { text = "Series B", style = new { color = "#247BA0" } }
+                    }
+                },
+                tooltip = new
+                {
+                    shared = false,
+                    intersect = true,
+                    x = new { show = false }
+                },
+                legend = new
+                {
+                    horizontalAlign = "left",
+                    offsetX = 40
+                }
+            };
+
+
+            await JS.InvokeVoidAsync("StartChart", "chart", options);
+        }
+    }
+
+}
