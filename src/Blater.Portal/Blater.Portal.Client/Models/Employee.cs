@@ -1,33 +1,13 @@
-﻿using Blater.Frontend.Client.Auto.AutoBuilders.Types.Details;
-using Blater.Frontend.Client.Auto.AutoBuilders.Types.Details.Tabs;
-using Blater.Frontend.Client.Auto.AutoBuilders.Types.Form;
-using Blater.Frontend.Client.Auto.AutoBuilders.Types.Table;
-using Blater.Frontend.Client.Auto.AutoBuilders.Types.Valitador;
-using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Details;
-using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Details.Tabs;
-using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Form.Timeline;
-using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Table;
-using Blater.Frontend.Client.Auto.AutoInterfaces.Types.Validator;
-using Blater.Frontend.Client.Auto.AutoModels.Types.Details;
-using Blater.Frontend.Client.Auto.AutoModels.Types.Details.Tabs;
-using Blater.Frontend.Client.Auto.AutoModels.Types.Form;
-using Blater.Frontend.Client.Auto.AutoModels.Types.Form.Timeline;
-using Blater.Frontend.Client.Auto.AutoModels.Types.Table;
-using Blater.Frontend.Client.Auto.AutoModels.Types.Validator;
-using Blater.Frontend.Client.Models.Bases;
-using Blater.Frontend.Client.Services;
-using FluentValidation;
-using Microsoft.AspNetCore.Components;
+﻿using Blater.Frontend.Client.Models.Bases;
 
 namespace Blater.Portal.Client.Models;
 
-public partial class Employee :
-    BaseFrontendModel,
-    IAutoFormTimelineConfiguration,
+public partial class Employee : BaseFrontendModel
+    /*IAutoFormTimelineConfiguration,
     IAutoDetailsConfiguration,
     
     IAutoDetailsTabsConfiguration,
-    IAutoValidatorConfiguration<Employee>
+    IAutoValidatorConfiguration<Employee>*/
 {
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;
@@ -35,6 +15,7 @@ public partial class Employee :
     public int Salary { get; set; }
     public int Rating { get; set; }
 
+    /*
     public AutoFormConfiguration FormConfiguration { get; } = new("FormTitle");
 
     public void ConfigureForm(AutoFormConfigurationBuilder builder)
@@ -44,12 +25,12 @@ public partial class Employee :
         builder.AddGroup(new AutoFormGroupConfiguration("SecondGroup"), configurationBuilder =>
         {
             configurationBuilder
-               .AddMember(() => YearsEmployed, new AutoFormAutoPropertyConfiguration
+               .AddMember(() => YearsEmployed, new BaseAutoFormBaseAutoPropertyConfiguration<>
                 {
                     LabelName = "YearsEmployed",
                     Placeholder = "Insert YearsEmployed Value"
                 })
-               .AddMember(() => Salary, new AutoFormAutoPropertyConfiguration
+               .AddMember(() => Salary, new BaseAutoFormBaseAutoPropertyConfiguration<>
                 {
                     LabelName = "Salary",
                     Placeholder = "Insert Salary Value"
@@ -63,13 +44,13 @@ public partial class Employee :
         var step = builder.AddStep("First Step", configurationBuilder =>
         {
             configurationBuilder
-               .AddMember(() => Name, new AutoFormAutoPropertyConfiguration
+               .AddMember(() => Name, new BaseAutoFormBaseAutoPropertyConfiguration<>
                 {
                     LabelName = "Name",
                     Placeholder = "Insert Name Value",
                     OnValueChanged = EventCallback.Factory.Create<string>(this, NameChanged),
                 })
-               .AddMember(() => Position, new AutoFormAutoPropertyConfiguration
+               .AddMember(() => Position, new BaseAutoFormBaseAutoPropertyConfiguration<>
                 {
                     LabelName = "Position",
                     Placeholder = "Insert Position Value",
@@ -79,7 +60,7 @@ public partial class Employee :
             configurationBuilder
                .AddSubgroup(new AutoFormGroupConfiguration("First SubGroup"), memberConfigurationBuilder =>
                 {
-                    memberConfigurationBuilder.AddMember(() => Rating, new AutoFormAutoPropertyConfiguration
+                    memberConfigurationBuilder.AddMember(() => Rating, new BaseAutoFormBaseAutoPropertyConfiguration<>
                     {
                         LabelName = "Rating",
                         Placeholder = "Insert Rating Value"
@@ -89,14 +70,14 @@ public partial class Employee :
 
         var group = step.AddGroup("Test", configurationBuilder =>
             {
-                configurationBuilder.AddMember(() => Name, new AutoFormAutoPropertyConfiguration<string>
+                configurationBuilder.AddMember(() => Name, new BaseAutoFormBaseAutoPropertyConfiguration<string>
                 {
                     LabelName = "Name",
                     Placeholder = "Insert Name Value",
                     OnValueChanged = EventCallback.Factory.Create<string>(this, NameChanged),
                 });
                 
-                var member2 = configurationBuilder.AddMember(() => Position, new AutoFormAutoPropertyConfiguration<string>
+                var member2 = configurationBuilder.AddMember(() => Position, new BaseAutoFormBaseAutoPropertyConfiguration<string>
                 {
                     LabelName = "Position   ",
                     Placeholder = "Insert Name Value",
@@ -125,26 +106,24 @@ public partial class Employee :
         builder.AddGroup(new AutoDetailsGroupConfiguration("AutoDetailsGroup"), configurationBuilder =>
         {
             configurationBuilder
-               .AddMember(() => Position, new AutoDetailsAutoPropertyConfiguration
+               .AddMember(() => Position, new BaseAutoDetailsBaseAutoPropertyConfiguration
                 {
                     LabelName = "Position Detail"
                 })
-               .AddMember(() => Salary, new AutoDetailsAutoPropertyConfiguration
+               .AddMember(() => Salary, new BaseAutoDetailsBaseAutoPropertyConfiguration
                 {
                     LabelName = "Salary Detail"
                 })
-               .AddMember(() => Rating, new AutoDetailsAutoPropertyConfiguration
+               .AddMember(() => Rating, new BaseAutoDetailsBaseAutoPropertyConfiguration
                 {
                     LabelName = "Rating Detail"
                 });
         });
     }
 
-    public AutoTableConfiguration TableConfiguration { get; } = new("AutoTableTitle");
-
     public void ConfigureTable(AutoTableConfigurationBuilder builder)
     {
-        builder.AddMember(() => Position, new AutoTableAutoPropertyConfiguration
+        builder.AddMember(() => Position, new BaseAutoTableBaseAutoPropertyConfiguration<>
         {
             LabelName = "Position Table"
         });
@@ -211,5 +190,5 @@ public partial class Employee :
         Position = $"{value} position";
 
         StateNotifierService.NotifyStateChanged(() => Position, typeof(Employee));
-    }
+    }*/
 }
