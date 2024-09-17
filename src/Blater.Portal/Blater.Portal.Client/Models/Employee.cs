@@ -154,11 +154,8 @@ public partial class Employee :
 
     public void ConfigureValidations(AutoValidatorConfigurationBuilder<Employee> configurationBuilder)
     {
-        configurationBuilder.FormValidate(rules =>
-        {
-            rules.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
-            rules.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
-        });
+        configurationBuilder.RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+        configurationBuilder.RuleFor(x => x.Salary).GreaterThan(0).WithMessage("Salary must be greater than 0");
     }
     
     public AutoDetailsTabsConfiguration DetailsTabsConfiguration { get; set; } = new()
@@ -194,7 +191,7 @@ public partial class Employee :
         builder.AddPanel(new AutoDetailsTabsPanelConfiguration("Panel Three"), configurationBuilder =>
         {
             configurationBuilder
-               .AddGroup(new AutoDetailsTabsGroupConfiguration("Group Three"), memberConfigurationBuilder =>
+               .AddGroup("Group Three", memberConfigurationBuilder =>
                 {
                     memberConfigurationBuilder
                        .AddMember(() => Name, new AutoDetailsTabsPropertyConfiguration());
