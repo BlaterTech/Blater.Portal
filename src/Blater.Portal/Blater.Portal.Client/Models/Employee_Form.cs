@@ -12,7 +12,7 @@ public partial class Employee : IAutoFormConfiguration<Employee>
         builder.AddGroup("First Group", configurationBuilder =>
         {
             configurationBuilder
-               .AddMember(x => x.Position, new AutoFormPropertyConfiguration<Employee, string>());
+               .AddMemberWithEvent(x => x.Position, new AutoFormPropertyConfiguration<Employee, string>());
             
             //todo: add onvaluechanged
         });

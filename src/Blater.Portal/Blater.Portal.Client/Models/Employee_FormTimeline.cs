@@ -15,7 +15,7 @@ public partial class Employee : IAutoFormTimelineConfiguration<Employee>
             configurationBuilder.AddGroup("", propertyConfigurationBuilder =>
             {
                 propertyConfigurationBuilder
-                   .AddMember(x => x.Position, new AutoFormPropertyConfiguration<Employee, string>());
+                   .AddMemberOnly(x => x.Position, new AutoFormPropertyConfiguration<Employee, string>());
                 
                 //todo: add eventcallback
             });
