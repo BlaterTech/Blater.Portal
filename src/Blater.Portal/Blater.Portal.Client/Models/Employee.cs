@@ -4,11 +4,6 @@ using Blater.Frontend.Client.Services;
 namespace Blater.Portal.Client.Models;
 
 public partial class Employee : BaseFrontendModel
-    /*IAutoFormTimelineConfiguration,
-    IAutoDetailsConfiguration,
-    
-    IAutoDetailsTabsConfiguration,
-    IAutoValidatorConfiguration<Employee>*/
 {
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;

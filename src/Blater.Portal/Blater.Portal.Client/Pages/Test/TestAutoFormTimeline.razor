@@ -13,6 +13,6 @@
 @code {
 
 //todo: ainda não está arrumado a questão do value change
-    public Employee Employee { get; set; } = new();
+    public Employee Employee { get; } = new();
     private AutoFormTimelineBuilder<Employee> FormBuilder { get; set; } = null!;
 }
