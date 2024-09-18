@@ -6,7 +6,7 @@ namespace Blater.Portal.Client.Models;
 
 public partial class Employee : IAutoDetailsTabsConfiguration<Employee>
 {
-    public AutoDetailsTabsConfiguration<Employee> DetailsTabsConfiguration { get; } = new("Employee AutoDetailsTabs");
+    public AutoDetailsTabsConfiguration<Employee> DetailsTabsConfiguration { get; set; } = new("Employee AutoDetailsTabs");
     public void ConfigureDetailsTabs(AutoDetailsTabsConfigurationBuilder<Employee> builder)
     {
         builder.AddPanel("", configurationBuilder =>

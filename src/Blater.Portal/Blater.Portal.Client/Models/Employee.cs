@@ -12,7 +12,7 @@ public partial class Employee : BaseFrontendModel
     public int Rating { get; set; }
 
     /*
-    public AutoFormConfiguration FormConfiguration { get; } = new("FormTitle");
+    public AutoFormConfiguration FormConfiguration { get; set; } = new("FormTitle");
 
     public void ConfigureForm(AutoFormConfigurationBuilder builder)
     {
@@ -95,7 +95,7 @@ public partial class Employee : BaseFrontendModel
         builder.AddStep("Tertiary Step");
     }
 
-    public AutoDetailsConfiguration DetailsConfiguration { get; } = new("AutoDetailsTitle");
+    public AutoDetailsConfiguration DetailsConfiguration { get; set; } = new("AutoDetailsTitle");
 
     public void ConfigureDetails(AutoDetailsConfigurationBuilder builder)
     {
@@ -125,7 +125,7 @@ public partial class Employee : BaseFrontendModel
         });
     }
 
-    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; } = new();
+    public AutoValidatorConfiguration<Employee> ValidatorConfiguration { get; set; } = new();
 
     public void ConfigureValidations(AutoValidatorConfigurationBuilder<Employee> configurationBuilder)
     {

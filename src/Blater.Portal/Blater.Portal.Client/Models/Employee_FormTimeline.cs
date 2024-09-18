@@ -6,7 +6,7 @@ namespace Blater.Portal.Client.Models;
 
 public partial class Employee : IAutoFormTimelineConfiguration<Employee>
 {
-    public AutoFormTimelineConfiguration<Employee> FormTimelineConfiguration { get; } = new("Employee FormTimeline");
+    public AutoFormTimelineConfiguration<Employee> FormTimelineConfiguration { get; set; } = new("Employee FormTimeline");
 
     public void ConfigureFormTimeline(IAutoFormTimelineConfigurationBuilder<Employee> builder)
     {

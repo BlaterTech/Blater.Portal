@@ -6,7 +6,7 @@ namespace Blater.Portal.Client.Models;
 
 public partial class Employee : IAutoTableConfiguration<Employee>
 {
-    public AutoTableConfiguration<Employee> TableConfiguration { get; } = new("Employee Table");
+    public AutoTableConfiguration<Employee> TableConfiguration { get; set; } = new("Employee Table");
 
     public void ConfigureTable(AutoTableConfigurationBuilder<Employee> builder)
     {
