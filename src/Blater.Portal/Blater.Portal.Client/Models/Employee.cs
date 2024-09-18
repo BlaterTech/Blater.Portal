@@ -1,4 +1,5 @@
 ﻿using Blater.Frontend.Client.Models.Bases;
+using Blater.Frontend.Client.Services;
 
 namespace Blater.Portal.Client.Models;
 
@@ -177,7 +178,8 @@ public partial class Employee : BaseFrontendModel
                 });
         });
     }
-
+*/
+    
     public void NameChanged(string value)
     {
         Name = $"{value} name";
@@ -190,5 +192,5 @@ public partial class Employee : BaseFrontendModel
         Position = $"{value} position";
 
         StateNotifierService.NotifyStateChanged(() => Position, typeof(Employee));
-    }*/
+    }
 }

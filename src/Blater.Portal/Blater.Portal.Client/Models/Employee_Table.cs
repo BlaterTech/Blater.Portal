@@ -7,11 +7,15 @@ namespace Blater.Portal.Client.Models;
 public partial class Employee : IAutoTableConfiguration<Employee>
 {
     public AutoTableConfiguration TableConfiguration { get; set; } = new("Employee Table");
+
     public void ConfigureTable(AutoTableConfigurationBuilder<Employee> builder)
     {
-        builder.AddMember(x => x.Name, new AutoTablePropertyConfiguration<string>
-        {
-            
-        });
+        var asd = builder
+                 .AddMemberWithEvent(x => x.Name, new AutoTablePropertyConfiguration<string>())
+                 .AddOnValueChanged(NameChanged);
+
+        builder
+           .AddMemberWithEvent(x => x.Position, new AutoTablePropertyConfiguration<string>())
+           .AddOnValueChanged(x => Position = $"{x} + {asd.Value}");
     }
 }
