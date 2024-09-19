@@ -7,6 +7,7 @@ public partial class Employee : BaseFrontendModel
 {
     public string Name { get; set; } = null!;
     public string Position { get; set; } = null!;
+    public string Test { get; set; } = null!;
     public int YearsEmployed { get; set; }
     public int Salary { get; set; }
     public int Rating { get; set; }
@@ -175,7 +176,7 @@ public partial class Employee : BaseFrontendModel
     }
 */
     
-    public void NameChanged(string value)
+    /*public void NameChanged(string value)
     {
         Name = $"{value} name";
 
@@ -187,5 +188,5 @@ public partial class Employee : BaseFrontendModel
         Position = $"{value} position";
 
         StateNotifierService.NotifyStateChanged(() => Position, typeof(Employee));
-    }
+    }*/
 }

@@ -7,6 +7,6 @@ public partial class Employee : IAutoValidatorConfiguration<Employee>
 {
     public InlineValidator<Employee> Validator { get; set; } = new()
     {
-        v => v.RuleFor(x => x.Name).NotNull(),
+        v => v.RuleFor(x => x.Name).NotEqual("a").WithMessage("Name not null possible equal 'a'"),
     };
 }
