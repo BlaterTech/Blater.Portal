@@ -9,9 +9,9 @@ public partial class Employee : IAutoDetailsTabsConfiguration<Employee>
     public AutoDetailsTabsConfiguration<Employee> DetailsTabsConfiguration { get; set; } = new("Employee AutoDetailsTabs");
     public void ConfigureDetailsTabs(AutoDetailsTabsConfigurationBuilder<Employee> builder)
     {
-        builder.AddPanel("", configurationBuilder =>
+        builder.AddPanel("Panel One", configurationBuilder =>
         {
-            configurationBuilder.AddGroup("", propertyConfigurationBuilder =>
+            configurationBuilder.AddGroup("Group One", propertyConfigurationBuilder =>
             {
                 propertyConfigurationBuilder.AddMember(x => x.Position, new AutoDetailsTabsPropertyConfiguration<Employee, string>());
             });

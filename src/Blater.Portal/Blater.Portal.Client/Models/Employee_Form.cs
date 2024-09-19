@@ -9,12 +9,10 @@ public partial class Employee : IAutoFormConfiguration<Employee>
     public AutoFormConfiguration<Employee> FormConfiguration { get; set; } = new("Employee AutoForm");
     public void ConfigureForm(AutoFormConfigurationBuilder<Employee> builder)
     {
-        builder.AddGroup("First Group", configurationBuilder =>
+        builder.AddGroup("Group One", configurationBuilder =>
         {
             configurationBuilder
                .AddMemberWithEvent(x => x.Position, new AutoFormPropertyConfiguration<Employee, string>());
-            
-            //todo: add onvaluechanged
         });
     }
 }

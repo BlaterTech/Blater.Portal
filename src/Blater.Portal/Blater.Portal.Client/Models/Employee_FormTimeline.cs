@@ -10,14 +10,12 @@ public partial class Employee : IAutoFormTimelineConfiguration<Employee>
 
     public void ConfigureFormTimeline(IAutoFormTimelineConfigurationBuilder<Employee> builder)
     {
-        builder.AddStep("", configurationBuilder =>
+        builder.AddStep("Step One", configurationBuilder =>
         {
-            configurationBuilder.AddGroup("", propertyConfigurationBuilder =>
+            configurationBuilder.AddGroup("Group One", propertyConfigurationBuilder =>
             {
                 propertyConfigurationBuilder
                    .AddMemberOnly(x => x.Position, new AutoFormPropertyConfiguration<Employee, string>());
-                
-                //todo: add eventcallback
             });
         });
     }
