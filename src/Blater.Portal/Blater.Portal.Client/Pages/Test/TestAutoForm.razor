@@ -1,16 +1,18 @@
 ﻿@page "/Test/TestAutoForm"
 @using Blater.Frontend.Client.Auto.AutoBuilders.Types.Form
 @using Blater.Portal.Client.Models
+@using Blater.Portal.Client.Models.Validations
 
 <div class="pa-2">
     <AutoFormBuilder
         @ref="@FormBuilder"
         T="Employee"
+        TValidator="EmployeeValidation"
         Model="@Employee"/>
 </div>
 
 @code {
     //todo: ainda não está arrumado a questão do value change
     public Employee Employee { get; set; } = new();
-    private AutoFormBuilder<Employee> FormBuilder { get; set; } = null!;
+    private AutoFormBuilder<Employee, EmployeeValidation> FormBuilder { get; set; } = null!;
 }

@@ -2,17 +2,18 @@
 
 @using Blater.Frontend.Client.Auto.AutoBuilders.Types.Form.Timeline
 @using Blater.Portal.Client.Models
+@using Blater.Portal.Client.Models.Validations
 
 <div class="pa-2">
     <AutoFormTimelineBuilder
         @ref="@FormBuilder"
         T="Employee"
+        TValidator="EmployeeValidation"
         Model="@Employee"/>
 </div>
 
 @code {
-
-//todo: ainda não está arrumado a questão do value change
+    
     public Employee Employee { get; set; } = new();
-    private AutoFormTimelineBuilder<Employee> FormBuilder { get; set; } = null!;
+    private AutoFormTimelineBuilder<Employee, EmployeeValidation> FormBuilder { get; set; } = null!;
 }
