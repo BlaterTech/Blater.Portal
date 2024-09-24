@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-builder.Services.AddBlaterFrontendClient();
+builder.AddBlaterFrontendClient();
 
 var app = builder.Build();
 

@@ -3,7 +3,7 @@ using Blater.Portal.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddBlaterFrontendServer();
+builder.AddBlaterFrontendServer();
 
 var app = builder.Build();
 
